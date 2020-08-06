@@ -12,6 +12,7 @@
         <module>xiesen-mock-data</module>
         <module>xiesen-common</module>
         <module>xiesen-flink-test</module>
+        <module>xiesn-mock-data-0.8</module>
     </modules>
 
     <parent>
