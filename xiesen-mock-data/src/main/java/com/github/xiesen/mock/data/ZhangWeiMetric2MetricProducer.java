@@ -1,14 +1,12 @@
 package com.github.xiesen.mock.data;
 
 import com.github.xiesen.common.avro.AvroSerializerFactory;
-import com.github.xiesen.mock.util.SaslConfig;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 
-import javax.security.auth.login.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -66,7 +64,7 @@ public class ZhangWeiMetric2MetricProducer {
         Map<String, Double> metrics = new HashMap<>();
         metrics.put("cpu_usage_rate", 0.6);
 
-        return AvroSerializerFactory.getMetricAvorSerializer().serializingMetric(metricSetName, timestamp, dimensions, metrics);
+        return AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions, metrics);
     }
 
 

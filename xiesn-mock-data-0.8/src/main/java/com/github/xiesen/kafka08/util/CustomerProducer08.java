@@ -83,7 +83,7 @@ public class CustomerProducer08 {
     public void sendLog(String logTypeName, String timestamp, String source, String offset,
                         Map<String, String> dimensions, Map<String, Double> measures, Map<String, String> normalFields) {
         try {
-            byte[] bytes = AvroSerializerFactory.getLogAvorSerializer().serializingLog(logTypeName, timestamp, source,
+            byte[] bytes = AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source,
                     offset, dimensions, measures, normalFields);
             producer.send(new ProducerRecord<String, byte[]>(topics, null, bytes));
         } catch (Exception e) {
@@ -101,7 +101,7 @@ public class CustomerProducer08 {
      */
     public void sendMetric(String metricSetName, String timestamp, Map<String, String> dimensions, Map<String, Double> metrics) {
         try {
-            byte[] bytes = AvroSerializerFactory.getMetricAvorSerializer().serializingMetric(metricSetName, timestamp, dimensions, metrics);
+            byte[] bytes = AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions, metrics);
             producer.send(new ProducerRecord<String, byte[]>(topics, null, bytes));
         } catch (Exception e) {
             logger.error("sendMetric-插入Kafka失败", e);
