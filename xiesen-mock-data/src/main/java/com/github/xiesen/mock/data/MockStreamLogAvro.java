@@ -113,9 +113,9 @@ public class MockStreamLogAvro {
 
             Map<String, String> normalFields = getRandomNormalFields();
 
-//            System.out.println(printData(logTypeName, timestamp, source, offset, dimensions, measures, normalFields));
-            CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
-            producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
+            System.out.println(printData(logTypeName, timestamp, source, offset, dimensions, measures, normalFields));
+//            CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
+//            producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
             Thread.sleep(2000);
         }
         Thread.sleep(1000);

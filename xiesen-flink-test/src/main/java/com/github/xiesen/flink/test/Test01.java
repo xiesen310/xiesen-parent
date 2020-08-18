@@ -1,5 +1,12 @@
 package com.github.xiesen.flink.test;
 
+import org.apache.commons.lang3.time.DateUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
+
 /**
  * @author xiese
  * @Description TODO
@@ -8,15 +15,55 @@ package com.github.xiesen.flink.test;
  */
 public class Test01 {
 
+    public String generateEsId(Map<String, Object> bigMap) {
+        StringBuilder builder = new StringBuilder();
 
-    public static void main(String[] args) throws Exception {
-        String sql = "create table jty_gfoc_err_filebeat ( WATERMARK FOR timestamp AS withOffset('timestamp', 60000), timestamp bigint, source varchar, offset varchar, appprogramname varchar, appsystem varchar, hostname varchar, collecttime varchar, logstash_deal_ip varchar, logstash_deal_name varchar, message varchar ) with ( type = 'kafka11', zookeeperQuorum = 'kafka-1:2181/kafka110,kafka-2:2181/kafka110,kafka-3:2181/kafka110', kafka.key.deserializer = 'org.apache.kafka.common.serialization.StringDeserializer', sourceDataType = 'logavro', kafka.value.deserializer = 'org.apache.kafka.common.serialization.ByteArrayDeserializer', bootstrapServers = 'kafka-1:19092,kafka-2:19092,kafka-3:19092', groupId = 'default_group', parallelism = '1', topic = 'dwd_default_log', schemaString = 'hostname,appprogramname,appsystem||collecttime,logstash_deal_name,logstash_deal_ip,message', offsetReset = 'latest' ); create table jty_gfoc_err_connectpool_1min_fromlog ( timestamp TIMESTAMP, appprogramname varchar, appsystem varchar, hostname varchar, gfoc_err_count double ) with ( type = 'kafka11', zookeeperQuorum = 'kafka-1:2181/kafka110,kafka-2:2181/kafka110,kafka-3:2181/kafka110', kafka.key.deserializer = 'org.apache.kafka.common.serialization.StringDeserializer', kafka.value.deserializer = 'org.apache.kafka.common.serialization.StringDeserializer', bootstrapServers = 'kafka-1:19092,kafka-2:19092,kafka-3:19092', sinkDataType = 'metricavro', parallelism = '2', topic = 'dwd_all_metric', schemaString = 'hostname,appprogramname,appsystem|gfoc_err_count|' ); insert into jty_gfoc_err_connectpool_1min_fromlog select hostname as hostname, appsystem as appsystem, appprogramname as appprogramname, cast(count(1) as double) AS gfoc_err_count, TUMBLE_START(`timestamp`, INTERVAL '1' MINUTE) AS `timestamp` from jty_gfoc_err_filebeat where message like '%创建连接池失败%' group by hostname, appsystem, appprogramname, TUMBLE(`timestamp`, INTERVAL '1' MINUTE);";
-        System.out.println(sql);
-        System.out.println("sql 中是否包含 % : " + sql.contains("%"));
+        if (bigMap.containsKey(LogConstants.TIMESTAMP)) {
+            builder.append(bigMap.get(LogConstants.TIMESTAMP));
+        }
+        if (bigMap.containsKey(LogConstants.SOURCE)) {
+            builder.append(bigMap.get(LogConstants.SOURCE));
+        }
+        if (bigMap.containsKey(LogConstants.APPSYSTEM)) {
+            builder.append(bigMap.get(LogConstants.APPSYSTEM));
+        }
 
-        sql = sql.replaceAll("%", "#");
-        System.out.println("-----------------------------------------------");
-        System.out.println(sql);
-        System.out.println("sql 中是否包含 % : " + sql.contains("%"));
+        if (bigMap.containsKey(LogConstants.OFFSET)) {
+            builder.append(bigMap.get(LogConstants.OFFSET));
+        }
+
+        if (bigMap.containsKey(LogConstants.NORMAL_FIELDS)) {
+            Map<String, String> normalFields = (Map<String, String>) bigMap.get(LogConstants.NORMAL_FIELDS);
+            if (normalFields.containsKey(LogConstants.DES_TIME)) {
+                builder.append(normalFields.get(LogConstants.DES_TIME));
+            }
+        }
+
+        String id = UUID.nameUUIDFromBytes(builder.toString().getBytes()).toString();
+
+        return id;
+    }
+
+    public static void main(String[] args) {
+        Map<String, Object> bigMap = new HashMap<>(20);
+        bigMap.put(LogConstants.LOG_TYPE_NAME, "logTypeName");
+        bigMap.put(LogConstants.TIMESTAMP, "2222222222");
+        bigMap.put(LogConstants.SOURCE, "/var/log/a/log");
+        bigMap.put(LogConstants.OFFSET, "100");
+        Map<String, String> dimensions = new HashMap(20);
+        Map<String, String> normalFields = new HashMap(20);
+        Map<String, Double> measures = new HashMap(20);
+        dimensions.put("ip", "192.168.1.1");
+        dimensions.put("hostname", "localhost");
+        dimensions.put("appsystem", "streamx");
+        bigMap.put(LogConstants.DIMENSIONS, dimensions);
+        bigMap.put(LogConstants.MEASURES, measures);
+        String deserializerTime = "111111111111111";
+        normalFields.put(LogConstants.DES_TIME, deserializerTime);
+        bigMap.put(LogConstants.NORMAL_FIELDS, normalFields);
+
+        System.out.println(bigMap);
+        Test01 test01 = new Test01();
+        System.out.println(test01.generateEsId(bigMap));
     }
 }

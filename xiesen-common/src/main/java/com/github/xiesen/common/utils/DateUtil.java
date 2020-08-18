@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -69,7 +70,11 @@ public class DateUtil {
         return format.format(new Date(currentTimeMillis + interval)).toString();
     }
 
-    public static void main(String[] args) {
-        System.out.println(getDate());
+    public static void main(String[] args) throws ParseException {
+        String timeStr = getUTCTimeStr();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+08:00");
+        Date date = sdf.parse(timeStr);
+        System.out.println(date);
+        System.out.println(date.getTime());
     }
 }
