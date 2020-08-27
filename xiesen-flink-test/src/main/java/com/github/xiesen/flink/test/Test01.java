@@ -1,10 +1,7 @@
 package com.github.xiesen.flink.test;
 
-import org.apache.commons.lang3.time.DateUtils;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 import java.util.UUID;
 
 /**
@@ -15,36 +12,72 @@ import java.util.UUID;
  */
 public class Test01 {
 
-    public String generateEsId(Map<String, Object> bigMap) {
+    private static final String STRIKE_THROUGH = "-";
+    private static final String EMPTY_STR = "";
+
+    /**
+     * 生成 es id
+     *
+     * @param bigMap
+     * @return
+     */
+    public static String generateEsId(Map<String, Object> bigMap) {
         StringBuilder builder = new StringBuilder();
-
-        if (bigMap.containsKey(LogConstants.TIMESTAMP)) {
-            builder.append(bigMap.get(LogConstants.TIMESTAMP));
-        }
-        if (bigMap.containsKey(LogConstants.SOURCE)) {
-            builder.append(bigMap.get(LogConstants.SOURCE));
-        }
-        if (bigMap.containsKey(LogConstants.APPSYSTEM)) {
-            builder.append(bigMap.get(LogConstants.APPSYSTEM));
-        }
-
-        if (bigMap.containsKey(LogConstants.OFFSET)) {
-            builder.append(bigMap.get(LogConstants.OFFSET));
-        }
-
-        if (bigMap.containsKey(LogConstants.NORMAL_FIELDS)) {
-            Map<String, String> normalFields = (Map<String, String>) bigMap.get(LogConstants.NORMAL_FIELDS);
-            if (normalFields.containsKey(LogConstants.DES_TIME)) {
-                builder.append(normalFields.get(LogConstants.DES_TIME));
-            }
-        }
-
-        String id = UUID.nameUUIDFromBytes(builder.toString().getBytes()).toString();
-
-        return id;
+        String a = bigMap.toString();
+//        if (bigMap.containsKey(LogConstants.TIMESTAMP)) {
+//            builder.append(bigMap.get(LogConstants.TIMESTAMP));
+//        }
+//
+//        if (bigMap.containsKey(LogConstants.SOURCE)) {
+//            builder.append(bigMap.get(LogConstants.SOURCE));
+//        }
+//
+//        if (bigMap.containsKey(LogConstants.OFFSET)) {
+//            builder.append(bigMap.get(LogConstants.OFFSET));
+//        }
+//
+//        if (bigMap.containsKey(LogConstants.DIMENSIONS)) {
+//            Map<String, String> dis = (Map<String, String>) bigMap.get(LogConstants.DIMENSIONS);
+//            if (dis.containsKey(LogConstants.APPSYSTEM)) {
+//                builder.append(dis.get(LogConstants.APPSYSTEM));
+//            }
+//        }
+//
+//        if (bigMap.containsKey(LogConstants.NORMAL_FIELDS)) {
+//            Map<String, String> normalFields = (Map<String, String>) bigMap.get(LogConstants.NORMAL_FIELDS);
+//            if (normalFields.containsKey(LogConstants.DES_TIME)) {
+//                builder.append(normalFields.get(LogConstants.DES_TIME));
+//            }
+//        }
+//
+        IdWorker idWorker=new IdWorker(0,0);
+        long id = idWorker.nextId();
+        System.out.println(id);
+        return String.valueOf(id);
     }
 
+
     public static void main(String[] args) {
+        Map<String, Object> bigMap = mockLogData();
+        int size = 1000;
+
+        long start = System.nanoTime();
+        for (int i = 0; i < size; i++) {
+            System.out.println(i);
+            generateEsId(bigMap);
+        }
+        long end = System.nanoTime();
+
+        System.out.println("平均耗时: " + (end - start) / size + " ns");
+
+    }
+
+    /**
+     * 模拟数据
+     *
+     * @return
+     */
+    private static Map<String, Object> mockLogData() {
         Map<String, Object> bigMap = new HashMap<>(20);
         bigMap.put(LogConstants.LOG_TYPE_NAME, "logTypeName");
         bigMap.put(LogConstants.TIMESTAMP, "2222222222");
@@ -61,9 +94,6 @@ public class Test01 {
         String deserializerTime = "111111111111111";
         normalFields.put(LogConstants.DES_TIME, deserializerTime);
         bigMap.put(LogConstants.NORMAL_FIELDS, normalFields);
-
-        System.out.println(bigMap);
-        Test01 test01 = new Test01();
-        System.out.println(test01.generateEsId(bigMap));
+        return bigMap;
     }
 }
