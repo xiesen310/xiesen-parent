@@ -8,6 +8,7 @@ import org.apache.jmeter.samplers.SampleResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @author xiese
@@ -26,25 +27,25 @@ public class StreamAlarmData {
         alarmJson.put("severity", i * 3);
         alarmJson.put("status", "PROBLEM");
         alarmJson.put("timestamp", DateUtil.getUTCTimeStr());
-        String extFields = "{\n" +
-                "        \"uuid\":\"2a094fd38e894de485ae09820bf5a08c\",\n" +
-                "        \"sourSystem\":\"1\",\n" +
-                "        \"actionID\":\"0\",\n" +
-                "        \"mergeTag\":\"1\",\n" +
-                "        \"connectId\":\"2a094fd38e894de485ae09820bf5a08c\",\n" +
-                "        \"eventNum\":\"2\",\n" +
-                "        \"alarmSuppress\":\"alarmSuppress\",\n" +
-                "        \"alarmWay\":\"2,2,2\",\n" +
-                "        \"successFlag\":\"1\",\n" +
-                "        \"expressionId\":\"2\",\n" +
-                "        \"alarmtime\":\"2020-07-08T20:02:00.000+08:00\",\n" +
-                "        \"calenderId\":\"1\",\n" +
-                "        \"reciTime\":\"1594209785705\",\n" +
-                "        \"alarmDetailType\":\"1\",\n" +
-                "        \"revUsers\":\"[]\"\n" +
-                "    }";
         String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ /\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
-        JSONObject extFieldsJson = JSONObject.parseObject(extFields);
+        JSONObject extFieldsJson = new JSONObject();
+        extFieldsJson.put("uuid", UUID.randomUUID().toString().replaceAll("-", ""));
+        extFieldsJson.put("sourSystem", String.valueOf(new Random().nextInt(10000)));
+        extFieldsJson.put("actionID", String.valueOf(new Random().nextInt(10000)));
+        extFieldsJson.put("mergeTag", String.valueOf(new Random().nextInt(10000)));
+        extFieldsJson.put("connectId", UUID.randomUUID().toString().replaceAll("-", ""));
+        extFieldsJson.put("eventNum", String.valueOf(new Random().nextInt(10000)));
+        extFieldsJson.put("alarmSuppress", "alarmSuppress");
+        extFieldsJson.put("alarmWay", "2,2,2");
+        extFieldsJson.put("successFlag", "1");
+        extFieldsJson.put("expressionId", new Random().nextInt(100000));
+
+        extFieldsJson.put("alarmtime", DateUtil.getUTCTimeStr());
+        extFieldsJson.put("calenderId", "1");
+        extFieldsJson.put("reciTime", System.currentTimeMillis());
+        extFieldsJson.put("alarmDetailType", "1");
+        extFieldsJson.put("revUsers", "[]");
+
         extFieldsJson.put("searchSentence", searchSentence);
         alarmJson.put("extFields", extFieldsJson);
         Map<String, Object> sourceMap = new HashMap<>(4);

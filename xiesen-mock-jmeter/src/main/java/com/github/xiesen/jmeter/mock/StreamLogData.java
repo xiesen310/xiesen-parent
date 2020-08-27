@@ -10,6 +10,7 @@ import org.apache.jmeter.samplers.SampleResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @author xiese
@@ -49,7 +50,7 @@ public class StreamLogData {
         JSONObject jsonObject = new JSONObject();
         String logTypeName = "stream_log_avro";
         String timestamp = DateUtil.getUTCTimeStr();
-        String source = "/var/log/" + DateUtil.getDate() + ".log";
+        String source = "/var/log/" + UUID.randomUUID().toString().replace("-", "") + ".log";
         String offset = getRandomOffset();
         Map<String, String> dimensions = getRandomDimensions();
         Map<String, Double> measures = new HashMap<>();
@@ -72,6 +73,9 @@ public class StreamLogData {
     }
 
     public static void main(String[] args) {
-        buildMsg(null, ProducerPool.getInstance("kafka1:9092,kafka2:9092,kafka3:9092").getProducer(),"xiesen");
+//        buildMsg(null, ProducerPool.getInstance("kafka1:9092,kafka2:9092,kafka3:9092").getProducer(), "xiesen");
+        for (int i = 0; i < 10; i++) {
+            System.out.println(getRandomOffset());
+        }
     }
 }

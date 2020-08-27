@@ -68,7 +68,7 @@ public class StreamMockData extends AbstractJavaSamplerClient {
     public Arguments getDefaultParameters() {
         Arguments arguments = new Arguments();
         arguments.addArgument(KAFKA_BROKER, "kafka1:9092,kafka2:9092,kafka3:9092");
-        arguments.addArgument(KAFKA_TOPIC_NAME, "xiesen");
+        arguments.addArgument(KAFKA_TOPIC_NAME, "xiesen_log");
         arguments.addArgument(DATA_TYPE, "xiesenlogavro");
         arguments.addArgument(JSON_DATA, "");
         return arguments;
