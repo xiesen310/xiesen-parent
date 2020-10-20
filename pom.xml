@@ -15,6 +15,7 @@
         <module>xiesn-mock-data-0.8</module>
         <module>xiesen-mock-jmeter</module>
         <module>consumer-avro-tools</module>
+        <module>xiesen-junit-test</module>
     </modules>
 
     <parent>
