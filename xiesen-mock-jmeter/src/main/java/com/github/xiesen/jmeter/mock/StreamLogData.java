@@ -73,9 +73,21 @@ public class StreamLogData {
     }
 
     public static void main(String[] args) {
-//        buildMsg(null, ProducerPool.getInstance("kafka1:9092,kafka2:9092,kafka3:9092").getProducer(), "xiesen");
-        for (int i = 0; i < 10; i++) {
-            System.out.println(getRandomOffset());
-        }
+        JSONObject jsonObject = new JSONObject();
+        String logTypeName = "stream_log_avro";
+        String timestamp = DateUtil.getUTCTimeStr();
+        String source = "/var/log/" + UUID.randomUUID().toString().replace("-", "") + ".log";
+        String offset = getRandomOffset();
+        Map<String, String> dimensions = getRandomDimensions();
+        Map<String, Double> measures = new HashMap<>();
+        Map<String, String> normalFields = getRandomNormalFields();
+        jsonObject.put(LogConstants.STR_LOG_TYPENAME, logTypeName);
+        jsonObject.put(LogConstants.STR_TIMESTAMP, timestamp);
+        jsonObject.put(LogConstants.STR_SOURCE, source);
+        jsonObject.put(LogConstants.STR_OFFSET, offset);
+        jsonObject.put(LogConstants.STR_DIMENSIONS, dimensions);
+        jsonObject.put(LogConstants.STR_MEASURES, measures);
+        jsonObject.put(LogConstants.STR_NORMAL_FIELDS, normalFields);
+        System.out.println(jsonObject.toJSONString());
     }
 }

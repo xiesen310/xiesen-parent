@@ -72,4 +72,8 @@ public class LogAvroMacroDef {
             "        }\n" +
             "    ]\n" +
             "}";
+
+    public static void main(String[] args) {
+        System.out.println(metadata);
+    }
 }

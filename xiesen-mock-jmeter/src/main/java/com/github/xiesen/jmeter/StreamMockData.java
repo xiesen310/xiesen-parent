@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
 import com.github.xiesen.jmeter.mock.StreamAlarmData;
+import com.github.xiesen.jmeter.mock.StreamHadoopData;
+import com.github.xiesen.jmeter.mock.StreamJsonData;
 import com.github.xiesen.jmeter.mock.StreamLogData;
 import com.github.xiesen.jmeter.util.Producer;
 import com.github.xiesen.jmeter.util.ProducerPool;
@@ -15,9 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author xiese
@@ -37,6 +37,9 @@ public class StreamMockData extends AbstractJavaSamplerClient {
     private static final String STR_METRIC_AVRO = "metricavro";
     private static final String STR_XIESEN_LOG_AVRO = "xiesenlogavro";
     private static final String STR_ALARM = "alarm";
+    private static final String STR_ALARM_PUSH = "alarmPush";
+    private static final String STR_HADOOP = "hadoop";
+    private static final String STR_STREAM_JSON = "stream_json";
 
     /**
      * kafka地址
@@ -117,6 +120,15 @@ public class StreamMockData extends AbstractJavaSamplerClient {
             case STR_ALARM:
                 StreamAlarmData.buildAlarmData(results, producer, topicName);
                 break;
+            case STR_HADOOP:
+                StreamHadoopData.buildHadoopData(results, producer, topicName);
+                break;
+            case STR_ALARM_PUSH:
+                mockAlarmPushJsonData(results, producer);
+                break;
+            case STR_STREAM_JSON:
+                StreamJsonData.buildStreamJson(results, producer, topicName);
+                break;
             default:
                 logger.error("不支持{}类型的数据", dataType);
         }
@@ -179,6 +191,34 @@ public class StreamMockData extends AbstractJavaSamplerClient {
     private void mockJsonData(SampleResult results, Producer producer, JSONObject jsonObject) {
         jsonObject.put("@timestamp", Instant.now().toString());
         jsonObject.put("offset", System.currentTimeMillis());
+        producer.sendJson(topicName, jsonObject.toJSONString());
+        results.setResponseCode("0");
+        results.setResponseData(jsonObject.toJSONString(), "UTF-8");
+        results.setDataType(SampleResult.TEXT);
+        results.setSuccessful(true);
+    }
+
+    /**
+     * 模拟告警推送 json 格式数据
+     *
+     * @param results
+     * @param producer
+     */
+    private void mockAlarmPushJsonData(SampleResult results, Producer producer) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", UUID.randomUUID());
+        jsonObject.put("alarmChannelId", new Random().nextLong());
+        jsonObject.put("appSystem", "tdx");
+        jsonObject.put("time", DateUtil.getUTCTimeStr());
+        jsonObject.put("title", "time");
+        jsonObject.put("content", "content");
+        jsonObject.put("level", 1);
+        jsonObject.put("type", 1);
+        jsonObject.put("pushResult", 1);
+        jsonObject.put("sendMode", 1);
+        jsonObject.put("recipient", "recipient");
+        jsonObject.put("contactWay", "contactWay");
+
         producer.sendJson(topicName, jsonObject.toJSONString());
         results.setResponseCode("0");
         results.setResponseData(jsonObject.toJSONString(), "UTF-8");

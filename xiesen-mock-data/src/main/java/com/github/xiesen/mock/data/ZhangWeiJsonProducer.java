@@ -133,7 +133,7 @@ public class ZhangWeiJsonProducer {
         String topic = "xiesen";
         String bootstrapServers = "zorkdata-91:9092";
         long records = 1000L;
-
+        System.out.println(buildMsg());
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
         long index = 0;
         for (index = 0; index < records; index++) {
