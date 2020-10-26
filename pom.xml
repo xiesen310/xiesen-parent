@@ -16,6 +16,7 @@
         <module>xiesen-mock-jmeter</module>
         <module>consumer-avro-tools</module>
         <module>xiesen-junit-test</module>
+        <module>xiesen-web</module>
     </modules>
 
     <parent>
