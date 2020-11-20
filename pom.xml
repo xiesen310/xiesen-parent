@@ -17,6 +17,7 @@
         <module>consumer-avro-tools</module>
         <module>xiesen-junit-test</module>
         <module>xiesen-web</module>
+        <module>xiesen-kafka</module>
     </modules>
 
     <parent>
