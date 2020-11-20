@@ -3,10 +3,7 @@ package com.github.xiesen.jmeter;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
-import com.github.xiesen.jmeter.mock.StreamAlarmData;
-import com.github.xiesen.jmeter.mock.StreamHadoopData;
-import com.github.xiesen.jmeter.mock.StreamJsonData;
-import com.github.xiesen.jmeter.mock.StreamLogData;
+import com.github.xiesen.jmeter.mock.*;
 import com.github.xiesen.jmeter.util.Producer;
 import com.github.xiesen.jmeter.util.ProducerPool;
 import org.apache.jmeter.config.Arguments;
@@ -40,6 +37,7 @@ public class StreamMockData extends AbstractJavaSamplerClient {
     private static final String STR_ALARM_PUSH = "alarmPush";
     private static final String STR_HADOOP = "hadoop";
     private static final String STR_STREAM_JSON = "stream_json";
+    private static final String STR_OPEN_FALCON = "open_falcon";
 
     /**
      * kafka地址
@@ -129,6 +127,9 @@ public class StreamMockData extends AbstractJavaSamplerClient {
             case STR_STREAM_JSON:
                 StreamJsonData.buildStreamJson(results, producer, topicName);
                 break;
+            case STR_OPEN_FALCON:
+                Alarm2OpenFalconData.buildAlarm2OpenFalcon(results, producer, topicName);
+                break;
             default:
                 logger.error("不支持{}类型的数据", dataType);
         }
@@ -172,9 +173,12 @@ public class StreamMockData extends AbstractJavaSamplerClient {
         String source = jsonObject.get("source").toString();
         String offset = jsonObject.get("offset").toString();
         Map<String, Double> metrics = JSONObject.parseObject(JSON.toJSONString(jsonObject.get("measures")), Map.class);
-        Map<String, String> dimensions = JSONObject.parseObject(JSON.toJSONString(jsonObject.get("dimensions")), Map.class);
-        Map<String, String> normalFields = JSONObject.parseObject(JSON.toJSONString(jsonObject.get("normalFields")), Map.class);
-        producer.sendLogAvro(topicName, logTypeName, DateUtil.getUTCTimeStr(), source, offset, dimensions, metrics, normalFields);
+        Map<String, String> dimensions = JSONObject.parseObject(JSON.toJSONString(jsonObject.get("dimensions")),
+                Map.class);
+        Map<String, String> normalFields = JSONObject.parseObject(JSON.toJSONString(jsonObject.get("normalFields")),
+                Map.class);
+        producer.sendLogAvro(topicName, logTypeName, DateUtil.getUTCTimeStr(), source, offset, dimensions, metrics,
+                normalFields);
         results.setResponseCode("0");
         results.setResponseData(jsonObject.toJSONString(), "UTF-8");
         results.setDataType(SampleResult.TEXT);
