@@ -36,6 +36,7 @@ public class StreamMockData extends AbstractJavaSamplerClient {
     private static final String STR_ALARM = "alarm";
     private static final String STR_ALARM_PUSH = "alarmPush";
     private static final String STR_HADOOP = "hadoop";
+    private static final String STR_TEST_HADOOP = "test_hadoop";
     private static final String STR_STREAM_JSON = "stream_json";
     private static final String STR_OPEN_FALCON = "open_falcon";
 
@@ -69,8 +70,8 @@ public class StreamMockData extends AbstractJavaSamplerClient {
     public Arguments getDefaultParameters() {
         Arguments arguments = new Arguments();
         arguments.addArgument(KAFKA_BROKER, "kafka1:9092,kafka2:9092,kafka3:9092");
-        arguments.addArgument(KAFKA_TOPIC_NAME, "xiesen_log");
-        arguments.addArgument(DATA_TYPE, "xiesenlogavro");
+        arguments.addArgument(KAFKA_TOPIC_NAME, "test");
+        arguments.addArgument(DATA_TYPE, STR_TEST_HADOOP);
         arguments.addArgument(JSON_DATA, "");
         return arguments;
     }
@@ -101,7 +102,11 @@ public class StreamMockData extends AbstractJavaSamplerClient {
     public SampleResult runTest(JavaSamplerContext javaSamplerContext) {
         SampleResult results = new SampleResult();
         Producer producer = ProducerPool.getInstance(kafkaAddress).getProducer();
-        JSONObject jsonObject = JSON.parseObject(jsonData);
+        JSONObject jsonObject = null;
+        if (jsonData != null) {
+            jsonObject = JSON.parseObject(jsonData);
+            System.out.println(jsonObject);
+        }
         switch (dataType) {
             case STR_JSON:
                 mockJsonData(results, producer, jsonObject);
@@ -120,6 +125,9 @@ public class StreamMockData extends AbstractJavaSamplerClient {
                 break;
             case STR_HADOOP:
                 StreamHadoopData.buildHadoopData(results, producer, topicName);
+                break;
+            case STR_TEST_HADOOP:
+                StreamHadoopDataTest.buildHadoopData(results, producer, topicName, jsonObject);
                 break;
             case STR_ALARM_PUSH:
                 mockAlarmPushJsonData(results, producer);

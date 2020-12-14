@@ -18,6 +18,7 @@
         <module>xiesen-junit-test</module>
         <module>xiesen-web</module>
         <module>xiesen-kafka</module>
+        <module>xiesen-elasticsearch6</module>
     </modules>
 
     <parent>
