@@ -5,7 +5,6 @@ import org.joda.time.DateTime;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -16,6 +15,7 @@ import java.util.Date;
  */
 public class DateUtil {
     private static DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+08:00");
+    private static DateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     private static DateFormat format1 = new SimpleDateFormat("yyyyMMdd");
 
     private static ThreadLocal<SimpleDateFormat> sdf = new ThreadLocal<SimpleDateFormat>() {
@@ -52,6 +52,10 @@ public class DateUtil {
         return format.format(new Date()).toString();
     }
 
+    public static String getParseTimeStr() {
+        return parseFormat.format(new Date()).toString();
+    }
+
     public static String getDate() {
         return String.valueOf(format1.format(new Date()));
     }
@@ -76,5 +80,7 @@ public class DateUtil {
         Date date = sdf.parse(timeStr);
         System.out.println(date);
         System.out.println(date.getTime());
+
+        System.out.println(getParseTimeStr());
     }
 }

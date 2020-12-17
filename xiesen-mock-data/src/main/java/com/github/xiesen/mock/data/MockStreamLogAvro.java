@@ -46,7 +46,8 @@ public class MockStreamLogAvro {
      * @return
      */
     public static String printData(String logTypeName, String timestamp, String source, String offset,
-                                   Map<String, String> dimensions, Map<String, Double> metrics, Map<String, String> normalFields) {
+                                   Map<String, String> dimensions, Map<String, Double> metrics,
+                                   Map<String, String> normalFields) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("logTypeName", logTypeName);
         jsonObject.put("timestamp", timestamp);
@@ -114,8 +115,8 @@ public class MockStreamLogAvro {
             Map<String, String> normalFields = getRandomNormalFields();
 
             System.out.println(printData(logTypeName, timestamp, source, offset, dimensions, measures, normalFields));
-//            CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
-//            producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
+            CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
+            producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
             Thread.sleep(2000);
         }
         Thread.sleep(1000);
