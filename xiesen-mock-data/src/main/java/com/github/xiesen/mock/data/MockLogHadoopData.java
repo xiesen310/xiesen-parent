@@ -1,4 +1,4 @@
-package com.github.xiesen.kafka08.mock;
+package com.github.xiesen.mock.data;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.avro.AvroSerializerFactory;
