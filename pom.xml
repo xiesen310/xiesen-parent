@@ -19,6 +19,7 @@
         <module>xiesen-web</module>
         <module>xiesen-kafka</module>
         <module>xiesen-elasticsearch6</module>
+        <module>xiesen-algorithm</module>
     </modules>
 
     <parent>
