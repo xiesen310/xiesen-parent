@@ -88,7 +88,7 @@ public class MockParseLogData {
         tagsArray.add("beats_input_codec_plain_applied");
 
         bigJson.put("tags", tagsArray);
-//        bigJson.put("servicename", "lmt模块");
+        bigJson.put("servicename", "lmt模块");
 
         JSONObject logJson = new JSONObject();
         JSONObject fileJson = new JSONObject();

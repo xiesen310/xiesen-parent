@@ -1,20 +1,26 @@
-package com.github.xiesen.mock.data;
+package com.github.xiesen.algorithm;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.github.xiesen.common.utils.DateUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
 /**
- * @author xiese
- * @Description 模拟 stream 告警数据
+ * @author 谢森
+ * @Description test
  * @Email xiesen310@163.com
- * @Date 2020/7/10 14:39
+ * @Date 2020/12/18 19:21
  */
-public class MockStreamAlarmData {
-    public static String buildAlarmJson() {
+public class TestAlarm2EsId {
+    public static void main(String[] args) {
+        Map<String, Object> map = buildAlarmJson();
+        System.out.println(JSON.toJSONString(map).toString());
+        System.out.println(EsIdGenerate.xxHashAlarm2es(map));
+    }
+
+    public static Map<String, Object> buildAlarmJson() {
         Random random = new Random();
         int i = random.nextInt(10);
         JSONObject alarmJson = new JSONObject();
@@ -23,7 +29,7 @@ public class MockStreamAlarmData {
         alarmJson.put("metricSetName", "cpu_system_metricbeat");
         alarmJson.put("severity", i * 3);
         alarmJson.put("status", "PROBLEM");
-        alarmJson.put("timestamp", DateUtil.getUTCTimeStr());
+        alarmJson.put("timestamp", String.valueOf(System.currentTimeMillis()));
         String extFields = "{\n" +
                 "        \"uuid\":\"2a094fd38e894de485ae09820bf5a08c\",\n" +
                 "        \"sourSystem\":\"1\",\n" +
@@ -41,7 +47,9 @@ public class MockStreamAlarmData {
                 "        \"alarmDetailType\":\"1\",\n" +
                 "        \"revUsers\":\"[]\"\n" +
                 "    }";
-        String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ /\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
+        String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ " +
+                "/\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND " +
+                "time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
         JSONObject extFieldsJson = JSONObject.parseObject(extFields);
         extFieldsJson.put("searchSentence", searchSentence);
         alarmJson.put("extFields", extFieldsJson);
@@ -61,17 +69,9 @@ public class MockStreamAlarmData {
             }
             alarmJson.put("content", str.toString());
         }
-        return alarmJson.toJSONString();
+
+        return JSON.parseObject(alarmJson.toJSONString(), Map.class);
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        long size = 10000000L * 1;
-        for (int i = 0; i < size; i++) {
-            String json = buildAlarmJson();
-            System.out.println(json);
-//            CustomerProducer producer = ProducerPool.getInstance("config.properties").getProducer();
-//            producer.sendJsonLog(json);
-        }
-        Thread.sleep(1000);
-    }
+
 }

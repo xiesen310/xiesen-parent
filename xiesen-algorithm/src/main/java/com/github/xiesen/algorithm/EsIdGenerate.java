@@ -1,6 +1,7 @@
 package com.github.xiesen.algorithm;
 
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.algorithm.constants.AlarmConstants;
 import com.github.xiesen.algorithm.xxhash.AbstractLongHashFunction;
 import org.apache.commons.lang3.StringUtils;
@@ -15,31 +16,24 @@ import java.util.Map;
  */
 public class EsIdGenerate {
 
+    public static boolean isNotEmpty(Map<?, ?> map) {
+        return null != map && false == map.isEmpty();
+    }
 
     /**
      * xxhash alarm push
+     * 拿出所有数据转json来生成一个 id.
      *
-     * @param map
+     * @param map 数据
      * @return
      */
     public static String xxHashAlarmPush2es(Map<String, Object> map) {
-        StringBuilder builder = new StringBuilder();
-        if (map.containsKey(AlarmConstants.ID)) {
-            builder.append(map.get(AlarmConstants.ID));
+        String s = "";
+        if (isNotEmpty(map)) {
+            s = JSONObject.toJSONString(map);
         }
 
-        if (map.containsKey(AlarmConstants.APP_SYSTEM)) {
-            builder.append(map.get(AlarmConstants.APP_SYSTEM));
-        }
-
-        if (map.containsKey(AlarmConstants.ALARM_CHANNEL_ID)) {
-            builder.append(map.get(AlarmConstants.ALARM_CHANNEL_ID));
-        }
-
-        if (map.containsKey(AlarmConstants.STR_TIME)) {
-            builder.append(map.get(AlarmConstants.STR_TIME));
-        }
-        long l = AbstractLongHashFunction.xx().hashChars(builder.toString());
+        long l = AbstractLongHashFunction.xx().hashChars(s);
         String id = Long.toString(l, 16);
         return id;
     }
@@ -64,10 +58,18 @@ public class EsIdGenerate {
             builder.append(map.get(AlarmConstants.STATUS));
         }
 
+        if (map.containsKey(AlarmConstants.CONTENT)) {
+            builder.append(map.get(AlarmConstants.CONTENT));
+        }
+
         if (map.containsKey(AlarmConstants.EXT_FIELDS)) {
             Map<String, String> extFields = (Map<String, String>) map.get(AlarmConstants.EXT_FIELDS);
             if (extFields != null && extFields.containsKey(AlarmConstants.EXPRESSION_ID)) {
                 builder.append(extFields.get(AlarmConstants.EXPRESSION_ID));
+            }
+
+            if (extFields != null && extFields.containsKey(AlarmConstants.MERGE_TAG)) {
+                builder.append(extFields.get(AlarmConstants.MERGE_TAG));
             }
 
             if (extFields != null && extFields.containsKey(AlarmConstants.ALARM_TIME)) {
@@ -97,14 +99,15 @@ public class EsIdGenerate {
      * xx hash log2es
      *
      * @param timestamp   时间戳
-     * @param source      数据源目录
-     * @param offset      offset
-     * @param appSystem   系统简称
+     * @param source      日志路径
+     * @param offset      日志偏移量
+     * @param appSystem   系统名称
      * @param logTypeName 日志集名称
+     * @param hostname    主机名
      * @return
      */
     public static String xxHashLog2es(String timestamp, String source, Long offset, String appSystem,
-                                      String logTypeName) {
+                                      String logTypeName, String hostname) {
         StringBuilder builder = new StringBuilder();
         if (StringUtils.isNotEmpty(timestamp)) {
             builder.append(timestamp);
@@ -125,10 +128,13 @@ public class EsIdGenerate {
             builder.append(logTypeName);
         }
 
+        if (StringUtils.isNotEmpty(hostname)) {
+            builder.append(hostname);
+        }
+
         long l = AbstractLongHashFunction.xx().hashChars(builder.toString());
         String id = Long.toString(l, 16);
         return id;
     }
-
 
 }

@@ -231,6 +231,7 @@ public class StreamMockData extends AbstractJavaSamplerClient {
         jsonObject.put("recipient", "recipient");
         jsonObject.put("contactWay", "contactWay");
 
+        System.out.println(jsonObject);
         producer.sendJson(topicName, jsonObject.toJSONString());
         results.setResponseCode("0");
         results.setResponseData(jsonObject.toJSONString(), "UTF-8");
@@ -246,6 +247,10 @@ public class StreamMockData extends AbstractJavaSamplerClient {
      */
     @Override
     public void teardownTest(JavaSamplerContext args) {
+    }
 
+    public static void main(String[] args) {
+        StreamMockData mockData = new StreamMockData();
+        mockData.mockAlarmPushJsonData(null,null);
     }
 }

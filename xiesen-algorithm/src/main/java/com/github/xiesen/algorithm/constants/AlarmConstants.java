@@ -28,6 +28,8 @@ public interface AlarmConstants {
     String ALARM_TIME = "alarmtime";
     String EXPRESSION_ID = "expressionId";
 
+    String MERGE_TAG = "mergeTag";
+
     /**
      * 告警推送相关
      */
