@@ -6,6 +6,7 @@ import com.github.xiesen.common.utils.PropertiesUtil;
 import com.github.xiesen.common.utils.StringUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
+import org.joda.time.DateTime;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -92,6 +93,8 @@ public class MockStreamLogAvro {
         Map<String, String> normalFields = new HashMap<>();
         normalFields.put("message", "data update success");
         normalFields.put("countryCode", getRandomCountryCode());
+        normalFields.put("collection_time", String.valueOf(new DateTime()));
+//        normalFields.put("collection_time", "xiesen");
         return normalFields;
     }
 
