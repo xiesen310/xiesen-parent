@@ -19,7 +19,7 @@ public class MockShaojiaoLogAvro {
     private static Map<String, String> getRandomDimensions() {
         Random random = new Random();
         Map<String, String> dimensions = new HashMap<>(4);
-        dimensions.put("hostname", "DVJTY4-WEB406-shaojiao11");
+        dimensions.put("hostname", "DVJTY4-WEB406-shaojiao12");
         dimensions.put("appprogramname", "DVJTY4-WEB406_80");
         dimensions.put("servicecode", "WEB");
         dimensions.put("clustername", "nginx");

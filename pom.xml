@@ -20,6 +20,7 @@
         <module>xiesen-kafka</module>
         <module>xiesen-elasticsearch6</module>
         <module>xiesen-algorithm</module>
+        <module>xiesen-kudu</module>
     </modules>
 
     <parent>
