@@ -8,8 +8,6 @@ import org.apache.kudu.client.KuduClient;
 import org.apache.kudu.client.KuduException;
 import org.apache.kudu.shaded.com.google.common.collect.ImmutableList;
 import org.apache.kudu.shaded.com.google.common.collect.Lists;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -21,15 +19,25 @@ import java.util.List;
  */
 public class KuduTestMain {
     private static final String KUDU_MASTERS = "cdh-4:7051";
-    private static final Logger logger = LoggerFactory.getLogger(KuduTestMain.class);
+    public static final String KUDU_TABLE_NAME = "streamx_kudu_sink";
 
     public static void main(String[] args) throws KuduException {
         KuduClient kuduClient = new KuduClient.KuduClientBuilder(KUDU_MASTERS).build();
-        createExampleTable(kuduClient, "kudu_test");
-//        createExample2Table(kuduClient, "kudu_test2");
-//        alterTableAddColumn(kuduClient, "kudu_test2", "domain_id_default", Type.INT32);
-//        alterTableDeleteColumn(kuduClient, "kudu_test2", "domain_id_default");
+        createExampleTable(kuduClient, KUDU_TABLE_NAME);
+//        deleteTable(kuduClient, KUDU_TABLE_NAME);
         kuduClient.close();
+    }
+
+    static boolean deleteTable(KuduClient client, String tableName) {
+        boolean flag = false;
+        try {
+            client.deleteTable(tableName);
+            System.out.println("删除表 " + tableName + " 成功");
+            flag = true;
+        } catch (KuduException e) {
+            System.out.println("删除表 " + tableName + " 失败,原因为: " + e.getMessage());
+        }
+        return flag;
     }
 
     /**
@@ -42,15 +50,18 @@ public class KuduTestMain {
      * @throws KuduException
      */
     static void createExampleTable(KuduClient client, String tableName) throws KuduException {
+        deleteTable(client, tableName);
         List<ColumnSchema> columnSchemas = Lists.newArrayList();
-        columnSchemas.add(new ColumnSchema.ColumnSchemaBuilder("id", Type.STRING).key(true).build());
-        columnSchemas.add(new ColumnSchema.ColumnSchemaBuilder("app", Type.INT8).build());
+        columnSchemas.add(new ColumnSchema.ColumnSchemaBuilder("uuid", Type.STRING).key(true).build());
+        columnSchemas.add(new ColumnSchema.ColumnSchemaBuilder("id", Type.STRING).build());
+        columnSchemas.add(new ColumnSchema.ColumnSchemaBuilder("name", Type.STRING).build());
+        columnSchemas.add(new ColumnSchema.ColumnSchemaBuilder("address", Type.STRING).build());
         Schema schema = new Schema(columnSchemas);
-        ImmutableList<String> hashKeys = ImmutableList.of("id");
+        ImmutableList<String> hashKeys = ImmutableList.of("uuid");
         CreateTableOptions cto = new CreateTableOptions();
         cto.addHashPartitions(hashKeys, 2);
         cto.setNumReplicas(1);
         client.createTable(tableName, schema, cto);
-        System.out.println("Create table " + tableName);
+        System.out.println("Create table " + tableName + " success");
     }
 }

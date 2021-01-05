@@ -48,4 +48,8 @@ public class MetricAvroMacroDef {
             "        }\n" +
             "    ]\n" +
             "}";
+
+    public static void main(String[] args) {
+        System.out.println(metadata);
+    }
 }
