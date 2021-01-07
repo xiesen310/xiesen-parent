@@ -1,8 +1,6 @@
 package com.github.xiesen.mock.data;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.github.xiesen.common.utils.DateUtil;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -10,15 +8,44 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
+import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author 谢森
- * @Description 模拟解析格式数据
+ * @Description 模拟 kudu sink 数据
  * @Email xiesen310@163.com
  * @Date 2020/12/14 13:21
  */
-public class MockParseLogData {
+public class MockHbaseSinkJsonData {
+    private static final String[] IDS = new String[]{"AO", "AF", "AL", "DZ", "AD", "AI", "AG", "AR", "AM", "AU", "AT"
+            , "AZ", "BS", "BH",
+            "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BO", "BW", "BR", "BN", "BG", "BF", "MM", "BI", "CM", "CA", "CF"
+            , "TD", "CL", "CN", "CO", "CG", "CK", "CR", "CU", "CY", "CZ", "DK", "DJ", "DO", "EC", "EG", "SV", "EE",
+            "ET", "FJ", "FI", "FR", "GF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GD", "GU", "GT", "GN", "GY", "HT"
+            , "HN", "HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IL", "IT", "JM", "JP", "JO", "KH", "KZ", "KE",
+            "KR", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MG", "MW", "MY", "MV", "ML"
+            , "MT", "MU", "MX", "MD", "MC", "MN", "MS", "MA", "MZ", "NA", "NR", "NP", "NL", "NZ", "NI", "NE", "NG",
+            "KP", "NO", "OM", "PK", "PA", "PG", "PY", "PE", "PH", "PL", "PF", "PT", "PR", "QA", "RO", "RU", "LC", "VC"
+            , "SM", "ST", "SA", "SN", "SC", "SL", "SG", "SK", "SI", "SB", "SO", "ZA", "ES", "LK", "SD", "SR", "SZ",
+            "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TG", "TO", "TT", "TN", "TR", "TM", "UG", "UA", "AE", "GB", "US"
+            , "UY", "UZ", "VE", "VN", "YE", "YU", "ZW", "ZR", "ZM"};
+
+    private static final String[] NAMES = new String[]{"闫明", "苏岩", "朱志刚", "朱明磊", "刘阿康", "宋倩倩", "荣权", "宋志鹏",
+            "王帝", "崔武", "尹丹丽"};
+
+    private String getRandomCountryCode() {
+        return IDS[new Random().nextInt(IDS.length)];
+    }
+
+    private String getRandomName() {
+        return NAMES[new Random().nextInt(NAMES.length)];
+    }
+
+    private String getRandomAddress() {
+        return "步行街" + new Random().nextInt(1000) + "号";
+    }
 
     /**
      * kafka producer
@@ -55,61 +82,18 @@ public class MockParseLogData {
         return new KafkaProducer<>(props);
     }
 
-    public static String buildMsg() {
+
+    /**
+     * {"country_code":"TW","name":"荣权","id":"635a273a-333d-4d77-b903-327c103a4bb3","age":41}
+     *
+     * @return
+     */
+    public String buildMsg() {
         JSONObject bigJson = new JSONObject();
-        String hostname = "yf120";
-
-        JSONObject hostJson = new JSONObject();
-        hostJson.put("name", hostname);
-        bigJson.put("host", hostJson);
-
-        bigJson.put("topicname", "ods_default_log");
-        bigJson.put("clustername", "基础监控");
-        bigJson.put("message", "[CST Dec 14 13:31:00] error    : Alert handler failed, retry scheduled for next cycle");
-        bigJson.put("ip", "192.168.70.120");
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("type", "log");
-        bigJson.put("input", inputJson);
-
-        bigJson.put("servicecode", "lmt模块");
-        bigJson.put("appprogramname", "lmt模块");
-        bigJson.put("@version", "1");
-
-        JSONObject agentJson = new JSONObject();
-        agentJson.put("hostname", hostname);
-        agentJson.put("ephemeral_id", "e955e2aa-4627-400e-a51c-2abbb7367e41");
-        agentJson.put("id", "59ecdfa2-5be4-4021-9653-c1124aecb7d7");
-        agentJson.put("version", "7.4.0");
-        agentJson.put("type", "filebeat");
-
-        bigJson.put("agent", agentJson);
-
-        JSONArray tagsArray = new JSONArray();
-        tagsArray.add("beats_input_codec_plain_applied");
-
-        bigJson.put("tags", tagsArray);
-        bigJson.put("servicename", "lmt模块");
-
-        JSONObject logJson = new JSONObject();
-        JSONObject fileJson = new JSONObject();
-        fileJson.put("path", "/var/log/monit.log");
-        logJson.put("file", fileJson);
-        logJson.put("offset", 938284);
-
-        bigJson.put("log", logJson);
-        bigJson.put("appsystem", "dev_test");
-        bigJson.put("collectruleid", 2);
-
-
-        JSONObject ecsJson = new JSONObject();
-        ecsJson.put("version", "1.1.0");
-        bigJson.put("ecs", ecsJson);
-
-        bigJson.put("collecttime", DateUtil.getUTCTimeStr());
-        bigJson.put("transtime", DateUtil.getUTCTimeStr());
-        bigJson.put("@timestamp", DateUtil.getUTCTimeStr());
-        bigJson.put("transip", "192.168.70.120");
-
+        bigJson.put("id", UUID.randomUUID());
+        bigJson.put("name", getRandomName());
+        bigJson.put("age", new Random().nextInt(100));
+        bigJson.put("country_code", getRandomCountryCode());
         return bigJson.toJSONString();
     }
 
@@ -136,16 +120,15 @@ public class MockParseLogData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "xiesen";
+        String topic = "user-source";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        long records = 10000L;
-
-        System.out.println(buildMsg());
+        long records = 1000L;
+        MockHbaseSinkJsonData data = new MockHbaseSinkJsonData();
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
         for (long index = 0; index < records; index++) {
-            String message = buildMsg();
+            String message = data.buildMsg();
             System.out.println(message);
             send(producer, topic, message);
             TimeUnit.SECONDS.sleep(1);

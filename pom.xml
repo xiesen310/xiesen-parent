@@ -21,6 +21,9 @@
         <module>xiesen-elasticsearch6</module>
         <module>xiesen-algorithm</module>
         <module>xiesen-kudu</module>
+        <module>xiesen-hbase</module>
+        <module>xiesen-redis</module>
+        <module>xiesen-sqlserver</module>
     </modules>
 
     <parent>
