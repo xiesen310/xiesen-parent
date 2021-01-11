@@ -1,5 +1,6 @@
 package com.github.xiesen.mock.data;
 
+import com.github.xiesen.common.utils.DateUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
 import org.mortbay.util.ajax.JSON;
@@ -40,7 +41,7 @@ public class MockShaojiaoLogAvro {
                 "/gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ" +
                 "%3D%3D HTTP/1.1\" 200 872 ");
 //        normalFields.put("collecttime", DateUtil.getUTCTimeStr());
-        normalFields.put("collecttime", "2020-12-30T16:27:22.610+08:00");
+        normalFields.put("collecttime", "aaa");
         return normalFields;
     }
 
@@ -49,8 +50,8 @@ public class MockShaojiaoLogAvro {
         long size = 1000000L * 1;
         for (int i = 0; i < size; i++) {
             String logTypeName = "default_analysis_template";
-//            String timestamp = DateUtil.getUTCTimeStr();
-            String timestamp = "2020-12-30T16:27:22.610+08:00";
+            String timestamp = DateUtil.getUTCTimeStr();
+//            String timestamp = "2020-12-30T16:27:22.610+08:00";
             String source = "/var/log/nginx/access.log";
             String offset = "351870827";
 

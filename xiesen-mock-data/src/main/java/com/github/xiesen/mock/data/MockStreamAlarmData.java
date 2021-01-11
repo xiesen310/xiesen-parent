@@ -2,6 +2,8 @@ package com.github.xiesen.mock.data;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
+import com.github.xiesen.mock.util.CustomerProducer;
+import com.github.xiesen.mock.util.ProducerPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,13 +37,15 @@ public class MockStreamAlarmData {
                 "        \"alarmWay\":\"2,2,2\",\n" +
                 "        \"successFlag\":\"1\",\n" +
                 "        \"expressionId\":\"2\",\n" +
-                "        \"alarmtime\":\"2020-07-08T20:02:00.000+08:00\",\n" +
+                "        \"alarmtime\":\"sss2020-07-08T20:02:00.000+08:00\",\n" +
                 "        \"calenderId\":\"1\",\n" +
                 "        \"reciTime\":\"1594209785705\",\n" +
                 "        \"alarmDetailType\":\"1\",\n" +
                 "        \"revUsers\":\"[]\"\n" +
                 "    }";
-        String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ /\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
+        String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ " +
+                "/\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND " +
+                "time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
         JSONObject extFieldsJson = JSONObject.parseObject(extFields);
         extFieldsJson.put("searchSentence", searchSentence);
         alarmJson.put("extFields", extFieldsJson);
@@ -69,8 +73,11 @@ public class MockStreamAlarmData {
         for (int i = 0; i < size; i++) {
             String json = buildAlarmJson();
             System.out.println(json);
-//            CustomerProducer producer = ProducerPool.getInstance("config.properties").getProducer();
-//            producer.sendJsonLog(json);
+            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
+                    "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+
+            producer.sendJsonLog(json);
+            Thread.sleep(1000);
         }
         Thread.sleep(1000);
     }
