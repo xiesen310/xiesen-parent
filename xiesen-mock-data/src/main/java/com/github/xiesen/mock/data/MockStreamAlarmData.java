@@ -37,7 +37,7 @@ public class MockStreamAlarmData {
                 "        \"alarmWay\":\"2,2,2\",\n" +
                 "        \"successFlag\":\"1\",\n" +
                 "        \"expressionId\":\"2\",\n" +
-                "        \"alarmtime\":\"sss2020-07-08T20:02:00.000+08:00\",\n" +
+                "        \"alarmtime\":\"2020-07-08T20:02:00.000+08:00\",\n" +
                 "        \"calenderId\":\"1\",\n" +
                 "        \"reciTime\":\"1594209785705\",\n" +
                 "        \"alarmDetailType\":\"1\",\n" +

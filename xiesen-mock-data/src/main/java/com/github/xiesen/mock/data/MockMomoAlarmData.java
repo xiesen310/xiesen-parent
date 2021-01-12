@@ -1,6 +1,5 @@
 package com.github.xiesen.mock.data;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
 import org.apache.kafka.clients.producer.Callback;
@@ -9,7 +8,10 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -18,7 +20,7 @@ import java.util.concurrent.TimeUnit;
  * @Email xiesen310@163.com
  * @Date 2020/12/14 13:21
  */
-public class MockParseLogData {
+public class MockMomoAlarmData {
 
     /**
      * kafka producer
@@ -56,61 +58,53 @@ public class MockParseLogData {
     }
 
     public static String buildMsg() {
-        JSONObject bigJson = new JSONObject();
-        String hostname = "yf12011111";
+        Random random = new Random();
+        JSONObject alarmJson = new JSONObject();
+        alarmJson.put("alarmTypeName", "alarm_metric");
+        alarmJson.put("expressionId", 1);
+        alarmJson.put("metricSetName", "cpu_system_metricbeat");
+        alarmJson.put("severity", 1);
+        alarmJson.put("status", "PROBLEM");
+        alarmJson.put("timestamp", "2021-01-12T17:01:47.572+08:00");
 
-        JSONObject hostJson = new JSONObject();
-        hostJson.put("name", hostname);
-        bigJson.put("host", hostJson);
-
-        bigJson.put("topicname", "ods_default_log");
-        bigJson.put("clustername", "基础监控");
-        bigJson.put("message", "[CST Dec 14 13:31:00] error    : Alert handler failed, retry scheduled for next cycle");
-//        bigJson.put("ip", "192.168.70.120");
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("type", "log");
-        bigJson.put("input", inputJson);
-
-        bigJson.put("servicecode", "lmt模块");
-        bigJson.put("appprogramname", "lmt模块");
-        bigJson.put("@version", "1");
-
-        JSONObject agentJson = new JSONObject();
-        agentJson.put("hostname", hostname);
-        agentJson.put("ephemeral_id", "e955e2aa-4627-400e-a51c-2abbb7367e41");
-        agentJson.put("id", "59ecdfa2-5be4-4021-9653-c1124aecb7d7");
-        agentJson.put("version", "7.4.0");
-        agentJson.put("type", "filebeat");
-
-        bigJson.put("agent", agentJson);
-
-        JSONArray tagsArray = new JSONArray();
-        tagsArray.add("beats_input_codec_plain_applied");
-
-        bigJson.put("tags", tagsArray);
-        bigJson.put("servicename", "lmt模块");
-
-        JSONObject logJson = new JSONObject();
-        JSONObject fileJson = new JSONObject();
-        fileJson.put("path", "/var/log/monit.log");
-        logJson.put("file", fileJson);
-        logJson.put("offset", 938284);
-
-        bigJson.put("log", logJson);
-        bigJson.put("appsystem", "dev_test");
-        bigJson.put("collectruleid", 2);
-
-
-        JSONObject ecsJson = new JSONObject();
-        ecsJson.put("version", "1.1.0");
-        bigJson.put("ecs", ecsJson);
-
-        bigJson.put("collecttime", DateUtil.getUTCTimeStr());
-        bigJson.put("transtime", DateUtil.getUTCTimeStr());
-        bigJson.put("@timestamp", DateUtil.getUTCTimeStr());
-        bigJson.put("transip", "192.168.70.120");
-
-        return bigJson.toJSONString();
+        String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ " +
+                "/\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND " +
+                "time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
+        JSONObject extFieldsJson = new JSONObject();
+        extFieldsJson.put("uuid", "2a094fd38e894de485ae09820bf5a08c");
+        extFieldsJson.put("sourSystem", "1");
+        extFieldsJson.put("actionID", "0");
+        extFieldsJson.put("mergeTag", "1");
+        extFieldsJson.put("connectId", "2a094fd38e894de485ae09820bf5a08c");
+        extFieldsJson.put("eventNum", "2");
+        extFieldsJson.put("alarmSuppress", "alarmSuppress");
+        extFieldsJson.put("alarmWay", "2,2,2");
+        extFieldsJson.put("successFlag", "1");
+        extFieldsJson.put("expressionId", "2");
+        extFieldsJson.put("alarmtime", DateUtil.getUTCTimeStr());
+        extFieldsJson.put("calenderId", "1");
+        extFieldsJson.put("reciTime", "1594209785705");
+        extFieldsJson.put("alarmDetailType", "1");
+        extFieldsJson.put("revUsers", "[]");
+        extFieldsJson.put("searchSentence", searchSentence);
+        alarmJson.put("extFields", extFieldsJson);
+        Map<String, Object> sourceMap = new HashMap<>(4);
+        sourceMap.put("hostname", "zorkdata1");
+        sourceMap.put("ip", "192.168.1.1");
+        sourceMap.put("sourSystem", 1);
+        sourceMap.put("appsystem", "tdx");
+        alarmJson.put("sources", sourceMap);
+        String title = "192.168.1.1 指标告警";
+        alarmJson.put("title", title);
+        if (alarmJson.toJSONString().getBytes().length < 1024) {
+            int content = 1011 - alarmJson.toJSONString().getBytes().length;
+            StringBuilder str = new StringBuilder();
+            for (int j = 0; j < content; j++) {
+                str.append("a");
+            }
+            alarmJson.put("content", str.toString());
+        }
+        return alarmJson.toJSONString();
     }
 
     /**

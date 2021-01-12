@@ -152,7 +152,7 @@ public class MockParseMetricData {
     public static void main(String[] args) throws InterruptedException {
         String topic = "xiesen_metric";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        long records = 10L;
+        long records = 10000L;
 
         System.out.println(buildMsg());
 
