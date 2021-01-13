@@ -9,6 +9,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @Email xiesen310@163.com
  * @Date 2020/12/14 13:21
  */
-public class MockSqlServerSinkJsonData {
+public class MockElasticsearchSinkJsonData {
     private static final String[] IDS = new String[]{"AO", "AF", "AL", "DZ", "AD", "AI", "AG", "AR", "AM", "AU", "AT"
             , "AZ", "BS", "BH",
             "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BO", "BW", "BR", "BN", "BG", "BF", "MM", "BI", "CM", "CA", "CF"
@@ -89,7 +90,7 @@ public class MockSqlServerSinkJsonData {
      */
     public String buildMsg() {
         JSONObject bigJson = new JSONObject();
-        bigJson.put("id", getRandomCountryCode());
+        bigJson.put("id", UUID.randomUUID());
         bigJson.put("name", getRandomName());
         bigJson.put("age", new Random().nextInt(100));
         bigJson.put("country_code", getRandomCountryCode());
@@ -122,7 +123,7 @@ public class MockSqlServerSinkJsonData {
         String topic = "user-source";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 1000L;
-        MockSqlServerSinkJsonData data = new MockSqlServerSinkJsonData();
+        MockElasticsearchSinkJsonData data = new MockElasticsearchSinkJsonData();
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 

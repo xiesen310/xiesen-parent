@@ -1,7 +1,6 @@
 package com.github.xiesen.junit.test;
 
-import java.util.Collections;
-import java.util.List;
+import cn.hutool.core.date.DateTime;
 
 /**
  * @author 谢森
@@ -11,8 +10,8 @@ import java.util.List;
  */
 public class Test1 {
     public static void main(String[] args) {
-        List<String> list = null;
-        Collections.sort(list);
-        Collections.reverse(list);
+        System.out.println(new DateTime());
     }
+
+
 }
