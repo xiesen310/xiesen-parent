@@ -36,7 +36,7 @@ public class MockTestMetricAvro {
         Map<String, String> dimensions = new HashMap<>(4);
         dimensions.put("hostname", "DVJTY4-WEB406");
         dimensions.put("appprogramname", "DVJTY4-WEB406_80");
-        dimensions.put("appsystem", "tdx");
+        dimensions.put("appsystem", "dev_test");
         dimensions.put("ip", "192.168.1.1");
         return dimensions;
     }

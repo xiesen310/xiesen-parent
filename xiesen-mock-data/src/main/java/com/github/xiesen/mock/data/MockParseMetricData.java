@@ -67,6 +67,7 @@ public class MockParseMetricData {
 
         JSONObject systemObject = new JSONObject();
         JSONObject coreObject = new JSONObject();
+        coreObject.put("user_pct", 1.1);
         coreObject.put("irq", new JSONObject().put("pct", 0));
         coreObject.put("softirq", new JSONObject().put("pct", 0.0517));
         coreObject.put("system", new JSONObject().put("pct", 0.0176));
@@ -150,8 +151,9 @@ public class MockParseMetricData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "xiesen_metric";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String topic = "ods_all_metric";
+        String bootstrapServers = "autotest-1:9092,autotest-2:9092,autotest-3:9092";
+//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 10000L;
 
         System.out.println(buildMsg());

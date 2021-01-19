@@ -1,7 +1,5 @@
 package com.github.xiesen.junit.test;
 
-import cn.hutool.core.date.DateTime;
-
 /**
  * @author 谢森
  * @Description Test1
@@ -10,8 +8,26 @@ import cn.hutool.core.date.DateTime;
  */
 public class Test1 {
     public static void main(String[] args) {
-        System.out.println(new DateTime());
+        boolean notBlank = isNotBlank("");
+        System.out.println(notBlank);
     }
 
+    public static boolean isBlank(CharSequence str) {
+        int length;
+        if ((str == null) || ((length = str.length()) == 0)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    /**
+     * 判断字符串不是空白字符
+     *
+     * @param str 字符串
+     * @return
+     */
+    public static boolean isNotBlank(CharSequence str) {
+        return !isBlank(str);
+    }
 }

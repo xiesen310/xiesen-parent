@@ -57,7 +57,7 @@ public class MockParseLogData {
 
     public static String buildMsg() {
         JSONObject bigJson = new JSONObject();
-        String hostname = "yf12011111";
+        String hostname = "yf120111111";
 
         JSONObject hostJson = new JSONObject();
         hostJson.put("name", hostname);
@@ -98,7 +98,7 @@ public class MockParseLogData {
 
         bigJson.put("log", logJson);
         bigJson.put("appsystem", "dev_test");
-        bigJson.put("collectruleid", 2);
+        bigJson.put("collectruleid", 1);
 
 
         JSONObject ecsJson = new JSONObject();
@@ -136,8 +136,11 @@ public class MockParseLogData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "xiesen";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String topic = "xiesen";
+        String topic = "ods_default_log";
+//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String bootstrapServers = "yf172:9092,yf171:9092,yf170:9092";
+        String bootstrapServers = "yf122:9092,yf121:9092,yf120:9092";
         long records = 10000L;
 
         System.out.println(buildMsg());

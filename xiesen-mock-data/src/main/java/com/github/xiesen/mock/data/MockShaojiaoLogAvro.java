@@ -40,8 +40,7 @@ public class MockShaojiaoLogAvro {
         normalFields.put("message", "183.95.248.189 - - [23/Jul/2020:08:26:32 +0800] \"GET " +
                 "/gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ" +
                 "%3D%3D HTTP/1.1\" 200 872 ");
-//        normalFields.put("collecttime", DateUtil.getUTCTimeStr());
-        normalFields.put("collecttime", "aaa");
+        normalFields.put("collecttime", DateUtil.getUTCTimeStr());
         return normalFields;
     }
 
