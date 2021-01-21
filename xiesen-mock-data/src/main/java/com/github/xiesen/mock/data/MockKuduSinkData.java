@@ -9,7 +9,6 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 import java.util.Random;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -90,10 +89,12 @@ public class MockKuduSinkData {
      */
     public String buildMsg() {
         JSONObject bigJson = new JSONObject();
-        bigJson.put("uuid", UUID.randomUUID());
-        bigJson.put("id", getRandomId());
-        bigJson.put("name", getRandomName());
-        bigJson.put("address", getRandomAddress());
+//        bigJson.put("uuid", UUID.randomUUID());
+//        bigJson.put("id", getRandomId());
+        bigJson.put("id", new Random().nextInt(6));
+        bigJson.put("age", new Random().nextInt(100));
+//        bigJson.put("name", getRandomName());
+//        bigJson.put("address", getRandomAddress());
         return bigJson.toJSONString();
     }
 
@@ -120,7 +121,7 @@ public class MockKuduSinkData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "redis_side";
+        String topic = "songTest123";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 1000L;
         MockKuduSinkData data = new MockKuduSinkData();
