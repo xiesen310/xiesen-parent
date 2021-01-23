@@ -10,7 +10,6 @@ import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author 谢森
@@ -96,9 +95,10 @@ public class MockAlarmPushData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "hzy_alarm_real";
+//        String topic = "hzy_alarm_real";
+        String topic = "xiesen_test";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        long records = 10L;
+        long records = 10000L;
 
         System.out.println(buildMsg());
 
@@ -108,7 +108,7 @@ public class MockAlarmPushData {
             String message = buildMsg();
             System.out.println(message);
             send(producer, topic, message);
-            TimeUnit.SECONDS.sleep(1);
+//            TimeUnit.SECONDS.sleep(1);
         }
 
         producer.flush();

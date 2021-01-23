@@ -66,6 +66,7 @@ public class MockMomoAlarmData {
         alarmJson.put("severity", 1);
         alarmJson.put("status", "PROBLEM");
         alarmJson.put("timestamp", "2021-01-12T17:01:47.572+08:00");
+//        alarmJson.put("timestamp", DateUtil.getUTCTimeStr());
 
         String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ " +
                 "/\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND " +
@@ -131,7 +132,9 @@ public class MockMomoAlarmData {
 
     public static void main(String[] args) throws InterruptedException {
         String topic = "dwd_alarm_real";
-        String bootstrapServers = "yf172:9092,yf171:9092,yf170:9092";
+//        String bootstrapServers = "yf172:9092,yf171:9092,yf170:9092";
+        String bootstrapServers = "autotest-3:9092,autotest-2:9092,autotest-1:9092";
+//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 10L;
 
         System.out.println(buildMsg());
