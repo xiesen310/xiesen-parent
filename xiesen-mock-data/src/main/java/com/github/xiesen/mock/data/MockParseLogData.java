@@ -39,11 +39,11 @@ public class MockParseLogData {
         props.put("buffer.memory", 33554432);
 
         // kerberos 认证
-        System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
+        /*System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
         System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_server_jaas.conf");
         props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.kerberos.service.name", "kafka");
-        props.put("sasl.mechanism", "GSSAPI");
+        props.put("sasl.mechanism", "GSSAPI");*/
 
         // sasl 认证
         /*props.put("security.protocol", "SASL_PLAINTEXT");
@@ -66,6 +66,7 @@ public class MockParseLogData {
         bigJson.put("clustername", "基础监控");
         bigJson.put("message", "[CST Dec 14 13:31:00] error    : Alert handler failed, retry scheduled for next cycle");
 //        bigJson.put("ip", "192.168.70.120");
+        bigJson.put("ip", "192.168.70.85");
         JSONObject inputJson = new JSONObject();
         inputJson.put("type", "log");
         bigJson.put("input", inputJson);
@@ -137,8 +138,8 @@ public class MockParseLogData {
     public static void main(String[] args) throws InterruptedException {
         String topic = "xiesen";
 //        String topic = "ods_default_log";
-//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        String bootstrapServers = "zorkdata-91:9092";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String bootstrapServers = "zorkdata-91:9092";
 //        String bootstrapServers = "yf172:9092,yf171:9092,yf170:9092";
 //        String bootstrapServers = "yf122:9092,yf121:9092,yf120:9092";
 //        String bootstrapServers = "autotest-3:9092,autotest-2:9092,autotest-1:9092";

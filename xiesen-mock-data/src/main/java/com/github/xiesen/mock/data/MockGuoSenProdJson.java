@@ -47,7 +47,7 @@ public class MockGuoSenProdJson {
         jsonObject.put("time", System.currentTimeMillis());
         jsonObject.put("anonymous_id", UUID.randomUUID().toString().replaceAll("-", ""));
         jsonObject.put("event", "$AppEnd");
-        jsonObject.put("_track_id", 2544114260000L);
+        jsonObject.put("_track_id", 254411L);
 //        jsonObject.put("_flush_time", System.currentTimeMillis());
 
         properties.put("platform_name", "iOS");

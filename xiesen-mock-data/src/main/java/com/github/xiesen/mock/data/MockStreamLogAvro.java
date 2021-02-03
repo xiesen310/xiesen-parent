@@ -71,10 +71,10 @@ public class MockStreamLogAvro {
         int i = random.nextInt(10);
         Map<String, String> dimensions = new HashMap<>();
 
-        dimensions.put("hostname", "zorkdata" + i);
-        dimensions.put("ip", "192.168.1." + i);
+        dimensions.put("hostname", "autotest-1");//"zorkdata" + i);
+        dimensions.put("ip", "192.168.70.85");
         dimensions.put("appprogramname", "tc50");
-        dimensions.put("appsystem", "tdx");
+        dimensions.put("appsystem", "dev_test");
 
         return dimensions;
     }
@@ -91,7 +91,7 @@ public class MockStreamLogAvro {
 
     private static Map<String, String> getRandomNormalFields() {
         Map<String, String> normalFields = new HashMap<>();
-        normalFields.put("message", "data update success");
+        normalFields.put("message", "data update success error");
         normalFields.put("countryCode", getRandomCountryCode());
         normalFields.put("collection_time", String.valueOf(new DateTime()));
 //        normalFields.put("collection_time", "xiesen");
@@ -107,7 +107,7 @@ public class MockStreamLogAvro {
         long size = getSize(propertiesName);
 
         for (int i = 0; i < size; i++) {
-            String logTypeName = "streamx_log_avro";
+            String logTypeName = "default_analysis_template";
             String timestamp = DateUtil.getUTCTimeStr();
             String source = "/var/log/" + DateUtil.getDate() + ".log";
             String offset = getRandomOffset();
@@ -116,8 +116,8 @@ public class MockStreamLogAvro {
 
 
             Map<String, String> normalFields = getRandomNormalFields();
-
-            System.out.println(printData(logTypeName, timestamp, source, offset, dimensions, measures, normalFields));
+//            System.out.println(JSON.toJSONString(dimensions));
+            System.out.println(timestamp);
             CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
             Thread.sleep(2000);

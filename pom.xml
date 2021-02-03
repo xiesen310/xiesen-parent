@@ -25,6 +25,8 @@
         <module>xiesen-redis</module>
         <module>xiesen-sqlserver</module>
         <module>xiesen-pulsar</module>
+        <module>xiesen-learnning</module>
+        <module>hashmap-demo</module>
     </modules>
 
     <parent>

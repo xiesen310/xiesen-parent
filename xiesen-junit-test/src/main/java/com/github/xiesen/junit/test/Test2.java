@@ -12,26 +12,11 @@ import java.util.Map;
 public class Test2 {
     private static Map<Integer, String> map = new HashMap<>();
 
-    public static void main(String[] args) throws InterruptedException {
-        Runnable runnable = new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 10; i++)
-                    map.put(i, String.valueOf(i));
-            }
-        };
-
-        runnable.run();
-
-        Runnable runnable2 = new Runnable() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 10; i++) {
-                    System.out.println(map.toString());
-                }
-
-            }
-        };
-        runnable2.run();
+    public static void main(String[] args) {
+        String uploadPath = "D:/tmp/upload";
+        if (!uploadPath.endsWith("/")) {
+            uploadPath = uploadPath + "/";
+        }
+        System.out.println(uploadPath);
     }
 }
