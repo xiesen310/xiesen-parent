@@ -89,9 +89,14 @@ public class MockKuduSideData {
      */
     public String buildMsg() {
         JSONObject bigJson = new JSONObject();
-        bigJson.put("code", getRandomId());
+
+        bigJson.put("id", new Random().nextInt(6));
+        bigJson.put("name", "aaaa");
+        bigJson.put("age", new Random().nextInt(100));
+        bigJson.put("country_code", "aaa");
+        /*bigJson.put("code", getRandomId());
         bigJson.put("name", getRandomName());
-        bigJson.put("address", getRandomAddress());
+        bigJson.put("address", getRandomAddress());*/
         return bigJson.toJSONString();
     }
 
@@ -118,7 +123,8 @@ public class MockKuduSideData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "kudu_side";
+//        String topic = "kudu_side";
+        String topic = "songTest1";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 1000L;
         MockKuduSideData data = new MockKuduSideData();
