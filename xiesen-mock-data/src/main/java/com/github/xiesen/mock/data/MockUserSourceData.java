@@ -1,7 +1,6 @@
-package com.github.xiesen.kafka241;
+package com.github.xiesen.mock.data;
 
 import com.alibaba.fastjson.JSONObject;
-import com.github.xiesen.common.utils.DateUtil;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -9,14 +8,44 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
-import java.util.UUID;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
  * @author 谢森
- * @since 2021/2/7
+ * @Description 模拟 redis 维表数据
+ * @Email xiesen310@163.com
+ * @Date 2020/12/14 13:21
  */
-public class MockAlarmPushData {
+public class MockUserSourceData {
+    private static final String[] IDS = new String[]{"AO", "AF", "AL", "DZ", "AD", "AI", "AG", "AR", "AM", "AU", "AT"
+            , "AZ", "BS", "BH",
+            "BD", "BB", "BY", "BE", "BZ", "BJ", "BM", "BO", "BW", "BR", "BN", "BG", "BF", "MM", "BI", "CM", "CA", "CF"
+            , "TD", "CL", "CN", "CO", "CG", "CK", "CR", "CU", "CY", "CZ", "DK", "DJ", "DO", "EC", "EG", "SV", "EE",
+            "ET", "FJ", "FI", "FR", "GF", "GA", "GM", "GE", "DE", "GH", "GI", "GR", "GD", "GU", "GT", "GN", "GY", "HT"
+            , "HN", "HK", "HU", "IS", "IN", "ID", "IR", "IQ", "IE", "IL", "IT", "JM", "JP", "JO", "KH", "KZ", "KE",
+            "KR", "KW", "KG", "LA", "LV", "LB", "LS", "LR", "LY", "LI", "LT", "LU", "MO", "MG", "MW", "MY", "MV", "ML"
+            , "MT", "MU", "MX", "MD", "MC", "MN", "MS", "MA", "MZ", "NA", "NR", "NP", "NL", "NZ", "NI", "NE", "NG",
+            "KP", "NO", "OM", "PK", "PA", "PG", "PY", "PE", "PH", "PL", "PF", "PT", "PR", "QA", "RO", "RU", "LC", "VC"
+            , "SM", "ST", "SA", "SN", "SC", "SL", "SG", "SK", "SI", "SB", "SO", "ZA", "ES", "LK", "SD", "SR", "SZ",
+            "SE", "CH", "SY", "TW", "TJ", "TZ", "TH", "TG", "TO", "TT", "TN", "TR", "TM", "UG", "UA", "AE", "GB", "US"
+            , "UY", "UZ", "VE", "VN", "YE", "YU", "ZW", "ZR", "ZM"};
+
+    private static final String[] NAMES = new String[]{"闫明", "苏岩", "朱志刚", "朱明磊", "刘阿康", "宋倩倩", "荣权", "宋志鹏",
+            "王帝", "崔武", "尹丹丽"};
+
+    private String getRandomId() {
+        return IDS[new Random().nextInt(IDS.length)];
+    }
+
+    private String getRandomName() {
+        return NAMES[new Random().nextInt(NAMES.length)];
+    }
+
+    private String getRandomAddress() {
+        return "步行街" + new Random().nextInt(1000) + "号";
+    }
+
     /**
      * kafka producer
      *
@@ -52,22 +81,19 @@ public class MockAlarmPushData {
         return new KafkaProducer<>(props);
     }
 
-    public static String buildMsg() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("alarmChannelId", 1L);
-        jsonObject.put("level", 1);
-        jsonObject.put("recipient", "recipient");
-        jsonObject.put("contactWay", "contactWay");
-        jsonObject.put("id", UUID.randomUUID());
-        jsonObject.put("time", DateUtil.getUTCTimeStr());
-        jsonObject.put("appSystem", "tdx");
-        jsonObject.put("type", 1);
-        jsonObject.put("sendMode", 1);
-        jsonObject.put("pushResult", 1);
-        jsonObject.put("content", "content");
-        jsonObject.put("title", "title");
-        jsonObject.put("sendTime", DateUtil.getUTCTimeStr());
-        return jsonObject.toJSONString();
+
+    /**
+     * {"id":"AO","name":"张三","address":"步行街101号"}
+     *
+     * @return
+     */
+    public String buildMsg() {
+        JSONObject bigJson = new JSONObject();
+
+        bigJson.put("name", getRandomName());
+        bigJson.put("age", new Random().nextInt(100));
+        bigJson.put("country_code", getRandomId());
+        return bigJson.toJSONString();
     }
 
     /**
@@ -93,17 +119,15 @@ public class MockAlarmPushData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "alarm_real";
-        String bootstrapServers = "zorkdata-91:9092";
-//        String bootstrapServers = "zorkdata-92:9092";
+        String topic = "user-source";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 1000L;
-
-        System.out.println(buildMsg());
+        MockUserSourceData data = new MockUserSourceData();
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
         for (long index = 0; index < records; index++) {
-            String message = buildMsg();
+            String message = data.buildMsg();
             System.out.println(message);
             send(producer, topic, message);
             TimeUnit.SECONDS.sleep(1);
@@ -114,5 +138,4 @@ public class MockAlarmPushData {
         Thread.sleep(1000L);
 
     }
-
 }

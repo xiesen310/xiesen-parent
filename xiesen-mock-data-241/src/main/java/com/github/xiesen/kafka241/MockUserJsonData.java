@@ -7,7 +7,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import javax.security.auth.login.Configuration;
 import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
@@ -73,9 +72,9 @@ public class MockUserJsonData {
         props.put("sasl.mechanism", "GSSAPI");*/
 
         // sasl 认证
-        props.put("security.protocol", "SASL_PLAINTEXT");
+        /*props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.mechanism", "PLAIN");
-        Configuration.setConfiguration(new SaslConfig("admin", "admin"));
+        Configuration.setConfiguration(new SaslConfig("admin", "admin"));*/
 
 
         return new KafkaProducer<>(props);
@@ -120,8 +119,8 @@ public class MockUserJsonData {
 
     public static void main(String[] args) throws InterruptedException {
         String topic = "user-source";
-//        String bootstrapServers = "zorkdata-91:9092";
-        String bootstrapServers = "zorkdata-92:9092";
+        String bootstrapServers = "zorkdata-91:9092";
+//        String bootstrapServers = "zorkdata-92:9092";
         long records = 1000L;
         MockUserJsonData data = new MockUserJsonData();
 
