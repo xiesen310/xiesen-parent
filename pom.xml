@@ -27,6 +27,7 @@
         <module>xiesen-pulsar</module>
         <module>xiesen-learnning</module>
         <module>hashmap-demo</module>
+        <module>xiesen-mock-data-241</module>
     </modules>
 
     <parent>
