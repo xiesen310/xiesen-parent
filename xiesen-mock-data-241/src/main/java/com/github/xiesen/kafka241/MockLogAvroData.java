@@ -90,6 +90,7 @@ public class MockLogAvroData {
     public static void main(String[] args) throws InterruptedException {
         String topic = "xiesen";
 //        String bootstrapServers = "zorkdata-91:9092";
+//        String bootstrapServers = "zorkdata-95:9092";
         String bootstrapServers = "zorkdata-92:9092";
         long records = 1000L;
 

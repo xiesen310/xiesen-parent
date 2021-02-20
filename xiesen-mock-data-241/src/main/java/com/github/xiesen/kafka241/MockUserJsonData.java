@@ -13,6 +13,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
+ * sql 转换任务数据模拟
+ *
  * @author 谢森
  * @since 2021/2/7
  */
@@ -120,6 +122,7 @@ public class MockUserJsonData {
     public static void main(String[] args) throws InterruptedException {
         String topic = "user-source";
         String bootstrapServers = "zorkdata-91:9092";
+//        String bootstrapServers = "zorkdata-95:9092";
 //        String bootstrapServers = "zorkdata-92:9092";
         long records = 1000L;
         MockUserJsonData data = new MockUserJsonData();
