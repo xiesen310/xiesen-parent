@@ -12,6 +12,7 @@ class ShadeData1 {
     private Lock lock = new ReentrantLock();
     Condition condition = lock.newCondition();
 
+
     public void increase() {
         try {
             lock.lock();
