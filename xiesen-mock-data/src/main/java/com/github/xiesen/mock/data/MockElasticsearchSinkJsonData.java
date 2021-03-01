@@ -120,7 +120,8 @@ public class MockElasticsearchSinkJsonData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "user-source";
+//        String topic = "user-source";
+        String topic = "song_test_hbase";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 1000L;
         MockElasticsearchSinkJsonData data = new MockElasticsearchSinkJsonData();
