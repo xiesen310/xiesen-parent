@@ -28,6 +28,7 @@
         <module>xiesen-learnning</module>
         <module>hashmap-demo</module>
         <module>xiesen-mock-data-241</module>
+        <module>xiesen-redisson</module>
     </modules>
 
     <parent>
