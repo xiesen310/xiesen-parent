@@ -29,6 +29,8 @@
         <module>hashmap-demo</module>
         <module>xiesen-mock-data-241</module>
         <module>xiesen-redisson</module>
+        <module>xiesen-asynchbase</module>
+        <module>flink112-example</module>
     </modules>
 
     <parent>

@@ -65,11 +65,56 @@ public class MockStreamMetricAvro {
         return dimensions;
     }
 
+    /**
+     * dimensions": {
+     * *     "appsystem": "dev_test",
+     * *     "hostname": "DESKTOP-4I4I8U3",
+     * *     "ruler_id": "2",
+     * *     "source": "d:\\tmp\\filebeat\\a.log",
+     * *     "ip": "192.168.70.170",
+     * *     "monitor_name": "filebeat"
+     * *   },
+     *
+     * @return
+     */
+    private static Map<String, String> getRandomDimensionsWithYm() {
+        Random random = new Random();
+        int i = random.nextInt(10);
+        Map<String, String> dimensions = new HashMap<>();
+
+        dimensions.put("hostname", "DESKTOP-4I4I8U3");
+        dimensions.put("ruler_id", "2");
+        dimensions.put("source", "D:\\opt\\smartdata-streamx\\a.log");
+        dimensions.put("ip", "192.168.70.170");
+        dimensions.put("monitor_name", "filebeat");
+        dimensions.put("appsystem", "dev_test");
+
+        return dimensions;
+    }
+
     private static Map<String, Double> getRandomMetrics() {
         Map<String, Double> metrics = new HashMap<>();
         DecimalFormat df = new DecimalFormat("######0.00");
         String format = df.format(new Random().nextDouble());
         metrics.put("cpu_usage_rate", Double.valueOf(format));
+        metrics.put("cpu_usage_rate", Double.valueOf(System.currentTimeMillis()));
+
+
+        return metrics;
+    }
+
+    /**
+     * "metrics": {
+     * *     "delay": 2.5851163E7,
+     * *     "collect_time": 1.614800718404E12
+     * *   }
+     *
+     * @return
+     */
+    private static Map<String, Double> getRandomMetricsWithYm() {
+        Map<String, Double> metrics = new HashMap<>();
+        metrics.put("delay", Double.valueOf(1111111));
+        metrics.put("collect_time", Double.valueOf(System.currentTimeMillis()));
         return metrics;
     }
 
@@ -82,10 +127,30 @@ public class MockStreamMetricAvro {
         long size = getSize(propertiesName);
 
         for (int i = 0; i < size; i++) {
-            String metricSetName = "streamx_metric_avro";
+            /**
+             * {
+             *   "metricsetname": "log_original_time_flink1",
+             *   "timestamp": "1614826569567",
+             *   "dimensions": {
+             *     "appsystem": "dev_test",
+             *     "hostname": "DESKTOP-4I4I8U3",
+             *     "ruler_id": "2",
+             *     "source": "d:\\tmp\\filebeat\\a.log",
+             *     "ip": "192.168.70.170",
+             *     "monitor_name": "filebeat"
+             *   },
+             *   "metrics": {
+             *     "delay": 2.5851163E7,
+             *     "collect_time": 1.614800718404E12
+             *   }
+             * }
+             */
+            String metricSetName = "ym7";
             String timestamp = DateUtil.getCurrentTimestamp();
-            Map<String, String> dimensions = getRandomDimensions();
-            Map<String, Double> metrics = getRandomMetrics();
+//            Map<String, String> dimensions = getRandomDimensions();
+            Map<String, String> dimensions = getRandomDimensionsWithYm();
+//            Map<String, Double> metrics = getRandomMetrics();
+            Map<String, Double> metrics = getRandomMetricsWithYm();
 
 
             System.out.println(printData(metricSetName, timestamp, dimensions, metrics));
@@ -93,6 +158,7 @@ public class MockStreamMetricAvro {
             CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
             Thread.sleep(2000);
+//            System.exit(-1);
         }
         Thread.sleep(1000);
     }

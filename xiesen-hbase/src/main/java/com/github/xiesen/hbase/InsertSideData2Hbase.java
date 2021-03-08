@@ -25,6 +25,7 @@ import java.util.List;
  * scan 'xiesen:country_hbase_side' // 扫描表
  * list // 查看表以及 namespace
  * create_namespace 'xiesen' // 创建 namespace
+ * user_permission // 查看用户权限
  *
  * @author 谢森
  * @Description InsertSideData2Hbase
