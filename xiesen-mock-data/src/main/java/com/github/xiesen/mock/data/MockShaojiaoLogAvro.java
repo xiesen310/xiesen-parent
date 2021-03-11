@@ -46,7 +46,7 @@ public class MockShaojiaoLogAvro {
 
 
     public static void main(String[] args) throws Exception {
-        long size = 1000000L * 1;
+        long size = 100L * 1;
         for (int i = 0; i < size; i++) {
             String logTypeName = "default_analysis_template";
             String timestamp = DateUtil.getUTCTimeStr();
