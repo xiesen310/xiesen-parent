@@ -26,7 +26,7 @@ public class ReadLogFile2Kafka {
     public static final Logger log = LoggerFactory.getLogger(ReadLogFile2Kafka.class);
 
     public static void main(String[] args) {
-        String topic = "jhapp2";
+        String topic = "jhapp1";
 //        String filePath = "E:\\data\\jhapp1.log";
         String filePath = "E:\\data\\jhapp2.log";
 

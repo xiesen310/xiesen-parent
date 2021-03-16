@@ -152,8 +152,8 @@ public class MockParseMetricData {
 
     public static void main(String[] args) throws InterruptedException {
         String topic = "ods_all_metric";
-        String bootstrapServers = "autotest-1:9092,autotest-2:9092,autotest-3:9092";
-//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String bootstrapServers = "autotest-1:9092,autotest-2:9092,autotest-3:9092";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 10000L;
 
         System.out.println(buildMsg());
