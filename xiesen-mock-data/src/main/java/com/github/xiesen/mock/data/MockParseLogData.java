@@ -10,7 +10,6 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author 谢森
@@ -136,14 +135,14 @@ public class MockParseLogData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "xiesen";
+        String topic = "xiesen_test_with_parse_template";
 //        String topic = "ods_default_log";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
 //        String bootstrapServers = "zorkdata-91:9092";
 //        String bootstrapServers = "yf172:9092,yf171:9092,yf170:9092";
 //        String bootstrapServers = "yf122:9092,yf121:9092,yf120:9092";
 //        String bootstrapServers = "autotest-3:9092,autotest-2:9092,autotest-1:9092";
-        long records = 100000L;
+        long records = 1000000L;
 
 
         System.out.println(buildMsg());
@@ -154,7 +153,7 @@ public class MockParseLogData {
             String message = buildMsg();
             System.out.println(message);
             send(producer, topic, message);
-            TimeUnit.SECONDS.sleep(1);
+//            TimeUnit.SECONDS.sleep(1);
         }
 
         producer.flush();
