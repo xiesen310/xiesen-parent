@@ -20,8 +20,8 @@ import java.util.Properties;
  */
 public class ReadLogFile2Kafka {
     public static void main(String[] args) {
-        String topic = "zhlc3";
-        String filePath = "E:\\data\\zhlc3.log";
+        String topic = "xiesen";
+        String filePath = "E:\\data\\paa_20210323.log";
 
 
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
@@ -29,10 +29,11 @@ public class ReadLogFile2Kafka {
 
 
         try {
+
             File file = new File(filePath);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String strLine = null;
-            int lineCount = 1;
+            int lineCount = 0;
 
             while (null != (strLine = bufferedReader.readLine())) {
                 if (lineCount % 1000 == 0) {
@@ -66,7 +67,7 @@ public class ReadLogFile2Kafka {
             File file = new File(strFile);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String strLine = null;
-            int lineCount = 1;
+            int lineCount = 0;
             while (null != (strLine = bufferedReader.readLine())) {
                 JSONObject jsonObject = JSONObject.parseObject(strLine);
                 JSONObject jsonObject1 = JSONObject.parseObject(jsonObject.getString("system"));
