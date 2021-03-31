@@ -9,6 +9,7 @@ import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
+import org.mortbay.util.ajax.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,8 +60,8 @@ public class MockShaojiaoMetricAvro {
 
     public static String buildMsg() {
         JSONObject bigJson = new JSONObject();
-        String hostname = "yf12011111111";
-//        String hostname = "yf120";
+//        String hostname = "yf12011111111";
+        String hostname = "yf120";
 
         JSONObject hostJson = new JSONObject();
         hostJson.put("name", hostname);
@@ -156,6 +157,14 @@ public class MockShaojiaoMetricAvro {
 
             Map<String, Double> metrics = new HashMap<>();
             metrics.put("user_pct", 1.0);
+
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("metricsetname", metricSetName);
+            map.put("timestamp", timestamp);
+            map.put("dimensions", dimensions);
+            map.put("metrics", metrics);
+            System.out.println(JSON.toString(map));
 
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
             Thread.sleep(1000L);

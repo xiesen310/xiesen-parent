@@ -29,5 +29,10 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.26</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.73</version>
+        </dependency>
     </dependencies>
 </project>

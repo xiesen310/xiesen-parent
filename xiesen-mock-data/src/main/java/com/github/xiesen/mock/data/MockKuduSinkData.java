@@ -66,11 +66,11 @@ public class MockKuduSinkData {
         props.put("buffer.memory", 33554432);
 
         // kerberos 认证
-        /*System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
+        System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
         System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_server_jaas.conf");
         props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.kerberos.service.name", "kafka");
-        props.put("sasl.mechanism", "GSSAPI");*/
+        props.put("sasl.mechanism", "GSSAPI");
 
         // sasl 认证
         /*props.put("security.protocol", "SASL_PLAINTEXT");
@@ -121,8 +121,8 @@ public class MockKuduSinkData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "songTest123";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String topic = "test";
+        String bootstrapServers = "zorkdata-91:9092";
         long records = 1000L;
         MockKuduSinkData data = new MockKuduSinkData();
 

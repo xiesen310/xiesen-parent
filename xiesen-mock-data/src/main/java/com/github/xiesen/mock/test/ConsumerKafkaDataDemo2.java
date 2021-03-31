@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * @author 谢森
  * @since 2021/3/17
  */
-public class ConsumerKafkaDataDemo1 {
+public class ConsumerKafkaDataDemo2 {
     public static void main(String[] args) throws InterruptedException {
         Properties props = new Properties();
 
@@ -31,7 +31,7 @@ public class ConsumerKafkaDataDemo1 {
 
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Collections.singletonList("xiesen_test1"));
+        consumer.subscribe(Collections.singletonList("xiesen"));
         AtomicLong i = new AtomicLong();
         while (true) {
             //  从服务器开始拉取数据

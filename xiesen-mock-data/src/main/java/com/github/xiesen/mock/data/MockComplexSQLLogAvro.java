@@ -20,9 +20,11 @@ public class MockComplexSQLLogAvro {
     private static Map<String, String> getRandomDimensions() {
         int num = new Random().nextInt(5);
         Map<String, String> dimensions = new HashMap<>(4);
-        dimensions.put("hostname", "zorkdata_" + num);
+//        dimensions.put("hostname", "zorkdata_" + num);
+        dimensions.put("hostname", "zorkdata_1");
         dimensions.put("appsystem", "dev_test");
-        dimensions.put("ip", "192.168.1." + num);
+//        dimensions.put("ip", "192.168.1." + num);
+        dimensions.put("ip", "192.168.1.1");
         return dimensions;
     }
 
