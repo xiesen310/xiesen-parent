@@ -46,7 +46,7 @@ public class MockShaojiaoLogAvro {
 
 
     public static void main(String[] args) throws Exception {
-        long size = 100L * 1;
+        long size = 100000000L * 1;
         for (int i = 0; i < size; i++) {
             String logTypeName = "default_analysis_template";
             String timestamp = DateUtil.getUTCTimeStr();
@@ -70,7 +70,7 @@ public class MockShaojiaoLogAvro {
                     "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
-            Thread.sleep(1000);
+//            Thread.sleep(1000);
         }
         Thread.sleep(1000);
     }

@@ -31,6 +31,7 @@
         <module>xiesen-redisson</module>
         <module>xiesen-asynchbase</module>
         <module>flink112-example</module>
+        <module>update-jar-metadata</module>
     </modules>
 
     <parent>
