@@ -22,7 +22,7 @@ public class KafkaConsumerDemo {
         props.put("bootstrap.servers", "kafka-1:19092,kafka-2:19092,kafka-3:19092");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("group.id", "group5");
+        props.put("group.id", "xiesen");
 
         // 可选设置属性
         props.put("enable.auto.commit", "true");
@@ -32,7 +32,7 @@ public class KafkaConsumerDemo {
 //        props.put("client.id", "zy_client_id");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Collections.singletonList("xiesen"));
+        consumer.subscribe(Collections.singletonList("admin_icube_topic"));
         AtomicLong i = new AtomicLong();
         while (true) {
             //  从服务器开始拉取数据
@@ -41,7 +41,8 @@ public class KafkaConsumerDemo {
             records.forEach(record -> {
                 i.getAndIncrement();
                 System.out.println(record.timestamp());
-                System.out.printf("topic = %s ,partition = %d,offset = %d, key = %s, value = %s%n", record.topic(), record.partition(),
+                System.out.printf("topic = %s ,partition = %d,offset = %d, key = %s, value = %s%n", record.topic(),
+                        record.partition(),
                         record.offset(), record.key(), record.value());
                 System.out.println("消费了 " + i + " 条数据");
             });

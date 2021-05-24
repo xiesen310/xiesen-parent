@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  * @Email xiesen310@163.com
  * @Date 2020/12/14 13:21
  */
-public class MockParseErrorLogData {
+public class MockNetworkParseLogData {
 
     /**
      * kafka producer
@@ -40,11 +40,11 @@ public class MockParseErrorLogData {
         props.put("buffer.memory", 33554432);
 
         // kerberos 认证
-        System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
+        /*System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
         System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_server_jaas.conf");
         props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.kerberos.service.name", "kafka");
-        props.put("sasl.mechanism", "GSSAPI");
+        props.put("sasl.mechanism", "GSSAPI");*/
 
         // sasl 认证
         /*props.put("security.protocol", "SASL_PLAINTEXT");
@@ -63,7 +63,7 @@ public class MockParseErrorLogData {
         hostJson.put("name", hostname);
         bigJson.put("host", hostJson);
 
-        bigJson.put("topicname", "ods_default_log");
+        bigJson.put("topicname", "xiesen_ods_default_log");
         bigJson.put("clustername", "基础监控");
         bigJson.put("message", "[CST Dec 14 13:31:00] error    : Alert handler failed, retry scheduled for next cycle");
         bigJson.put("ip", "192.168.70.120");
@@ -71,8 +71,8 @@ public class MockParseErrorLogData {
         inputJson.put("type", "log");
         bigJson.put("input", inputJson);
 
-        bigJson.put("servicecode", "lmt模块");
-        bigJson.put("appprogramname", "lmt模块");
+        bigJson.put("servicecode", "VPN");
+        bigJson.put("appprogramname", "VPN");
         bigJson.put("@version", "1");
 
         JSONObject agentJson = new JSONObject();
@@ -88,7 +88,7 @@ public class MockParseErrorLogData {
         tagsArray.add("beats_input_codec_plain_applied");
 
         bigJson.put("tags", tagsArray);
-        bigJson.put("servicename", "lmt模块");
+        bigJson.put("servicename", "VPN");
 
         JSONObject logJson = new JSONObject();
         JSONObject fileJson = new JSONObject();
@@ -97,7 +97,7 @@ public class MockParseErrorLogData {
         logJson.put("offset", 938284);
 
         bigJson.put("log", logJson);
-        bigJson.put("appsystem", "dev_test");
+        bigJson.put("appsystem", "network");
         bigJson.put("collectruleid", 2);
 
 
@@ -107,8 +107,7 @@ public class MockParseErrorLogData {
 
         bigJson.put("collecttime", DateUtil.getUTCTimeStr());
         bigJson.put("transtime", DateUtil.getUTCTimeStr());
-//        bigJson.put("@timestamp", DateUtil.getUTCTimeStr());
-        bigJson.put("@timestamp", "2021-03-23 09:49:35,141");
+        bigJson.put("@timestamp", DateUtil.getUTCTimeStr());
         bigJson.put("transip", "192.168.70.120");
 
         return bigJson.toJSONString();
@@ -137,12 +136,12 @@ public class MockParseErrorLogData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "ods_default_log";
-//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        String bootstrapServers = "zorkdata-91:9092";
-        long records = 10L;
-        System.out.println(buildMsg());
+        String topic = "xiesen_ods_default_log1";
+//        String topic = "xiesen";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        long records = 10000000L;
 
+        long start = System.currentTimeMillis();
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
         for (long index = 0; index < records; index++) {
@@ -154,6 +153,7 @@ public class MockParseErrorLogData {
 
         producer.flush();
         producer.close();
+        System.out.println("生产 " + records + " 条数据,耗时: " + (System.currentTimeMillis() - start) + " ms");
         Thread.sleep(1000L);
 
     }

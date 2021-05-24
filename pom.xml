@@ -32,6 +32,8 @@
         <module>xiesen-asynchbase</module>
         <module>flink112-example</module>
         <module>update-jar-metadata</module>
+        <module>xiesen-json</module>
+        <module>xiesen-hive</module>
     </modules>
 
     <parent>

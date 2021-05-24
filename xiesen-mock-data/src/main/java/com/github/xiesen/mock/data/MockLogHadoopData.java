@@ -3,12 +3,14 @@ package com.github.xiesen.mock.data;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.avro.AvroSerializerFactory;
 import com.github.xiesen.common.utils.DateUtil;
+import com.github.xiesen.mock.util.SaslConfig;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 
+import javax.security.auth.login.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -66,9 +68,9 @@ public class MockLogHadoopData {
         props.put("sasl.mechanism", "GSSAPI");*/
 
         // sasl 认证
-        /*props.put("security.protocol", "SASL_PLAINTEXT");
+        props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.mechanism", "PLAIN");
-        Configuration.setConfiguration(new SaslConfig("admin", "admin"));*/
+        Configuration.setConfiguration(new SaslConfig("admin", "admin"));
 
         return new KafkaProducer<>(props);
     }

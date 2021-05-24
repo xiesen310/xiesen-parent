@@ -120,7 +120,7 @@ public class MockStreamLogAvro {
             System.out.println(timestamp);
             CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
-            Thread.sleep(2000);
+            Thread.sleep(200);
         }
         Thread.sleep(1000);
     }
