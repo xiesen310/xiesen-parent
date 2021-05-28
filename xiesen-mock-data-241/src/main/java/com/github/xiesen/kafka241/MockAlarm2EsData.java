@@ -8,7 +8,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import javax.security.auth.login.Configuration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -49,9 +48,9 @@ public class MockAlarm2EsData {
         props.put("sasl.mechanism", "GSSAPI");*/
 
         // sasl 认证
-        props.put("security.protocol", "SASL_PLAINTEXT");
+        /*props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.mechanism", "PLAIN");
-        Configuration.setConfiguration(new SaslConfig("admin", "admin"));
+        Configuration.setConfiguration(new SaslConfig("admin", "admin"));*/
 
 
         return new KafkaProducer<>(props);
@@ -135,7 +134,8 @@ public class MockAlarm2EsData {
         String topic = "alarm2es";
 //        String bootstrapServers = "zorkdata-91:9092";
 //        String bootstrapServers = "zorkdata-95:9092";
-        String bootstrapServers = "zorkdata-92:9092";
+//        String bootstrapServers = "zorkdata-92:9092";
+        String bootstrapServers = "kafka-1:19092,kafka-3:19092,kafka-2:19092";
         long records = 1000L;
 
         System.out.println(buildAlarmJson());

@@ -1,6 +1,6 @@
 package com.github.xiesen.mock.data;
 
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.JSON;
 import com.github.xiesen.common.utils.DateUtil;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -8,6 +8,8 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -55,33 +57,48 @@ public class MockAlarmEventData {
         return new KafkaProducer<>(props);
     }
 
-    public static String buildMsg() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("alarmContent", "[CST May 25 10:49:15] error    : 'noahtest-215' mem usage of 81.4% matches " +
-                "resource limit [mem usage > 80.0%]");
+    /**
+     * 模拟新建消息
+     * @return
+     */
+    public static String buildUpdateMsg() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("alarmContent", "[CST May 25 10:49:15]");
+        map.put("alarmCount", "1");
+        map.put("lastTime", DateUtil.getUTCTimeStr());
+        map.put("eventId", "nAeVq3kB7nfzsGWqruMT");
+//        map.put("eventId", UUID.randomUUID().toString().replaceAll("-", ""));
+        map.put("alarmTime", DateUtil.getUTCTimeStr());
+        map.put("alarmId", UUID.randomUUID().toString().replaceAll("-",""));
+        map.put("alarmLevel", "5");
+        map.put("alarmTitle", "noahtest-215");
+        map.put("dataType", 2);
+        return JSON.toJSONString(map);
+    }
+
+    public static String buildNewMsg() {
+        Map<String,Object> map = new HashMap<>();
+        map.put("alarmContent", "[CST May 25 10:49:15]");
 
 
-        jsonObject.put("lastTime", DateUtil.getUTCTimeStr());
-//        jsonObject.put("eventId", "96e35d27835f4b9e91183b3b17656f72");
-        jsonObject.put("eventId", UUID.randomUUID().toString().replaceAll("-", ""));
-        jsonObject.put("recvUser", "recvUser");
+        map.put("lastTime", DateUtil.getUTCTimeStr());
 
-        jsonObject.put("alarmTime", DateUtil.getUTCTimeStr());
-        jsonObject.put("ip", "192.168.70.215");
-        jsonObject.put("operator", "operator");
-        jsonObject.put("alarmCount", 1);
-        jsonObject.put("hostname", "noahtest-215");
-        jsonObject.put("alarmObject", "122_ff89f1d295fdf1ec6ed5ffae0f33c7e5");
-        jsonObject.put("eventStatus", 1);
-        jsonObject.put("alarmId", "9307365bf52d4345a3f42e2be5b0d894");
-        jsonObject.put("appSystem", "tdx");
-        jsonObject.put("eventTime", DateUtil.getUTCTimeStr());
-        jsonObject.put("alarmLevel", 5);
-        jsonObject.put("alarmTitle", "noahtest-215");
-        jsonObject.put("beginTime", DateUtil.getUTCTimeStr());
-        jsonObject.put("alarmObjectValue", "122_dev_test_noahtest-215");
-        jsonObject.put("ruleId", "122");
-        return jsonObject.toJSONString();
+        map.put("alarmCount", "8");
+        map.put("eventId", UUID.randomUUID().toString().replaceAll("-", ""));
+
+        map.put("hostname", "noahtest-215");
+        map.put("alarmObject", "122_ff89f1d295fdf1ec6ed5ffae0f33c7e5");
+        map.put("eventStatus", "1");
+        map.put("alarmId", "9307365bf52d4345a3f42e2be5b0d894");
+        map.put("appSystem", "tdx");
+        map.put("eventTime", DateUtil.getUTCTimeStr());
+        map.put("alarmLevel", "5");
+        map.put("alarmTitle", "noahtest-215");
+        map.put("beginTime", DateUtil.getUTCTimeStr());
+        map.put("alarmObjectValue", "122_dev_test_noahtest-215");
+        map.put("ruleId", "122");
+        map.put("dataType", 1);
+        return JSON.toJSONString(map);
     }
 
     /**
@@ -109,15 +126,14 @@ public class MockAlarmEventData {
     public static void main(String[] args) throws InterruptedException {
 //        String topic = "hzy_alarm_real";
         String topic = "xiesen_test";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String bootstrapServers = "node120:9092,node121:9092,node122:9092";
         long records = 10000L;
-
-        System.out.println(buildMsg());
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
         for (long index = 0; index < records; index++) {
-            String message = buildMsg();
+            String message = buildNewMsg();
             System.out.println(message);
             send(producer, topic, message);
             TimeUnit.SECONDS.sleep(1);
