@@ -61,10 +61,12 @@ public class MockSongJsonData {
     public static String buildMsg() {
         JSONObject bigJson = new JSONObject();
         bigJson.put("timestamp", System.currentTimeMillis());
-        bigJson.put("name", "99999999999999");
-        bigJson.put("age", 77);
-        bigJson.put("country_code", "bubububububu");
-        bigJson.put("appsystem", "appsystemTest");
+        bigJson.put("appprogramname", "test");
+        bigJson.put("appsystem", "Dengjiajia");
+        bigJson.put("clustername", "test-cluster");
+        bigJson.put("hostname", "cs54");
+        bigJson.put("ip", "192.168.30.54");
+        bigJson.put("servicename", "test-cluster");
         return bigJson.toJSONString();
     }
 
@@ -91,8 +93,8 @@ public class MockSongJsonData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "songTest2";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String topic = "mdh";
+        String bootstrapServers = "cs56:9092,cs55:9092,cs54:9092";
         long records = 1000L;
 
         System.out.println(buildMsg());
