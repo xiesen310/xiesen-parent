@@ -20,14 +20,11 @@ import java.util.Random;
  * @Email xiesen310@163.com
  * @Date 2020/12/11 11:34
  */
-public class MockLogHadoopData {
-
-    private static String[] operator = {"登录", "委托", "转账"};
-    private static String[] operator_status = {"success", "fail"};
+public class MockLogHadoopData2 {
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "xiesen_log2es_avro";
-        String bootstrapServers = "kafka-1:9092,kafka-2:9092,kafka-3:9092";
+        String topic = "xiesen";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 100000000L;
 
         KafkaProducer<String, byte[]> producer = buildProducer(bootstrapServers, ByteArraySerializer.class.getName());
@@ -106,23 +103,19 @@ public class MockLogHadoopData {
     private static Map<String, String> getRandomDimensions() {
         Random random = new Random();
         Map<String, String> dimensionsMap = new HashMap<>();
-        dimensionsMap.put("operstatus", operator_status[random.nextInt(operator_status.length)]);
-        dimensionsMap.put("funcno", operator[random.nextInt(operator.length)]);
-        dimensionsMap.put("appsystem", "tdx");
+        dimensionsMap.put("appsystem", "dev_test");
+        dimensionsMap.put("hostname", "yf12" + random.nextInt(10));
+        dimensionsMap.put("appprogramname", "linux模块");
+        dimensionsMap.put("clustername", "基础监控");
+        dimensionsMap.put("ip", "192.168.70.12" + random.nextInt(10));
         return dimensionsMap;
 
     }
 
     private static Map<String, String> getRandomNormalFields() {
         Map<String, String> normalFields = new HashMap<>();
-        normalFields.put("logdate", "2020-10-08");
-        normalFields.put("anstime", "2020-10-08 21:34:28.820");
-        normalFields.put("readtime", "2020-10-08 21:35:14.382");
-        normalFields.put("conncetmsg", "IP:X.X.X.X MAC:X 线程:001 通道ID:001 事务ID:001");
-        normalFields.put("message",
-                "[res]=21:34:28.820 成功处理 IP:X.X.X.X MAC:X 线程:001 通道ID:001 事务ID:001 请求:(0-061)XX 营业部:XXX 耗时A:78 耗时B:0 " +
-                        "排队:0,[items]=[\\\"0||\\\"] [res]=21:34:28.820 成功处理 IP:X.X.X.X MAC:X 线程:001 通道ID:001 事务ID:001" +
-                        " 请求:(0-061)XX 营业部:XXX 耗时A:78 耗时B:0 排队:0,[items]=[\\\"0||\\\"]");
+        normalFields.put("countryCode", "BD");
+        normalFields.put("message", "data update error ptah");
         return normalFields;
     }
 
@@ -138,7 +131,7 @@ public class MockLogHadoopData {
     private static byte[] mockNetWorkLog() {
 
         JSONObject jsonObject = new JSONObject();
-        String logTypeName = "networklog";
+        String logTypeName = "default_analysis_template";
         String timestamp = DateUtil.getUTCTimeStr();
 
         Map<String, String> dimensions = getRandomDimensions();
@@ -147,7 +140,7 @@ public class MockLogHadoopData {
 
         jsonObject.put("logTypeName", logTypeName);
         jsonObject.put("timestamp", timestamp);
-        jsonObject.put("source", "核新");
+        jsonObject.put("source", "/var/log/path.log");
 
         String offset = getRandomOffset();
         jsonObject.put("offset", offset);

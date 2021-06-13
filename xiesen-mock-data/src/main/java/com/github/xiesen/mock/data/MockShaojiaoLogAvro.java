@@ -3,7 +3,6 @@ package com.github.xiesen.mock.data;
 import com.github.xiesen.common.utils.DateUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
-import org.mortbay.util.ajax.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -65,7 +64,7 @@ public class MockShaojiaoLogAvro {
             map.put("dimensions", dimensions);
             map.put("measures", measures);
             map.put("normalFields", normalFields);
-            System.out.println(JSON.toString(map));
+//            System.out.println(JSON.toString(map));
             CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
                     "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);

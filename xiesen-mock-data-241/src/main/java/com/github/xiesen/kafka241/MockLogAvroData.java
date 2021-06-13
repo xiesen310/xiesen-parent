@@ -91,7 +91,7 @@ public class MockLogAvroData {
         String topic = "xiesen";
 //        String bootstrapServers = "zorkdata-91:9092";
 //        String bootstrapServers = "zorkdata-95:9092";
-        String bootstrapServers = "zorkdata-92:9092";
+        String bootstrapServers = "kafka-1:19092,kafka-:19092,kafka-3:19092";
         long records = 1000L;
 
         KafkaProducer<String, byte[]> producer = buildProducer(bootstrapServers, ByteArraySerializer.class.getName());

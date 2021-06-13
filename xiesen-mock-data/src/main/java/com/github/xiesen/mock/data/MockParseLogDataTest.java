@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * @Email xiesen310@163.com
  * @Date 2020/12/14 13:21
  */
-public class MockParseLogData {
+public class MockParseLogDataTest {
 
     /**
      * kafka producer
@@ -138,32 +138,21 @@ public class MockParseLogData {
 
     public static void main(String[] args) throws InterruptedException, UnsupportedEncodingException {
         String topic = "xiesen_test_with_parse_template";
-//        String topic = "xiesen_test_with_parse_template_error";
-//        String topic = "xiesen";
-//        String topic = "ods_default_log";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-//        String bootstrapServers = "zorkdata-91:9092";
-//        String bootstrapServers = "yf172:9092,yf171:9092,yf170:9092";
-//        String bootstrapServers = "yf122:9092,yf121:9092,yf120:9092";
-//        String bootstrapServers = "autotest-3:9092,autotest-2:9092,autotest-1:9092";
+
         long records = 10000000L;
 
-
-//        System.out.println(buildMsg());
         long start = System.currentTimeMillis();
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
-
-        for (long index = 0; index < records; index++) {
+        long index = 0;
+        while (true) {
             String message = buildMsg();
-            System.out.println(message.getBytes("UTF-8").length);
             send(producer, topic, message);
-            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(10);
+            index++;
+            if (index % 2 == 0) {
+                System.out.println("当前时间: " + DateUtil.getUTCTimeStr() + " 已产生 " + index + " 条数据");
+            }
         }
-
-        producer.flush();
-        producer.close();
-        System.out.println("生产 " +records +" 条数据,耗时: " + (System.currentTimeMillis() - start) + " ms");
-        Thread.sleep(1000L);
-
     }
 }
