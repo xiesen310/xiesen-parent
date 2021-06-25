@@ -26,9 +26,10 @@ public class ReadLogFile2Kafka {
     public static final Logger log = LoggerFactory.getLogger(ReadLogFile2Kafka.class);
 
     public static void main(String[] args) {
-        String topic = "jhapp1";
+        String topic = "ydlog";
 //        String filePath = "E:\\data\\jhapp1.log";
-        String filePath = "E:\\data\\jhapp2.log";
+//        String filePath = "E:\\data\\jhapp2.log";
+        String filePath = "E:\\data\\ydlog.log";
 
         String bootstrapServers = "kafka-1:9092,kafka-2:9092,kafka-3:9092";
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
