@@ -24,6 +24,7 @@ public class MockShaojiaoLogAvro {
         dimensions.put("servicecode", "WEB");
         dimensions.put("clustername", "nginx");
         dimensions.put("appsystem", "dev_test");
+        dimensions.put("appsystem", "dev_test");
         dimensions.put("servicename", "nginx");
         dimensions.put("ip", "192.168.1.1");
         return dimensions;

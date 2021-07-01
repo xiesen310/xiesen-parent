@@ -126,8 +126,8 @@ public class MockAlarmEventData {
     public static void main(String[] args) throws InterruptedException {
 //        String topic = "hzy_alarm_real";
         String topic = "xiesen_test";
-//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        String bootstrapServers = "node120:9092,node121:9092,node122:9092";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String bootstrapServers = "node120:9092,node121:9092,node122:9092";
         long records = 10000L;
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());

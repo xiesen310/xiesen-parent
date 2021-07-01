@@ -32,7 +32,7 @@ public class KafkaConsumerDemo {
 //        props.put("client.id", "zy_client_id");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Collections.singletonList("admin_icube_topic"));
+        consumer.subscribe(Collections.singletonList("xiesen_test"));
         AtomicLong i = new AtomicLong();
         while (true) {
             //  从服务器开始拉取数据
