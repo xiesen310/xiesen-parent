@@ -48,8 +48,8 @@ public class WordCountData {
             "Be all my sins remember'd."
     };*/
 
-    public static final String[] WORDS = new String[] {
-            "be","eb"
+    public static final String[] WORDS = new String[]{
+            "be", "eb"
     };
 
     public static DataSet<String> getDefaultTextLineDataSet(ExecutionEnvironment env) {

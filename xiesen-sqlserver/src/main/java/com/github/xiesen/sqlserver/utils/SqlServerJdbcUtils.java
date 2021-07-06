@@ -21,7 +21,8 @@ public class SqlServerJdbcUtils {
 
     static {
         try {
-            InputStream in = SqlServerJdbcUtils.class.getClassLoader().getResourceAsStream("sql-server-druid.properties");
+            InputStream in = SqlServerJdbcUtils.class.getClassLoader().getResourceAsStream("sql-server-druid" +
+                    ".properties");
             prop.load(in);
         } catch (IOException e) {
             e.printStackTrace();

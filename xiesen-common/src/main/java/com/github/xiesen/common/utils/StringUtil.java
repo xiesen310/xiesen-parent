@@ -73,7 +73,8 @@ public class StringUtil {
      * 指标入kafka的后，spark处理不了特殊字符
      */
     public static String replaceChar4MetricKey(String str) {
-        str = str.replaceAll("\"", "").replaceAll(",", "_").replaceAll("\\[", "").replaceAll("]", "").replaceAll("\\\\", "").replaceAll(" ", "_").replaceAll("=", "").replaceAll(":", "")
+        str = str.replaceAll("\"", "").replaceAll(",", "_").replaceAll("\\[", "").replaceAll("]", "").replaceAll(
+                "\\\\", "").replaceAll(" ", "_").replaceAll("=", "").replaceAll(":", "")
                 .replaceAll("\\.", "_");
         return str;
     }

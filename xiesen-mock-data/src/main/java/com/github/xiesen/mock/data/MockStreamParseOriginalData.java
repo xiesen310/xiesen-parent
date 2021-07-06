@@ -52,7 +52,8 @@ public class MockStreamParseOriginalData {
         fileBeatObject.put("beat", beat);
         fileBeatObject.put("host", host);
         fileBeatObject.put("servicename", "test_appprogramname8");
-        fileBeatObject.put("grokmessage", "192.168.1.151 - - [29/Jun/2020:16:09:23 +0800] \"GET /webserver/scene/getSceneList.do?menuItemId=1039&sceneGroupId=&templateFlag= HTTP/1.0\" 200 3167");
+        fileBeatObject.put("grokmessage", "192.168.1.151 - - [29/Jun/2020:16:09:23 +0800] \"GET " +
+                "/webserver/scene/getSceneList.do?menuItemId=1039&sceneGroupId=&templateFlag= HTTP/1.0\" 200 3167");
         fileBeatObject.put("datemessage", "2020-07-06T08:22:00.666Z");
         fileBeatObject.put("jsonmessage", "{\"testmessage\":\"test\"}");
         fileBeatObject.put("geoipmessage", "151.101.230.217");

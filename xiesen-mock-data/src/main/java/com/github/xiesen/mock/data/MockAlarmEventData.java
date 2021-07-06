@@ -59,17 +59,18 @@ public class MockAlarmEventData {
 
     /**
      * 模拟新建消息
+     *
      * @return
      */
     public static String buildUpdateMsg() {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("alarmContent", "[CST May 25 10:49:15]");
         map.put("alarmCount", "1");
         map.put("lastTime", DateUtil.getUTCTimeStr());
         map.put("eventId", "nAeVq3kB7nfzsGWqruMT");
 //        map.put("eventId", UUID.randomUUID().toString().replaceAll("-", ""));
         map.put("alarmTime", DateUtil.getUTCTimeStr());
-        map.put("alarmId", UUID.randomUUID().toString().replaceAll("-",""));
+        map.put("alarmId", UUID.randomUUID().toString().replaceAll("-", ""));
         map.put("alarmLevel", "5");
         map.put("alarmTitle", "noahtest-215");
         map.put("dataType", 2);
@@ -77,7 +78,7 @@ public class MockAlarmEventData {
     }
 
     public static String buildNewMsg() {
-        Map<String,Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("alarmContent", "[CST May 25 10:49:15]");
 
 

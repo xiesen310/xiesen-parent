@@ -21,6 +21,6 @@ public class LogRecords {
     private String collectTime;
     private Map<String, Object> fields;
     private Map<String, Object> host;
-    
+
     private Long kfkTs;
 }

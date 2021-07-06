@@ -84,7 +84,8 @@ public class XiesenLog2MetricProducer {
         jsonObject.put(LogConstants.STR_DIMENSIONS, dimensions);
         jsonObject.put(LogConstants.STR_MEASURES, measures);
         jsonObject.put(LogConstants.STR_NORMAL_FIELDS, normalFields);
-        return AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
+        return AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source, offset,
+                dimensions, measures, normalFields);
     }
 
 

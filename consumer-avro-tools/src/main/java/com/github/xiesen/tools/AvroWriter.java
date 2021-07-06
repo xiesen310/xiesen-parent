@@ -27,7 +27,8 @@ public class AvroWriter {
         Map<String, Double> metrics = new HashMap<>();
         Map<String, String> normalFields = new HashMap<>();
         normalFields.put("message", "aaaaaaaaa");
-        byte[] bytes = AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source, offset, dimensions, metrics, normalFields);
+        byte[] bytes = AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source,
+                offset, dimensions, metrics, normalFields);
 
         GenericRecord deserializing = AvroDeserializerFactory.getLogsDeserializer().deserializing(bytes);
         System.out.println(deserializing);

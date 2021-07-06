@@ -51,7 +51,8 @@ class MurmurHash3 {
         return unsignedShort;
     }
 
-    public <T> long hash(long seed, @Nullable T input, AbstractAccess<T> access, long offset, long length, @Nullable long[] result) {
+    public <T> long hash(long seed, @Nullable T input, AbstractAccess<T> access, long offset, long length,
+                         @Nullable long[] result) {
         long h1 = seed;
         long h2 = seed;
         long remaining = length;
@@ -214,7 +215,8 @@ class MurmurHash3 {
     private static class AsAbstractLongTupleHashFunctionAbstract extends AbstractDualHashFunctionAbstract {
         private static final long serialVersionUID = 0L;
         @NotNull
-        private static final AsAbstractLongTupleHashFunctionAbstract SEEDLESS_INSTANCE = new AsAbstractLongTupleHashFunctionAbstract();
+        private static final AsAbstractLongTupleHashFunctionAbstract SEEDLESS_INSTANCE =
+                new AsAbstractLongTupleHashFunctionAbstract();
         @NotNull
         private static final AbstractLongHashFunction SEEDLESS_INSTANCE_LONG = SEEDLESS_INSTANCE.asLongHashFunction();
 
@@ -279,7 +281,8 @@ class MurmurHash3 {
         }
 
         @Override
-        public <T> long dualHash(@Nullable T input, AbstractAccess<T> access, long off, long len, @Nullable long[] result) {
+        public <T> long dualHash(@Nullable T input, AbstractAccess<T> access, long off, long len,
+                                 @Nullable long[] result) {
             long seed = seed();
             if (access.byteOrder(input) == LITTLE_ENDIAN) {
                 return MurmurHash3.INSTANCE.hash(seed, input, access, off, len, result);

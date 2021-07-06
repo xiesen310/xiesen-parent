@@ -8,7 +8,8 @@ package com.github.xiesen.algorithm.xxhash;
  */
 final class Primitives {
 
-    private Primitives() {}
+    private Primitives() {
+    }
 
     static long unsignedInt(int i) {
         return i & 0xFFFFFFFFL;

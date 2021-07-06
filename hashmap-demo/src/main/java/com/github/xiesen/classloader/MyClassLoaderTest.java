@@ -10,7 +10,8 @@ public class MyClassLoaderTest {
     public static void main(String[] args) throws Exception {
         System.out.println(Thread.currentThread().getContextClassLoader());
 
-        MyClassLoader myClassLoader = new MyClassLoader("D:\\develop\\workspace\\xiesen\\xiesen-parent\\xiesen-kafka\\target\\classes\\com\\github\\xiesen\\kafka\\HelloWorld.class");
+        MyClassLoader myClassLoader = new MyClassLoader("D:\\develop\\workspace\\xiesen\\xiesen-parent\\xiesen-kafka" +
+                "\\target\\classes\\com\\github\\xiesen\\kafka\\HelloWorld.class");
         Thread.currentThread().setContextClassLoader(myClassLoader);
 
         Class clazz = myClassLoader.loadClass("com.github.xiesen.kafka.HelloWorld");

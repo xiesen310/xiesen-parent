@@ -91,8 +91,8 @@ public class MockElasticsearchSinkJsonDataSong {
         bigJson.put("name", getRandomName());
         bigJson.put("age", new Random().nextInt(100));
         bigJson.put("country_code", getRandomCountryCode());*/
-        bigJson.put("hostname", ("hostname"+new Random().nextInt(100)+1));
-        bigJson.put("ip", "192.168.70."+ new Random().nextInt(600)+11);
+        bigJson.put("hostname", ("hostname" + new Random().nextInt(100) + 1));
+        bigJson.put("ip", "192.168.70." + new Random().nextInt(600) + 11);
         bigJson.put("appsystem", "dev_test");
         bigJson.put("servicename", "linux模块");
         bigJson.put("clustername", "jichujiankong");

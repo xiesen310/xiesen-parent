@@ -27,8 +27,8 @@ public class ElasticSearchDocumentAPI {
     public RestHighLevelClient restHighLevelClient;
 
     @Before
-    public void connectES(){
-        restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost("192.168.70.25",9200,"http")));
+    public void connectES() {
+        restHighLevelClient = new RestHighLevelClient(RestClient.builder(new HttpHost("192.168.70.25", 9200, "http")));
     }
 
     /**
@@ -36,15 +36,15 @@ public class ElasticSearchDocumentAPI {
      */
     @Test
     public void testIndex() throws IOException {
-        String jsonString ="{"+
+        String jsonString = "{" +
                 "    \"user\" : \"kimchy\",\n" +
                 "    \"post_date\" : \"2009-11-15T14:12:12\",\n" +
                 "    \"message\" : \"trying out Elasticsearch\"\n" +
                 "}";
 
-        IndexRequest request = new IndexRequest("posts","doc","2");
+        IndexRequest request = new IndexRequest("posts", "doc", "2");
         request.source(jsonString, XContentType.JSON);
-        IndexResponse response = restHighLevelClient.index(request,RequestOptions.DEFAULT);
+        IndexResponse response = restHighLevelClient.index(request, RequestOptions.DEFAULT);
         System.out.println(response.getId());
         restHighLevelClient.close();
     }
@@ -54,14 +54,14 @@ public class ElasticSearchDocumentAPI {
      */
     @Test
     public void testIndex2() throws IOException {
-        Map<String,Object> jsonMap = new HashMap<String, Object>();
+        Map<String, Object> jsonMap = new HashMap<String, Object>();
         jsonMap.put("user", "kimchy");
         jsonMap.put("post_date", "2009-11-15T14:12:12");
         jsonMap.put("message", "trying out Elasticsearch");
 
-        IndexRequest request = new IndexRequest("posts","doc","3");
+        IndexRequest request = new IndexRequest("posts", "doc", "3");
         request.source(jsonMap);
-        IndexResponse response = restHighLevelClient.index(request,RequestOptions.DEFAULT);
+        IndexResponse response = restHighLevelClient.index(request, RequestOptions.DEFAULT);
         System.out.println(response.getId());
         restHighLevelClient.close();
     }
@@ -74,15 +74,15 @@ public class ElasticSearchDocumentAPI {
         XContentBuilder builder = jsonBuilder();
         builder.startObject();
         {
-            builder.field("user","kimchy");
-            builder.field("post_date",new Date());
-            builder.field("message","trying out Elasticsearch");
+            builder.field("user", "kimchy");
+            builder.field("post_date", new Date());
+            builder.field("message", "trying out Elasticsearch");
         }
         builder.endObject();
 
-        IndexRequest request = new IndexRequest("posts","doc","4");
+        IndexRequest request = new IndexRequest("posts", "doc", "4");
         request.source(builder);
-        IndexResponse response = restHighLevelClient.index(request, RequestOptions.DEFAULT );
+        IndexResponse response = restHighLevelClient.index(request, RequestOptions.DEFAULT);
         System.out.println(response.getId());
         restHighLevelClient.close();
     }
@@ -93,12 +93,12 @@ public class ElasticSearchDocumentAPI {
     @Test
     public void testIndex4() throws IOException {
 
-        IndexRequest request = new IndexRequest("posts","doc","5")
-                .source("user","kimchy",
-                        "post_date",new Date(),
-                        "message","trying out Elasticsearch");
+        IndexRequest request = new IndexRequest("posts", "doc", "5")
+                .source("user", "kimchy",
+                        "post_date", new Date(),
+                        "message", "trying out Elasticsearch");
 
-        IndexResponse response = restHighLevelClient.index(request,RequestOptions.DEFAULT );
+        IndexResponse response = restHighLevelClient.index(request, RequestOptions.DEFAULT);
         System.out.println(response.getId());
         restHighLevelClient.close();
     }

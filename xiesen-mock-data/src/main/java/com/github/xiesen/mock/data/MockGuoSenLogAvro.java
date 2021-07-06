@@ -19,7 +19,8 @@ import java.util.Random;
  */
 public class MockGuoSenLogAvro {
     public static void printMsg(String logTypeName, String timestamp, String source, String offset,
-                                Map<String, String> dimensions, Map<String, Double> measures, Map<String, String> normalFields) {
+                                Map<String, String> dimensions, Map<String, Double> measures,
+                                Map<String, String> normalFields) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("logTypeName", logTypeName);
         jsonObject.put("timestamp", timestamp);
@@ -82,7 +83,9 @@ public class MockGuoSenLogAvro {
         normalFields.put("IP", "183.95.248.189");
         normalFields.put("logstash_deal_name", "logstash-0");
         normalFields.put("logchecktime", DateUtil.getUTCTimeStr());
-        normalFields.put("message", "183.95.248.189 - - [23/Jul/2020:08:26:32 +0800] \"GET /gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ%3D%3D HTTP/1.1\" 200 872 ");
+        normalFields.put("message", "183.95.248.189 - - [23/Jul/2020:08:26:32 +0800] \"GET " +
+                "/gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ" +
+                "%3D%3D HTTP/1.1\" 200 872 ");
         normalFields.put("res_url", "http://goldsundg.guosen.com.cn:1445/asset/webF10/dist/pages/index.html");
         normalFields.put("collecttime", DateUtil.getUTCTimeStr());
         normalFields.put("logcheckip", "10.33.209.53");
@@ -117,7 +120,8 @@ public class MockGuoSenLogAvro {
             map.put("measures", measures);
             map.put("normalFields", normalFields);
             System.out.println(JSON.toString(map));
-            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
+                    "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
             Thread.sleep(1000);

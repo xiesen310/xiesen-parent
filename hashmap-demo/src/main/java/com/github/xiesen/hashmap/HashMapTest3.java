@@ -15,7 +15,7 @@ public class HashMapTest3 {
         map.put("1", 1);
         map.put("2", 2);
         map.put("3", 3);
-        Map<String, Object> result = elementSelector(map, "1", "2","4");
+        Map<String, Object> result = elementSelector(map, "1", "2", "4");
         System.out.println(result);
 
     }

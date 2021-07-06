@@ -14,7 +14,7 @@ public class MyClassLoader extends SecureClassLoader {
     public MyClassLoader(String path) {
         this.path = path;
     }
-    
+
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
         try {

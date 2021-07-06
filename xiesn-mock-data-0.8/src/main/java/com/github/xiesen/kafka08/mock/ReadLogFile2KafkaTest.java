@@ -24,7 +24,7 @@ public class ReadLogFile2KafkaTest {
 
     public static void main(String[] args) {
         String topic = "sfwglog";
-        String filePath = "E:\\data\\sfwglog.log";
+        String filePath = "E:\\data\\xl_sfwg.log";
         readFileByLine(filePath);
        /* String bootstrapServers = "kafka-1:9092,kafka-2:9092,kafka-3:9092";
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());

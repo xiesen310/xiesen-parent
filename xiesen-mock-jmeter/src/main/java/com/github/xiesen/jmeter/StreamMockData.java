@@ -251,6 +251,6 @@ public class StreamMockData extends AbstractJavaSamplerClient {
 
     public static void main(String[] args) {
         StreamMockData mockData = new StreamMockData();
-        mockData.mockAlarmPushJsonData(null,null);
+        mockData.mockAlarmPushJsonData(null, null);
     }
 }

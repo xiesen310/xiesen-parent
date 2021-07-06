@@ -40,7 +40,6 @@ public class HiveJDBCTest {
         result = stmt.executeQuery("select count(1) as num from hzy.logtest");
 
 
-
         while (result.next()) {
 //            String str = result.getString(1);
 //            System.out.println(str);

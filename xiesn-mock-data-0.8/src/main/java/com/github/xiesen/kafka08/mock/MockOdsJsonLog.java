@@ -27,7 +27,7 @@ public class MockOdsJsonLog {
             send(producer, topic, mockData());
             Thread.sleep(1000);
         }
-        
+
     }
 
     /**

@@ -12,7 +12,8 @@ import java.io.FileNotFoundException;
 public class YamlUtils {
     public static void main(String[] args) {
         try {
-            Yaml.load(new File("D:\\develop\\workspace\\xiesen\\xiesen-parent\\xiesen-junit-test\\src\\main\\resources\\general_dump.yaml"));
+            Yaml.load(new File("D:\\develop\\workspace\\xiesen\\xiesen-parent\\xiesen-junit-test\\src\\main" +
+                    "\\resources\\general_dump.yaml"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

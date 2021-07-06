@@ -35,9 +35,9 @@ public class FlinkKafkaDemo {
             topic = params.get("topic");
         } else if (params.has("groupId")) {
             groupId = params.get("groupId");
-        } else if (params.has("brokers")){
+        } else if (params.has("brokers")) {
             brokers = params.get("brokers");
-        }else {
+        } else {
             throw new RuntimeException("Executing FlinkKafkaDemo param exception");
         }
 
@@ -46,7 +46,8 @@ public class FlinkKafkaDemo {
         properties.setProperty("group.id", groupId);
         properties.setProperty("auto.offset.reset", "earliest");
 
-        FlinkKafkaConsumer011<String> kafkaConsumer011 = new FlinkKafkaConsumer011<>(topic, new SimpleStringSchema(), properties);
+        FlinkKafkaConsumer011<String> kafkaConsumer011 = new FlinkKafkaConsumer011<>(topic, new SimpleStringSchema(),
+                properties);
         DataStreamSource<String> source = env.addSource(kafkaConsumer011);
         kafkaConsumer011.setStartFromGroupOffsets();
 

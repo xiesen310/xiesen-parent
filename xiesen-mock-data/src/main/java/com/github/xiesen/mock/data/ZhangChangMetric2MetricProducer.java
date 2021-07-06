@@ -51,7 +51,8 @@ public class ZhangChangMetric2MetricProducer {
         Map<String, Double> metrics = new HashMap<>();
         metrics.put("countNum", 1.0);
 
-        return AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions, metrics);
+        return AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions
+                , metrics);
     }
 
 

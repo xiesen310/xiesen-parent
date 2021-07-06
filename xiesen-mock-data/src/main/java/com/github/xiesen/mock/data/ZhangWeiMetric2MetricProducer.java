@@ -64,7 +64,8 @@ public class ZhangWeiMetric2MetricProducer {
         Map<String, Double> metrics = new HashMap<>();
         metrics.put("cpu_usage_rate", 0.6);
 
-        return AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions, metrics);
+        return AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions
+                , metrics);
     }
 
 

@@ -1,4 +1,5 @@
 package com.github.xiesen.algorithm.xxhash;
+
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
@@ -11,7 +12,8 @@ import java.nio.ByteOrder;
 final class ByteBufferAbstractAccess extends AbstractAccess<ByteBuffer> {
     public static final ByteBufferAbstractAccess INSTANCE = new ByteBufferAbstractAccess();
 
-    private ByteBufferAbstractAccess() {}
+    private ByteBufferAbstractAccess() {
+    }
 
     @Override
     public long getLong(ByteBuffer input, long offset) {

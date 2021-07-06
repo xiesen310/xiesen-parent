@@ -93,7 +93,8 @@ public class ZhangWeiJsonProducer {
         filebeatJson.put("beat", beat);
         filebeatJson.put("host", host);
         filebeatJson.put("servicename", "test_appprogramname8");
-        filebeatJson.put("grokmessage", "192.168.1.151 - - [29/Jun/2020:16:09:23 +0800] \"GET /webserver/scene/getSceneList.do?menuItemId=1039&sceneGroupId=&templateFlag= HTTP/1.0\" 200 3167");
+        filebeatJson.put("grokmessage", "192.168.1.151 - - [29/Jun/2020:16:09:23 +0800] \"GET " +
+                "/webserver/scene/getSceneList.do?menuItemId=1039&sceneGroupId=&templateFlag= HTTP/1.0\" 200 3167");
         filebeatJson.put("datemessage", "2020-07-06T08:22:00.666Z");
         filebeatJson.put("jsonmessage", "{\"testmessage\":\"test\"}");
         filebeatJson.put("geoipmessage", "151.101.230.217");

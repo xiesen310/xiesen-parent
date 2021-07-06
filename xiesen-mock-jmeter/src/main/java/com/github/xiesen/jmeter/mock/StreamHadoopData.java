@@ -33,7 +33,8 @@ public class StreamHadoopData {
         normalFields.put("fmillsecond", "585606599");
         normalFields.put("inputtype", "Z");
         normalFields.put("logchecktime", DateUtil.getUTCTimeStr());
-        normalFields.put("message", "13811110000-110101199003075517-上海市浦东新区张江微电子港-zorkdata@163.com-123456789-wanghaiying123-王海鹰-192.168.1.1-00-50-56-C0-00-08-6227002470170278192-持仓1000万");
+        normalFields.put("message", "13811110000-110101199003075517-上海市浦东新区张江微电子港-zorkdata@163" +
+                ".com-123456789-wanghaiying123-王海鹰-192.168.1.1-00-50-56-C0-00-08-6227002470170278192-持仓1000万");
         normalFields.put("end_logtime", DateUtil.getUTCTimeStr());
         normalFields.put("smillsecond", "585606599");
         normalFields.put("featurecode", "unknown");
@@ -91,7 +92,8 @@ public class StreamHadoopData {
         normalFields.put("fmillsecond", "585606599");
         normalFields.put("inputtype", "Z");
         normalFields.put("logchecktime", DateUtil.getUTCTimeStr());
-        normalFields.put("message", "13811110000-110101199003075517-上海市浦东新区张江微电子港-zorkdata@163.com-123456789-wanghaiying123-王海鹰-192.168.1.1-00-50-56-C0-00-08-6227002470170278192-持仓1000万");
+        normalFields.put("message", "13811110000-110101199003075517-上海市浦东新区张江微电子港-zorkdata@163" +
+                ".com-123456789-wanghaiying123-王海鹰-192.168.1.1-00-50-56-C0-00-08-6227002470170278192-持仓1000万");
         normalFields.put("end_logtime", DateUtil.getUTCTimeStr());
         normalFields.put("smillsecond", "585606599");
         normalFields.put("featurecode", "unknown");

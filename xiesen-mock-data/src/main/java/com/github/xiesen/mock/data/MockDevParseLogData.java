@@ -154,7 +154,7 @@ public class MockDevParseLogData {
 
         producer.flush();
         producer.close();
-        System.out.println("生产 " +records +" 条数据,耗时: " + (System.currentTimeMillis() - start) + " ms");
+        System.out.println("生产 " + records + " 条数据,耗时: " + (System.currentTimeMillis() - start) + " ms");
         Thread.sleep(1000L);
 
     }

@@ -56,8 +56,8 @@ public class KafkaConsumerAvroDemo {
 
                 /*System.out.printf("topic = %s ,partition = %d,offset = %d, key = %s, value = %s%n", record.topic(),
                         record.partition(),
-                        record.offset(), record.key(), AvroDeserializerFactory.getMetricDeserializer().deserializing(record.value()));*/
-
+                        record.offset(), record.key(), AvroDeserializerFactory.getMetricDeserializer().deserializing
+                        (record.value()));*/
 
 
                 System.out.println("消费了 " + i + " 条数据");

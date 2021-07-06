@@ -126,10 +126,12 @@ abstract class AbstractDualHashFunctionAbstract extends AbstractLongTupleHashFun
      * @param <T>
      * @return
      */
-    protected abstract <T> long dualHash(@Nullable T input, AbstractAccess<T> access, long off, long len, @Nullable long[] result);
+    protected abstract <T> long dualHash(@Nullable T input, AbstractAccess<T> access, long off, long len,
+                                         @Nullable long[] result);
 
     @Override
-    public <T> void hash(@Nullable final T input, final AbstractAccess<T> access, final long off, final long len, final long[] result) {
+    public <T> void hash(@Nullable final T input, final AbstractAccess<T> access, final long off, final long len,
+                         final long[] result) {
         checkResult(result);
         dualHash(input, access, off, len, result);
     }

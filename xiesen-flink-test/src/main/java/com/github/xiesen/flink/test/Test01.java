@@ -50,7 +50,7 @@ public class Test01 {
 //            }
 //        }
 //
-        IdWorker idWorker=new IdWorker(0,0);
+        IdWorker idWorker = new IdWorker(0, 0);
         long id = idWorker.nextId();
         System.out.println(id);
         return String.valueOf(id);

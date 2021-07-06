@@ -48,8 +48,6 @@ public class MockTestMetricAvro {
     }
 
 
-
-
     public static void main(String[] args) throws Exception {
         long size = 10000000L * 1;
 

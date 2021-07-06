@@ -130,7 +130,6 @@ public class MockHbaseSinkJsonData {
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
 
-
         for (long index = 0; index < records; index++) {
             String message = data.buildMsg();
             System.out.println(message);

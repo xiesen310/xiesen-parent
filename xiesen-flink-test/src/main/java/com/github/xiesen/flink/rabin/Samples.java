@@ -22,7 +22,8 @@ public class Samples {
      * @param logTypeName 日志集名称
      * @return
      */
-    public static String generateEsId(RabinFingerprintLong rabin, String timestamp, String source, Long offset, String appSystem, String logTypeName) {
+    public static String generateEsId(RabinFingerprintLong rabin, String timestamp, String source, Long offset,
+                                      String appSystem, String logTypeName) {
         StringBuilder builder = new StringBuilder();
         if (StringUtils.isNotEmpty(timestamp)) {
             builder.append(timestamp);
@@ -79,7 +80,8 @@ public class Samples {
 
         for (int i = 0; i < 1000; i++) {
             rabin.reset();
-            rabin.pushBytes("2020-08-21T17:28:05.079+08:00/var/log/tdx.log0tdxtdx_filebeat2020-08-21T17:28:06.880+08:00".getBytes());
+            rabin.pushBytes(("2020-08-21T17:28:05.079+08:00/var/log/tdx.log0tdxtdx_filebeat2020-08-21T17:28:06" +
+                    ".880+08:00").getBytes());
 //            rabin.pushBytes("xiesenxie".getBytes());
             System.out.println(Long.toString(rabin.getFingerprintLong(), 16));
         }

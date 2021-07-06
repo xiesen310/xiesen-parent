@@ -30,7 +30,9 @@ public abstract class AbstractFingerprint implements Fingerprint<Polynomial> {
     }
 
     public abstract void pushByte(byte b);
+
     public abstract void reset();
+
     public abstract Polynomial getFingerprint();
 
     @Override

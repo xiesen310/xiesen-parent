@@ -64,7 +64,8 @@ public class Producer {
      * @param normalFields 普通列
      */
     public void sendLogAvro(String topic, String logTypeName, String timestamp, String source, String offset,
-                            Map<String, String> dimensions, Map<String, Double> metrics, Map<String, String> normalFields) {
+                            Map<String, String> dimensions, Map<String, Double> metrics,
+                            Map<String, String> normalFields) {
         try {
             byte[] bytes = AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source,
                     offset, dimensions, metrics, normalFields);
@@ -83,7 +84,8 @@ public class Producer {
      * @param dimensions    维度
      * @param metrics       指标
      */
-    public void sendMetricAvro(String metricTopic, String metricSetName, String timestamp, Map<String, String> dimensions,
+    public void sendMetricAvro(String metricTopic, String metricSetName, String timestamp,
+                               Map<String, String> dimensions,
                                Map<String, Double> metrics) {
         try {
             byte[] bytes = AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp,

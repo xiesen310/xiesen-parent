@@ -115,7 +115,8 @@ public class MockStreamLogAvro {
 
             System.out.println(printData(logTypeName, timestamp, source, offset, dimensions, measures, normalFields));
 
-            CustomerProducer08 producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent\\xiesn-mock-data-0.8\\src\\main\\resources\\config.properties").getProducer();
+            CustomerProducer08 producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
+                    "\\xiesn-mock-data-0.8\\src\\main\\resources\\config.properties").getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
             Thread.sleep(2000);
         }

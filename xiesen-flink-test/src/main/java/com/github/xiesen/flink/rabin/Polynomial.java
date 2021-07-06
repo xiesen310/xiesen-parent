@@ -479,7 +479,8 @@ public class Polynomial implements Arithmetic<Polynomial>, Comparable<Polynomial
      * Tests and Constructions of Irreducible Polynomials over Finite Fields
      * (1997) Shuhong Gao, Daniel Panario
      * <p>
-     * http://citeseer.ist.psu.edu/cache/papers/cs/27167/http:zSzzSzwww.math.clemson.eduzSzfacultyzSzGaozSzpaperszSzGP97a.pdf/gao97tests.pdf
+     * http://citeseer.ist.psu.edu/cache/papers/cs/27167/http:zSzzSzwww.math.clemson
+     * .eduzSzfacultyzSzGaozSzpaperszSzGP97a.pdf/gao97tests.pdf
      */
     protected Reducibility getReducibilityBenOr() {
         final long degree = this.degree().longValue();

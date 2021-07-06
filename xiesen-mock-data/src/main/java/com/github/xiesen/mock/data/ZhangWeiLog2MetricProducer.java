@@ -74,9 +74,11 @@ public class ZhangWeiLog2MetricProducer {
         Map<String, String> normalFields = new HashMap<>();
         normalFields.put("age", "26");
         normalFields.put("logstash_deal_name", "yf122");
-        normalFields.put("message", "[CST Sep  4 18:01:43] error    : Aborting queued event '/var/monit/1594927381_2578b50' - service ostemplate not found in monit configuration");
+        normalFields.put("message", "[CST Sep  4 18:01:43] error    : Aborting queued event " +
+                "'/var/monit/1594927381_2578b50' - service ostemplate not found in monit configuration");
 
-        return AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
+        return AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source, offset,
+                dimensions, measures, normalFields);
     }
 
 

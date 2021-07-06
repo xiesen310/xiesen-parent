@@ -6,6 +6,6 @@ package com.github.xiesen.json;
  */
 public class snowyJson {
     public static void main(String[] args) {
-        
+
     }
 }

@@ -743,7 +743,6 @@ public class CompressFileUtils {
     }
 
 
-
     private static List<String> getJarList(File file) {
         List<String> list = new ArrayList<>();
         File[] fs = file.listFiles();

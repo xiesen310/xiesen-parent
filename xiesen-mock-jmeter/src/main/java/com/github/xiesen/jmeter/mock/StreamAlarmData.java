@@ -27,7 +27,9 @@ public class StreamAlarmData {
         alarmJson.put("severity", i * 3);
         alarmJson.put("status", "PROBLEM");
         alarmJson.put("timestamp", DateUtil.getUTCTimeStr());
-        String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ /\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
+        String searchSentence = "SELECT mean(\"cores\") AS value  FROM cpu_system_metricbeat WHERE ( \"hostname\" =~ " +
+                "/\\.*/ ) AND ( \"ip\" =~ /\\.*/ ) AND ( \"appsystem\" = 'dev_test') AND time >= 1594209600000ms AND " +
+                "time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
         JSONObject extFieldsJson = new JSONObject();
         extFieldsJson.put("uuid", UUID.randomUUID().toString().replaceAll("-", ""));
         extFieldsJson.put("sourSystem", String.valueOf(new Random().nextInt(10000)));

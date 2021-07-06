@@ -43,26 +43,28 @@ public class IdWorker {
     // 数据标识id部分
     private final long datacenterId;
 
-    public IdWorker(){
+    public IdWorker() {
         this.datacenterId = getDatacenterId(maxDatacenterId);
         this.workerId = getMaxWorkerId(datacenterId, maxWorkerId);
     }
+
     /**
-     * @param workerId
-     *            工作机器ID
-     * @param datacenterId
-     *            序列号
+     * @param workerId     工作机器ID
+     * @param datacenterId 序列号
      */
     public IdWorker(long workerId, long datacenterId) {
         if (workerId > maxWorkerId || workerId < 0) {
-            throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0", maxWorkerId));
+            throw new IllegalArgumentException(String.format("worker Id can't be greater than %d or less than 0",
+                    maxWorkerId));
         }
         if (datacenterId > maxDatacenterId || datacenterId < 0) {
-            throw new IllegalArgumentException(String.format("datacenter Id can't be greater than %d or less than 0", maxDatacenterId));
+            throw new IllegalArgumentException(String.format("datacenter Id can't be greater than %d or less than 0",
+                    maxDatacenterId));
         }
         this.workerId = workerId;
         this.datacenterId = datacenterId;
     }
+
     /**
      * 获取下一个ID
      *
@@ -71,7 +73,8 @@ public class IdWorker {
     public synchronized long nextId() {
         long timestamp = timeGen();
         if (timestamp < lastTimestamp) {
-            throw new RuntimeException(String.format("Clock moved backwards.  Refusing to generate id for %d milliseconds", lastTimestamp - timestamp));
+            throw new RuntimeException(String.format("Clock moved backwards.  Refusing to generate id for %d " +
+                    "milliseconds", lastTimestamp - timestamp));
         }
 
         if (lastTimestamp == timestamp) {
@@ -153,10 +156,10 @@ public class IdWorker {
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
-        IdWorker idWorker=new IdWorker(0,0);
+        IdWorker idWorker = new IdWorker(0, 0);
 
         Set<Long> idSet = new HashSet<Long>();
-        for(int i=0;i<1000000;i++){
+        for (int i = 0; i < 1000000; i++) {
             long nextId = idWorker.nextId();
             idSet.add(nextId);
             //System.out.println(nextId);

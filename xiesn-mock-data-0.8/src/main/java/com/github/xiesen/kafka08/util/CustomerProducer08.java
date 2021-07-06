@@ -41,8 +41,10 @@ public class CustomerProducer08 {
             initConfig(propertiesName);
             Properties props = new Properties();
             props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
-            props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
-            props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.ByteArraySerializer");
+            props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization" +
+                    ".StringSerializer");
+            props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization" +
+                    ".ByteArraySerializer");
 
             /**
              * 这个参数控制着相同分区内数据发送的批次个数大小，也就是当数据达到 这个size 时，进行数据发送,
@@ -52,7 +54,8 @@ public class CustomerProducer08 {
 
             producer = new KafkaProducer<String, byte[]>(props);
 
-            props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization.StringSerializer");
+            props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, "org.apache.kafka.common.serialization" +
+                    ".StringSerializer");
             noAvroProducer = new KafkaProducer<String, String>(props);
 
         } catch (Exception ex) {
@@ -81,7 +84,8 @@ public class CustomerProducer08 {
      * @param normalFields 普通列
      */
     public void sendLog(String logTypeName, String timestamp, String source, String offset,
-                        Map<String, String> dimensions, Map<String, Double> measures, Map<String, String> normalFields) {
+                        Map<String, String> dimensions, Map<String, Double> measures,
+                        Map<String, String> normalFields) {
         try {
             byte[] bytes = AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source,
                     offset, dimensions, measures, normalFields);
@@ -99,9 +103,11 @@ public class CustomerProducer08 {
      * @param dimensions    维度
      * @param metrics       指标
      */
-    public void sendMetric(String metricSetName, String timestamp, Map<String, String> dimensions, Map<String, Double> metrics) {
+    public void sendMetric(String metricSetName, String timestamp, Map<String, String> dimensions, Map<String,
+            Double> metrics) {
         try {
-            byte[] bytes = AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions, metrics);
+            byte[] bytes = AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp
+                    , dimensions, metrics);
             producer.send(new ProducerRecord<String, byte[]>(topics, null, bytes));
         } catch (Exception e) {
             logger.error("sendMetric-插入Kafka失败", e);
