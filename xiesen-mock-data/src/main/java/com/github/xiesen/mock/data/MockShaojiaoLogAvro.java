@@ -24,7 +24,6 @@ public class MockShaojiaoLogAvro {
         dimensions.put("servicecode", "WEB");
         dimensions.put("clustername", "nginx");
         dimensions.put("appsystem", "dev_test");
-        dimensions.put("appsystem", "dev_test");
         dimensions.put("servicename", "nginx");
         dimensions.put("ip", "192.168.1.1");
         return dimensions;
@@ -32,6 +31,8 @@ public class MockShaojiaoLogAvro {
 
     private static Map<String, Double> getRandomMeasures() {
         Map<String, Double> measures = new HashMap<>(4);
+        measures.put("cpu_used",0.8);
+        measures.put("memory_used",0.9);
         return measures;
     }
 
@@ -41,6 +42,7 @@ public class MockShaojiaoLogAvro {
                 "/gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ" +
                 "%3D%3D HTTP/1.1\" 200 872 ");
         normalFields.put("collecttime", DateUtil.getUTCTimeStr());
+//        normalFields.put("collecttime", "abc");
         return normalFields;
     }
 
@@ -50,7 +52,6 @@ public class MockShaojiaoLogAvro {
         for (int i = 0; i < size; i++) {
             String logTypeName = "default_analysis_template";
             String timestamp = DateUtil.getUTCTimeStr();
-//            String timestamp = "2020-12-30T16:27:22.610+08:00";
             String source = "/var/log/nginx/access.log";
             String offset = "351870827";
 
