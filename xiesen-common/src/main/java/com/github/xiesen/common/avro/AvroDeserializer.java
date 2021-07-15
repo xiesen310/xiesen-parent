@@ -29,6 +29,7 @@ public class AvroDeserializer {
         getKeysFromjson(schema);
     }
 
+    
     /**
      * @param schema：Avro序列化所使用的schema
      * @return void    返回类型

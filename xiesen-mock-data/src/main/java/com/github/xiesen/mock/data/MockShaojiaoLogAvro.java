@@ -31,8 +31,8 @@ public class MockShaojiaoLogAvro {
 
     private static Map<String, Double> getRandomMeasures() {
         Map<String, Double> measures = new HashMap<>(4);
-        measures.put("cpu_used",0.8);
-        measures.put("memory_used",0.9);
+//        measures.put("cpu_used",0.8);
+//        measures.put("memory_used",0.9);
         return measures;
     }
 
