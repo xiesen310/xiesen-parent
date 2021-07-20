@@ -6,7 +6,6 @@ import com.github.xiesen.mock.util.LogRecords;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicLong;
@@ -40,7 +39,7 @@ public class KafkaConsumerFilebeat {
         while (true) {
             //  从服务器开始拉取数据
 
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
+            ConsumerRecords<String, String> records = consumer.poll(100);
             records.forEach(record -> {
 //                i.getAndIncrement();
                 System.out.println(record.timestamp());

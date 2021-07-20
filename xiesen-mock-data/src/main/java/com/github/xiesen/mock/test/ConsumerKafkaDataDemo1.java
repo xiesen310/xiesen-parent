@@ -3,7 +3,6 @@ package com.github.xiesen.mock.test;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 
-import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicLong;
@@ -35,7 +34,7 @@ public class ConsumerKafkaDataDemo1 {
         AtomicLong i = new AtomicLong();
         while (true) {
             //  从服务器开始拉取数据
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000000000));
+            ConsumerRecords<String, String> records = consumer.poll(1000000000);
             records.forEach(record -> {
                 i.getAndIncrement();
                 System.out.println(record.timestamp());

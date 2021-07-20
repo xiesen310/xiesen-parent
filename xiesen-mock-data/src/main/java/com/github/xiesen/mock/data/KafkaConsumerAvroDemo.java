@@ -7,7 +7,6 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.ByteArrayDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
-import java.time.Duration;
 import java.util.Collections;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicLong;
@@ -43,7 +42,7 @@ public class KafkaConsumerAvroDemo {
         while (true) {
             //  从服务器开始拉取数据
 
-            ConsumerRecords<String, byte[]> records = consumer.poll(Duration.ofMillis(100));
+            ConsumerRecords<String, byte[]> records = consumer.poll(100);
 
             records.forEach(record -> {
                 GenericRecord value =

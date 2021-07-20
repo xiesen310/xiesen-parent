@@ -71,7 +71,7 @@ public class MockShaojiaoLogAvro {
                     "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
-//            Thread.sleep(1000);
+            Thread.sleep(1000);
         }
         Thread.sleep(1000);
     }
