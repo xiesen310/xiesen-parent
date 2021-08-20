@@ -48,6 +48,10 @@ public class MockShaojiaoLogAvro {
 
 
     public static void main(String[] args) throws Exception {
+        if (args.length != 1) {
+            throw new RuntimeException("请填写配置文件路径");
+        }
+        
         long size = 100000000L * 1;
         for (int i = 0; i < size; i++) {
             String logTypeName = "default_analysis_template";
@@ -67,8 +71,7 @@ public class MockShaojiaoLogAvro {
             map.put("measures", measures);
             map.put("normalFields", normalFields);
 //            System.out.println(JSON.toString(map));
-            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
-                    "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+            CustomerProducer producer = ProducerPool.getInstance(args[0]).getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
             Thread.sleep(1000);

@@ -19,9 +19,9 @@ import java.util.Properties;
  * @Email xiesen310@163.com
  * @Date 2020/6/28 9:49
  */
-@Slf4j
+
 public class CustomerProducer {
-    private static final Logger logger = LoggerFactory.getLogger(CustomerProducer.class);
+    private static final Logger log = LoggerFactory.getLogger(CustomerProducer.class);
     static String servers = "kafka-1:9092,kafka-2:9092,kafka-3:9092";
     static int batchSize = 1;
     static CustomerProducer testProducer;
@@ -88,11 +88,11 @@ public class CustomerProducer {
             /**
              * kerberos 认证
              */
-            System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
+            /*System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
             System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_server_jaas.conf");
             props.put("security.protocol", "SASL_PLAINTEXT");
             props.put("sasl.kerberos.service.name", "kafka");
-            props.put("sasl.mechanism", "GSSAPI");
+            props.put("sasl.mechanism", "GSSAPI");*/
 
 
             producer = new KafkaProducer<String, byte[]>(props);
