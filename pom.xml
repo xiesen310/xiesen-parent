@@ -37,6 +37,7 @@
         <module>xiesen-siddhi</module>
         <module>xiesen-influxdb</module>
         <module>xiesen-mysql</module>
+        <module>xiesen-jython</module>
     </modules>
 
     <parent>

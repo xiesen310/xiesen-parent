@@ -93,8 +93,8 @@ public class MockSongJsonData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "mdh";
-        String bootstrapServers = "cs56:9092,cs55:9092,cs54:9092";
+        String topic = "xiesen_trino";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 1000L;
 
         System.out.println(buildMsg());

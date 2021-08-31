@@ -11,9 +11,11 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.mortbay.util.ajax.JSON;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
+import java.util.Random;
 
 /**
  * @author 谢森
@@ -58,10 +60,20 @@ public class MockShaojiaoMetricAvro {
         return new KafkaProducer<>(props);
     }
 
+    public static String ipPrefix() {
+        boolean b = new Random().nextBoolean();
+        if (b) {
+            return "120";
+        } else {
+            return "121";
+        }
+    }
+
     public static String buildMsg() {
         JSONObject bigJson = new JSONObject();
 //        String hostname = "yf12011111111";
-        String hostname = "yf120";
+        String prefix = ipPrefix();
+        String hostname = "yf" + prefix;
 
         JSONObject hostJson = new JSONObject();
         hostJson.put("name", hostname);
@@ -70,7 +82,7 @@ public class MockShaojiaoMetricAvro {
         bigJson.put("topicname", "ods_default_log");
         bigJson.put("clustername", "基础监控");
         bigJson.put("message", "xiesen test data");
-//        bigJson.put("ip", "192.168.70.120");
+        bigJson.put("ip", "192.168.70." + prefix);
         JSONObject inputJson = new JSONObject();
         inputJson.put("type", "log");
         bigJson.put("input", inputJson);
@@ -143,20 +155,23 @@ public class MockShaojiaoMetricAvro {
         String metricSetName = "core_system_mb";
         int size = 1000;
 
-        CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
-                "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+        CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
         for (int i = 0; i < size; i++) {
             String timestamp = String.valueOf(System.currentTimeMillis());
             java.util.Map<String, String> dimensions = new HashMap<>();
+            String prefix = ipPrefix();
             dimensions.put("appsystem", "dev_test");
-            dimensions.put("hostname", "autotest-3");
-            dimensions.put("ip", "192.168.70.85");
-            dimensions.put("servicename", "lmt模块");
-            dimensions.put("clustername", "基础监控");
+            dimensions.put("hostname", "autotest-"+ prefix);
+            dimensions.put("ip", "192.168.70." + prefix);
+//            dimensions.put("servicename", "lmt模块");
+//            dimensions.put("clustername", "基础监控");
             dimensions.put("appprogramname", "lmt模块");
 
             Map<String, Double> metrics = new HashMap<>();
-            metrics.put("user_pct", 1.0);
+
+            double v = new Random().nextDouble();
+
+            metrics.put("user_pct",v);
 
 
             Map<String, Object> map = new HashMap<>();
