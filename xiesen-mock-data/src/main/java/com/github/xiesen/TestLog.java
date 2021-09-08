@@ -1,6 +1,7 @@
 package com.github.xiesen;
 
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.LoggerFactory;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,9 +13,8 @@ import java.util.logging.Logger;
  * @Email xiesen310@163.com
  * @Date 2021/1/22 19:21
  */
-@Slf4j
 public class TestLog {
-
+    private static org.slf4j.Logger log = LoggerFactory.getLogger(TestLog.class);
     public static void main(String[] args) {
         Logger.getLogger("com").setLevel(Level.OFF);
         log.info("我是 info");

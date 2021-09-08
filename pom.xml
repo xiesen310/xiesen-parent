@@ -38,6 +38,7 @@
         <module>xiesen-influxdb</module>
         <module>xiesen-mysql</module>
         <module>xiesen-jython</module>
+        <module>xiesen-Phoenix</module>
     </modules>
 
     <parent>

@@ -46,7 +46,7 @@ public class KafkaConsumerFilebeat {
                 LogRecords logRecords = JSON.parseObject(record.value(), new TypeReference<LogRecords>() {
                 });
 
-                logRecords.setKfkTs(record.timestamp());
+//                logRecords.setKfkTs(record.timestamp());
 
                 System.out.printf("topic = %s ,partition = %d,offset = %d, key = %s, value = %s%n", record.topic(),
                         record.partition(),

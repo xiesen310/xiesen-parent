@@ -120,8 +120,7 @@ public class MockGuoSenLogAvro {
             map.put("measures", measures);
             map.put("normalFields", normalFields);
             System.out.println(JSON.toString(map));
-            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
-                    "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
             Thread.sleep(1000);
