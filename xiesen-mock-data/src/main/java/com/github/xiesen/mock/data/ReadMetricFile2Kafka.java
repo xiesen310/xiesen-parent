@@ -10,7 +10,9 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.HashSet;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author 谢森
@@ -21,13 +23,13 @@ import java.util.Properties;
 public class ReadMetricFile2Kafka {
     public static void main(String[] args) {
         String topic = "ym_metric_data";
-        String filePath = "E:\\data\\metricbeat.log";
+        String filePath = "C:\\Users\\xiesen\\Downloads\\axkh.json";
 
 
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
+//        KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
-
+        Set<String> set = new HashSet<>(1024);
         try {
             File file = new File(filePath);
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
@@ -38,7 +40,11 @@ public class ReadMetricFile2Kafka {
                 if (lineCount % 1000 == 0) {
                     System.out.println("第[" + lineCount + "]行数据:" + strLine);
                 }
-                send(producer, topic, strLine);
+
+                JSONObject jsonObject = JSONObject.parseObject(strLine);
+                String logTypeName = jsonObject.getString("logTypeName");
+                set.add(logTypeName);
+//                send(producer, topic, strLine);
                 lineCount++;
             }
             System.out.println("数据总条数: " + lineCount);
@@ -46,9 +52,11 @@ public class ReadMetricFile2Kafka {
             e.printStackTrace();
         }
 
-        producer.flush();
-        producer.close();
+//        producer.flush();
+//        producer.close();
 
+
+        set.forEach((name) -> System.out.println(name));
         try {
             Thread.sleep(1000L);
         } catch (InterruptedException e) {
