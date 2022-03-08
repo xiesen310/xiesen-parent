@@ -24,5 +24,14 @@ public class TestStr {
         System.out.println(s1.equals(s2.intern()));
         System.out.println(s2.equals(s3.intern()));
         System.out.println(s2.intern().equals(s3.intern()));
+
+
+        System.out.println("==========================");
+        int hour, minute, second;
+        second = 3661;
+        hour = second / 3600;
+        minute = (second - hour * 3600) / 60;
+        second = second - hour * 3600 - minute * 60;
+        System.out.println(" hour is " + hour + " minute is " + minute + " second is " + second);
     }
 }

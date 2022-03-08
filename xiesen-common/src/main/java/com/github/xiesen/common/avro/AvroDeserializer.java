@@ -57,7 +57,7 @@ public class AvroDeserializer {
      */
 
     public GenericRecord deserializing(byte[] body) {
-        System.out.println(new String(body));
+//        System.out.println(new String(body));
         DatumReader<GenericData.Record> datumReader = new GenericDatumReader<GenericData.Record>(this.schema);
         Decoder decoder = DecoderFactory.get().binaryDecoder(body, null);
         GenericData.Record result = null;

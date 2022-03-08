@@ -10,6 +10,7 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import java.util.Properties;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author 谢森
@@ -118,9 +119,9 @@ public class MockHiveSinkJsonData {
 
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "xiesen_test1";
+        String topic = "xiesen_json_input2";
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        long records = 5000000L;
+        long records = 500L;
         MockHiveSinkJsonData data = new MockHiveSinkJsonData();
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
@@ -129,7 +130,7 @@ public class MockHiveSinkJsonData {
             String message = data.buildMsg();
             System.out.println(message);
             send(producer, topic, message);
-//            TimeUnit.SECONDS.sleep(1);
+            TimeUnit.SECONDS.sleep(1);
         }
 
         producer.flush();

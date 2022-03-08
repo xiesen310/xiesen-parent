@@ -11,35 +11,35 @@
     <modules>
         <module>xiesen-mock-data</module>
         <module>xiesen-common</module>
-        <module>xiesen-flink-test</module>
-        <module>xiesn-mock-data-0.8</module>
-        <module>xiesen-mock-jmeter</module>
-        <module>consumer-avro-tools</module>
-        <module>xiesen-junit-test</module>
-        <module>xiesen-web</module>
-        <module>xiesen-kafka</module>
-        <module>xiesen-elasticsearch6</module>
-        <module>xiesen-algorithm</module>
-        <module>xiesen-kudu</module>
-        <module>xiesen-hbase</module>
-        <module>xiesen-redis</module>
-        <module>xiesen-sqlserver</module>
-        <module>xiesen-pulsar</module>
-        <module>xiesen-learnning</module>
-        <module>hashmap-demo</module>
-        <module>xiesen-mock-data-241</module>
-        <module>xiesen-redisson</module>
-        <module>xiesen-asynchbase</module>
-        <module>flink112-example</module>
-        <module>update-jar-metadata</module>
-        <module>xiesen-json</module>
-        <module>xiesen-hive</module>
-        <module>xiesen-siddhi</module>
-        <module>xiesen-influxdb</module>
-        <module>xiesen-mysql</module>
-        <module>xiesen-jython</module>
-        <module>xiesen-Phoenix</module>
-        <module>test-trino</module>
+<!--        <module>xiesen-flink-test</module>-->
+<!--        <module>xiesn-mock-data-0.8</module>-->
+<!--        <module>xiesen-mock-jmeter</module>-->
+<!--        <module>consumer-avro-tools</module>-->
+<!--        <module>xiesen-junit-test</module>-->
+<!--        <module>xiesen-web</module>-->
+<!--        <module>xiesen-kafka</module>-->
+<!--        <module>xiesen-elasticsearch6</module>-->
+<!--        <module>xiesen-algorithm</module>-->
+<!--        <module>xiesen-kudu</module>-->
+<!--        <module>xiesen-hbase</module>-->
+<!--        <module>xiesen-redis</module>-->
+<!--        <module>xiesen-sqlserver</module>-->
+<!--        <module>xiesen-pulsar</module>-->
+<!--        <module>xiesen-learnning</module>-->
+<!--        <module>hashmap-demo</module>-->
+<!--        <module>xiesen-mock-data-241</module>-->
+<!--        <module>xiesen-redisson</module>-->
+<!--        <module>xiesen-asynchbase</module>-->
+<!--        <module>flink112-example</module>-->
+<!--        <module>update-jar-metadata</module>-->
+<!--        <module>xiesen-json</module>-->
+<!--        <module>xiesen-hive</module>-->
+<!--        <module>xiesen-siddhi</module>-->
+<!--        <module>xiesen-influxdb</module>-->
+<!--        <module>xiesen-mysql</module>-->
+<!--        <module>xiesen-jython</module>-->
+<!--        <module>xiesen-Phoenix</module>-->
+<!--        <module>test-trino</module>-->
     </modules>
 
     <parent>

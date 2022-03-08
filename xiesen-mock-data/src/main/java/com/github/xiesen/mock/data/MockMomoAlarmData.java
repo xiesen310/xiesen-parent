@@ -130,12 +130,14 @@ public class MockMomoAlarmData {
     }
 
 
-    public static void main(String[] args) throws InterruptedException {
-        String topic = "dwd_alarm_real";
+    public static void main(String[] args) throws Exception {
+        String topic = "dwd_alarm_real_xiesen";
+//        String topic = "test2";
 //        String bootstrapServers = "yf172:9092,yf171:9092,yf170:9092";
-        String bootstrapServers = "autotest-3:9092,autotest-2:9092,autotest-1:9092";
-//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        long records = 10L;
+//        String bootstrapServers = "autotest-3:9092,autotest-2:9092,autotest-1:9092";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String bootstrapServers = "kafka1:9092,kafka2:9093,kafka3:9094";
+        long records = 100L;
 
         System.out.println(buildMsg());
 
@@ -153,4 +155,5 @@ public class MockMomoAlarmData {
         Thread.sleep(1000L);
 
     }
+
 }

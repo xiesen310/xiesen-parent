@@ -49,7 +49,7 @@ public class MockTestMetricAvro {
 
 
     public static void main(String[] args) throws Exception {
-        long size = 10000000L * 1;
+        long size = 100000L * 1;
 
         for (int i = 0; i < size; i++) {
             String metricSetName = "log2metric";
@@ -63,8 +63,7 @@ public class MockTestMetricAvro {
             map.put("dimensions", dimensions);
             map.put("metrics", metrics);
             System.out.println(JSON.toString(map));
-            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
-                    "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
 
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
 
