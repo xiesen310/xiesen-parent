@@ -3,7 +3,6 @@ package com.github.xiesen.mock.util;
 import com.github.xiesen.common.avro.AvroSerializerFactory;
 import com.github.xiesen.common.utils.PropertiesUtil;
 import com.github.xiesen.common.utils.StringUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -83,7 +82,7 @@ public class CustomerProducer {
              *  all： 表示发送数据时，broker 不仅会将消息写入到本地磁盘，同时也要保证其他副本也写入完成，才返回结果
              *  1: 表示发送数据时，broker 接收到消息写入到本地磁盘即可，无需保证其他副本是否写入成功
              */
-            props.put(ProducerConfig.ACKS_CONFIG, "1");
+            props.put(ProducerConfig.ACKS_CONFIG, "all");
 
             /**
              * kerberos 认证
@@ -149,9 +148,11 @@ public class CustomerProducer {
     public void sendMetric(String metricSetName, String timestamp, Map<String, String> dimensions, Map<String,
             Double> metrics) {
         try {
+            long startTime = System.currentTimeMillis();
             byte[] bytes = AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp
                     , dimensions, metrics);
-            producer.send(new ProducerRecord<String, byte[]>(topics, null, bytes));
+            producer.send(new ProducerRecord<String, byte[]>(topics, null, bytes), new CustomerMetricCallBack(topics, metricSetName, timestamp
+                    , dimensions, metrics));
         } catch (Exception e) {
             log.error("sendMetric-插入Kafka失败", e);
         }

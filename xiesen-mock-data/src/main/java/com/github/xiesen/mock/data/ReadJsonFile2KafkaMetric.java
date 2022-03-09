@@ -24,7 +24,8 @@ import java.util.Set;
 public class ReadJsonFile2KafkaMetric {
     public static void main(String[] args) {
 //        String filePath = "D:\\tmp\\metricData\\m2logtest.log";
-        String filePath = "D:\\tmp\\metricData\\m2logtest";
+//        String filePath = "D:\\tmp\\metricData\\m2logtest";
+        String filePath = "D:\\tmp\\metricData\\lv2Net";
         CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
 
         try {
@@ -49,7 +50,7 @@ public class ReadJsonFile2KafkaMetric {
         }
     }
 
-    private static int insertToKafka(CustomerProducer producer, BufferedReader bufferedReader) throws IOException {
+    private static int insertToKafka(CustomerProducer producer, BufferedReader bufferedReader) throws IOException, InterruptedException {
         String strLine;
         int lineCount = 0;
         while (null != (strLine = bufferedReader.readLine())) {
@@ -72,7 +73,6 @@ public class ReadJsonFile2KafkaMetric {
                 double value = jsonObject2.getDoubleValue(key);
                 metrics.put(key, value);
             }
-
             producer.sendMetric(metricsetname, timestamp, dimensions, metrics);
             lineCount++;
         }
