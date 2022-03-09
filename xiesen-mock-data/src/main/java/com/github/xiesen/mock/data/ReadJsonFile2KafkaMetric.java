@@ -23,74 +23,60 @@ import java.util.Set;
  */
 public class ReadJsonFile2KafkaMetric {
     public static void main(String[] args) {
-        String topic = "xiesen";
-        String filePath = "D:\\tmp\\error.txt";
+//        String filePath = "D:\\tmp\\metricData\\m2logtest.log";
+        String filePath = "D:\\tmp\\metricData\\m2logtest";
         CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
 
-//        producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
-
-
         try {
-
-            File file = new File(filePath);
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"UTF-8"));
-            String strLine = null;
-            int lineCount = 0;
-
-            while (null != (strLine = bufferedReader.readLine())) {
-//                if (lineCount % 1000 == 0) {
-                System.out.println("第[" + lineCount + "]行数据:" + strLine);
-//                }
-
-                JSONObject jsonObject = JSONObject.parseObject(strLine);
-                String metricsetname = jsonObject.getString("metricsetname");
-                String timestamp = jsonObject.getString("timestamp");
-                String dimensionStr = jsonObject.getString("dimensions");
-                JSONObject jsonObject1 = JSONObject.parseObject(dimensionStr);
-                Map<String, String> dimensions = jsonObject1.toJavaObject(Map.class);
-               /* if (dimensions.containsKey("errorInfo")) {
-                    String errorInfo = dimensions.get("errorInfo");
-                    System.out.println(errorInfo);
-                    String s = errorInfo.replaceAll("\\.", " ").replaceAll("\\n", "").replaceAll("-", "");
-                    System.out.println(s);
-                    dimensions.put("errorInfo", s);
-//                    dimensions.remove("errorInfo");
-                }*/
-
-                String metricStr = jsonObject.getString("metrics");
-                JSONObject jsonObject2 = JSONObject.parseObject(metricStr);
-                Set<String> keySet = jsonObject2.keySet();
-                Map<String, Double> metrics = new HashMap<>();
-                for (String key : keySet) {
-                    double value = jsonObject2.getDoubleValue(key);
-                    metrics.put(key, value);
+            File dir = new File(filePath);
+            if (dir.isDirectory()) {
+                File[] files = dir.listFiles();
+                for (File file : files) {
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));
+                    int lineCount = insertToKafka(producer, bufferedReader);
+                    System.out.println(file.getName() + " 数据总条数: " + lineCount);
+                    bufferedReader.close();
                 }
-
-
-                System.out.println("metricSetName = " + metricsetname);
-                System.out.println("timestamp = " + timestamp);
-                System.out.println("dimensions = " + dimensions);
-                System.out.println("metrics = " + metrics);
-
-
-                producer.sendMetric(metricsetname, timestamp, dimensions, metrics);
-                Thread.sleep(1000);
-                lineCount++;
-                System.out.printf(lineCount + "");
             }
-            System.out.println("数据总条数: " + lineCount);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-//        producer.flush();
-//        producer.close();
 
         try {
             Thread.sleep(1000L);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    private static int insertToKafka(CustomerProducer producer, BufferedReader bufferedReader) throws IOException {
+        String strLine;
+        int lineCount = 0;
+        while (null != (strLine = bufferedReader.readLine())) {
+            if (lineCount % 1000 == 0) {
+                System.out.println("第[" + lineCount + "]行数据:" + strLine);
+            }
+
+            JSONObject jsonObject = JSONObject.parseObject(strLine);
+            String metricsetname = jsonObject.getString("metricsetname");
+            String timestamp = jsonObject.getString("timestamp");
+            String dimensionStr = jsonObject.getString("dimensions");
+            JSONObject jsonObject1 = JSONObject.parseObject(dimensionStr);
+            Map<String, String> dimensions = jsonObject1.toJavaObject(Map.class);
+
+            String metricStr = jsonObject.getString("metrics");
+            JSONObject jsonObject2 = JSONObject.parseObject(metricStr);
+            Set<String> keySet = jsonObject2.keySet();
+            Map<String, Double> metrics = new HashMap<>();
+            for (String key : keySet) {
+                double value = jsonObject2.getDoubleValue(key);
+                metrics.put(key, value);
+            }
+
+            producer.sendMetric(metricsetname, timestamp, dimensions, metrics);
+            lineCount++;
+        }
+        return lineCount;
     }
 
     /**

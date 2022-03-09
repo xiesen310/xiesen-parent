@@ -13,6 +13,9 @@
 
     <name>xiesen-mock-data</name>
     <url>http://www.example.com</url>
+    <properties>
+        <clickhouse.version>0.3.1</clickhouse.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -84,6 +87,11 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.49</version>
+        </dependency>
+        <dependency>
+            <groupId>ru.yandex.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>${clickhouse.version}</version>
         </dependency>
     </dependencies>
 
