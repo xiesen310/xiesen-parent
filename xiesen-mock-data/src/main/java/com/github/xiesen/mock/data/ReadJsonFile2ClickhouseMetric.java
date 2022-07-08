@@ -84,8 +84,8 @@ public class ReadJsonFile2ClickhouseMetric {
         int size = alarmRecordQueue.size();
         for (int i = 0; i < size; i++) {
             MetricData metricData = alarmRecordQueue.poll(3, TimeUnit.SECONDS);
-            preparedStatement.setString(1, metricData.getKey());
-            preparedStatement.setString(2, metricData.getMetricsetname());
+//            preparedStatement.setString(1, metricData.getKey());
+//            preparedStatement.setString(2, metricData.getMetricsetname());
             preparedStatement.addBatch();
         }
         execute(preparedStatement, 2);
@@ -130,7 +130,7 @@ public class ReadJsonFile2ClickhouseMetric {
             });
             String dimension = builder.toString();
             String key = metricsetname + "-" + timestamp + "-" + dimension;
-            MetricData metricData = new MetricData(key, metricsetname);
+//            MetricData metricData = new MetricData(key, metricsetname);
             if ("process_number_count_5".equals(metricsetname)) {
                 System.out.println(strLine);
             }

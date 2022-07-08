@@ -4,9 +4,7 @@ import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
 import org.mortbay.util.ajax.JSON;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author xiese
@@ -18,12 +16,12 @@ public class MockChinaDimensionMetricAvroData {
 
     private static Map<String, String> getRandomDimensions() {
         Random random = new Random();
-        int i = random.nextInt(10);
+        int i = random.nextInt(225);
         Map<String, String> dimensions = new HashMap<>(4);
-        dimensions.put("hostname", "zorkdata_1");
+        dimensions.put("hostname", "zorkdata_" + i);
         dimensions.put("appprogramname", "通达信交易");
         dimensions.put("appsystem", "tdx");
-        dimensions.put("ip", "192.168.1.1");
+        dimensions.put("ip", "192.168.1." + i);
         return dimensions;
     }
 
@@ -34,12 +32,25 @@ public class MockChinaDimensionMetricAvroData {
         return measures;
     }
 
+    public static final List<String> METRIC_SETS = Arrays.asList("china_dimension_metric", "core_system_mb", "diskio_system_mb", "filesystem_system_mb", "load_system_mb");
+
+    private static String getRandomMetricSetName() {
+        Random random = new Random();
+        return METRIC_SETS.get(random.nextInt(METRIC_SETS.size()));
+    }
 
     public static void main(String[] args) throws Exception {
+        String confPath = null;
+        if (args.length == 1) {
+            confPath = args[0];
+        } else {
+            System.exit(-1);
+        }
+
         long size = 100000L * 1;
 
         for (int i = 0; i < size; i++) {
-            String metricSetName = "china_dimension_metric";
+            String metricSetName = getRandomMetricSetName();
             String timestamp = String.valueOf(System.currentTimeMillis());
 
             Map<String, String> dimensions = getRandomDimensions();
@@ -50,8 +61,8 @@ public class MockChinaDimensionMetricAvroData {
             map.put("dimensions", dimensions);
             map.put("metrics", metrics);
             System.out.println(JSON.toString(map));
-            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
-                    "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+            Thread.sleep(new Random().nextInt(1000));
+            CustomerProducer producer = ProducerPool.getInstance(confPath).getProducer();
 
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
 

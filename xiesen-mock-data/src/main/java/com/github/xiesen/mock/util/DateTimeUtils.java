@@ -30,7 +30,7 @@ public class DateTimeUtils {
         try {
             date = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+08:00").parse(dateStr);
         } catch (Exception e) {
-            log.warn("日期字符 {} ,解析时间格式失败,获取当前系统时间", dateStr);
+//            log.warn("日期字符 {} ,解析时间格式失败,获取当前系统时间", dateStr);
             date = new Date();
         }
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
@@ -47,6 +47,12 @@ public class DateTimeUtils {
         return result;
     }
 
+
+    public static String getDate() {
+        String s = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS").format(new Date());
+        return s;
+    }
+
     public static void main(String[] args) {
         String ss = "2021-11-30T10:30:15.345+08:00";
         System.out.println(utc2date(ss));
@@ -54,7 +60,7 @@ public class DateTimeUtils {
 
         Map<String, String> map = new HashMap<>(16);
         System.out.println(map.getOrDefault("key", "xiesen"));
-
+        System.out.println(getDate());
 
     }
 }

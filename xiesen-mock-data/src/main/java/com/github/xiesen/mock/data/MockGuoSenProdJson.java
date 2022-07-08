@@ -15,8 +15,8 @@ import java.util.UUID;
  * @Date 2020/6/28 10:08
  */
 public class MockGuoSenProdJson {
-    private static String topic = "guosen_json";
-    private static String brokerAddr = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+    private static String topic = "ods-jzjy-prometheus";
+    private static String brokerAddr = "kafka-1:29092,kafka-2:29092,kafka-3:29092";
     private static ProducerRecord<String, String> producerRecord = null;
     private static KafkaProducer<String, String> producer = null;
 
@@ -131,7 +131,7 @@ public class MockGuoSenProdJson {
     public static void main(String[] args) throws InterruptedException {
         for (int i = 0; i <= 1000; i++) {
             send(topic);
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         }
     }
 }

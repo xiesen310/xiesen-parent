@@ -1,5 +1,6 @@
 package com.github.xiesen.mock.data;
 
+import com.alibaba.fastjson.JSONObject;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -7,6 +8,8 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.Properties;
+import java.util.Random;
+import java.util.UUID;
 
 /**
  * @author 谢森
@@ -20,13 +23,16 @@ public class MockAceJsonData {
     private static String[] operator_status = {"success", "fail"};
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "ace_xs_source";
-        String bootstrapServers = "192.168.70.219:9092";
+//        String topic = "ace_xs_source";
+        String topic = "aesinput";
+//        String bootstrapServers = "192.168.70.219:9092";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
         long records = 1000L;
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
         for (long index = 0; index < records; index++) {
             send(producer, topic, mockJson());
+            Thread.sleep(2000);
         }
 
         Thread.sleep(2000);
@@ -34,11 +40,17 @@ public class MockAceJsonData {
     }
 
     private static String mockJson() {
-        String json = "{\"pv\":4,\"xctime\":1572932485,\"obj\":{\"cc\":\"mm\",\"channel\":{\"col2\":\"male\"," +
+        /*String json = "{\"pv\":4,\"xctime\":1572932485,\"obj\":{\"cc\":\"mm\",\"channel\":{\"col2\":\"male\"," +
                 "\"col1\":\"zhansan\"}},\"name\":\"tom\"," +
                 "\"some_users\":[{\"user_info1\":\"0F4aq5JsvMqWxNTaF61BZw==\",\"user_no1\":12}," +
-                "{\"user_info2\":\"bar\",\"user_no2\":14}]}";
-        return json;
+                "{\"user_info2\":\"bar\",\"user_no2\":14}]}";*/
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("CONTENT", "this is content " + UUID.randomUUID().toString().replaceAll("-", ""));
+        jsonObject.put("MSG_ID", UUID.randomUUID().toString().replaceAll("-", ""));
+        jsonObject.put("MSG_TYPE", "success");
+        jsonObject.put("SEND_DATE", System.currentTimeMillis());
+        jsonObject.put("AGE", new Random().nextInt(80) + 10);
+        return jsonObject.toJSONString();
     }
 
     /**

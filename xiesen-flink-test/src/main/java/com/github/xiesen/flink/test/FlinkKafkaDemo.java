@@ -9,8 +9,8 @@ import org.apache.flink.streaming.api.TimeCharacteristic;
 import org.apache.flink.streaming.api.datastream.DataStreamSource;
 import org.apache.flink.streaming.api.environment.CheckpointConfig;
 import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer011;
-import org.apache.flink.streaming.connectors.kafka.FlinkKafkaProducer011;
+import org.apache.flink.streaming.connectors.kafka.FlinkKafkaConsumer;
+import org.apache.flink.streaming.util.serialization.KeyedDeserializationSchema;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -46,7 +46,7 @@ public class FlinkKafkaDemo {
         properties.setProperty("group.id", groupId);
         properties.setProperty("auto.offset.reset", "earliest");
 
-        FlinkKafkaConsumer011<String> kafkaConsumer011 = new FlinkKafkaConsumer011<>(topic, new SimpleStringSchema(),
+        FlinkKafkaConsumer<String> kafkaConsumer011 = new FlinkKafkaConsumer<>(topic, new SimpleStringSchema(),
                 properties);
         DataStreamSource<String> source = env.addSource(kafkaConsumer011);
         kafkaConsumer011.setStartFromGroupOffsets();

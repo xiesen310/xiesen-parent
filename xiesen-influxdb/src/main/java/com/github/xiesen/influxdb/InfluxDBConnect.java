@@ -63,6 +63,10 @@ public class InfluxDBConnect {
         this.query(command);
     }
 
+    void createDatabase(String database) {
+        this.influxDB.createDatabase(database);
+    }
+
     /**
      * 查询
      *
@@ -73,25 +77,6 @@ public class InfluxDBConnect {
         return influxDB.query(new Query(command, database));
     }
 
-    /**
-     * 插入
-     */
-    public void insert(InfluxDbRow influxDbRow) {
-        if (influxDbRow == null) {
-            return;
-        }
-        Point.Builder builder = Point.measurement(influxDbRow.getMeasurement());
-        builder.tag(influxDbRow.getTags());
-        builder.fields(influxDbRow.getFields());
-        if (influxDbRow.getTimeSecond() != null) {
-            builder.time(influxDbRow.getTimeSecond(), TimeUnit.SECONDS);
-        }
-        Instant timestamp = Instant.now();
-
-        // builder.time(timestamp.toEpochMilli(), TimeUnit.MILLISECONDS);
-        builder.time(1626231525798L, TimeUnit.MILLISECONDS);
-        influxDB.write(database, "default", builder.build());
-    }
 
     public static Long getmicTime() {
         Long cutime = System.currentTimeMillis() * 1000; // 微秒
@@ -148,12 +133,31 @@ public class InfluxDBConnect {
             builder.tag(influxDbRow.getTags());
             builder.fields(influxDbRow.getFields());
             if (influxDbRow.getTimeSecond() != null) {
-                builder.time(influxDbRow.getTimeSecond(), TimeUnit.SECONDS);
+                builder.time(influxDbRow.getTimeSecond(), TimeUnit.MILLISECONDS);
             } else {
                 builder.time(System.currentTimeMillis() / 1000, TimeUnit.SECONDS);
             }
             batchPoints.point(builder.build());
         }
         influxDB.write(batchPoints);
+    }
+
+
+    /**
+     * 插入
+     */
+    public void insertData(InfluxDbRow influxDbRow) {
+        if (influxDbRow == null) {
+            return;
+        }
+        Point.Builder builder = Point.measurement(influxDbRow.getMeasurement());
+        builder.tag(influxDbRow.getTags());
+        builder.fields(influxDbRow.getFields());
+        if (influxDbRow.getTimeSecond() != null) {
+            builder.time(influxDbRow.getTimeSecond(), TimeUnit.SECONDS);
+        }
+        Instant timestamp = Instant.now();
+        builder.time(timestamp.toEpochMilli(), TimeUnit.MILLISECONDS);
+        influxDB.write(database, "default", builder.build());
     }
 }

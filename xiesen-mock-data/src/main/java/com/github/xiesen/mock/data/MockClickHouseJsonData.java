@@ -1,6 +1,9 @@
 package com.github.xiesen.mock.data;
 
+import cn.hutool.core.date.DateTime;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.github.xiesen.mock.util.DateTimeUtils;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
@@ -24,8 +27,9 @@ public class MockClickHouseJsonData {
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
         for (long index = 0; index < records; index++) {
+//            System.out.println(mockJsonFormatData());
             send(producer, topic, mockJsonFormatData());
-//            Thread.sleep(1000);
+            Thread.sleep(1000);
         }
 
         Thread.sleep(2000);
@@ -93,6 +97,7 @@ public class MockClickHouseJsonData {
     private static String mockJsonFormatData() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("timestamp", System.currentTimeMillis());
+        jsonObject.put("date", DateTimeUtils.getDate());
         jsonObject.put("app", "clickhouse");
         jsonObject.put("message", "/gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfd");
         return jsonObject.toJSONString();

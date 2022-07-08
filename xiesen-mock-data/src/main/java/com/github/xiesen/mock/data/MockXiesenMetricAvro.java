@@ -11,7 +11,6 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.mortbay.util.ajax.JSON;
 
-import java.text.DecimalFormat;
 import java.util.*;
 
 /**
@@ -20,7 +19,7 @@ import java.util.*;
  * @Email xiesen310@163.com
  * @Date 2020/12/14 13:21
  */
-public class MockShaojiaoMetricAvro {
+public class MockXiesenMetricAvro {
 
     /**
      * kafka producer
@@ -64,13 +63,6 @@ public class MockShaojiaoMetricAvro {
         } else {
             return "121";
         }
-    }
-
-//    public static final List<String> METRIC_SET_NAMES = Arrays.asList("core_system_mb", "cpu_system_mb", "memory_system_mb");
-    public static final List<String> METRIC_SET_NAMES = Arrays.asList("core_system_mb");
-
-    public static String randomMetricSetName() {
-        return METRIC_SET_NAMES.get(new Random().nextInt(METRIC_SET_NAMES.size()));
     }
 
     public static String buildMsg() {
@@ -156,27 +148,23 @@ public class MockShaojiaoMetricAvro {
 
 
     public static void main(String[] args) throws InterruptedException {
-
-        int size = 10;
+        String metricSetName = "core_system_mb";
+        int size = 100000;
 
         CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
         for (int i = 0; i < size; i++) {
-            String metricSetName = randomMetricSetName();
             String timestamp = String.valueOf(System.currentTimeMillis());
-            java.util.Map<String, String> dimensions = new HashMap<>();
-//            String prefix = ipPrefix();
-            String prefix = "120";
+            Map<String, String> dimensions = new HashMap<>();
+            String prefix = ipPrefix();
             dimensions.put("appsystem", "dev_test");
             dimensions.put("hostname", "autotest-" + prefix);
             dimensions.put("ip", "192.168.70." + prefix);
-//            dimensions.put("servicename", "lmt模块");
-//            dimensions.put("clustername", "基础监控");
             dimensions.put("appprogramname", "lmt模块");
+            dimensions.put("id", UUID.randomUUID().toString().replaceAll("-", ""));
 
             Map<String, Double> metrics = new HashMap<>();
 
-//            double v = new Random().nextDouble();
-            double v = 0.8;
+            double v = new Random().nextDouble();
 
             metrics.put("user_pct", v);
 
@@ -189,7 +177,7 @@ public class MockShaojiaoMetricAvro {
             System.out.println(JSON.toString(map));
 
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
-            Thread.sleep(1000L);
+            Thread.sleep(10L);
         }
 
         Thread.sleep(1000L);

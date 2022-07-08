@@ -52,7 +52,7 @@ public class InfluxDBTest1 {
         influxDbRow.setTags(tags);
         influxDbRow.setFields(fields);
 
-        connect.insert(influxDbRow);
+//        connect.insert(influxDbRow);
     }
 
     /**
