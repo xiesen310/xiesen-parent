@@ -20,8 +20,8 @@ import java.util.Properties;
  */
 public class ReadLogFile2Kafka {
     public static void main(String[] args) {
-        String topic = "xiesen";
-        String filePath = "E:\\data\\paa_20210323.log";
+        String topic = "ods_xiesen";
+        String filePath = "D:\\tmp\\ods_default_log1.log";
 
 
         String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
@@ -39,8 +39,11 @@ public class ReadLogFile2Kafka {
                 if (lineCount % 1000 == 0) {
                     System.out.println("第[" + lineCount + "]行数据:" + strLine);
                 }
-                send(producer, topic, strLine);
-                lineCount++;
+                if (null != strLine) {
+
+                    send(producer, topic, strLine);
+                    lineCount++;
+                }
             }
             System.out.println("数据总条数: " + lineCount);
         } catch (Exception e) {
@@ -101,6 +104,7 @@ public class ReadLogFile2Kafka {
         props.put("batch.size", 16384);
         props.put("linger.ms", 0);
         props.put("buffer.memory", 33554432);
+        props.put("max.request.size", 5242880 * 2);
 
         // kerberos 认证
         /*System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
@@ -128,6 +132,7 @@ public class ReadLogFile2Kafka {
      */
     private static <T> void send(KafkaProducer<String, T> producer, String topic, T message) {
         ProducerRecord<String, T> producerRecord = new ProducerRecord<>(topic, null, message);
+
         producer.send(producerRecord, new Callback() {
             @Override
             public void onCompletion(RecordMetadata metadata, Exception exception) {
