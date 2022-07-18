@@ -78,8 +78,8 @@ public class MockChinaBankCallChainData {
     private static JSONObject CallA(String traceId) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("timestamp", DateUtil.getUTCTimeStr());
-        jsonObject.put("logtypename", "");
-        jsonObject.put("offset", 0);
+        jsonObject.put("logTypeName", "test");
+        jsonObject.put("offset", "0");
 
         JSONObject normalFields = new JSONObject();
         normalFields.put("traceid", traceId);
@@ -89,54 +89,13 @@ public class MockChinaBankCallChainData {
         normalFields.put("endtime", System.currentTimeMillis() + "");
         normalFields.put("spanname", "SpringMvcSpan|0");
         normalFields.put("code", "200");
-        normalFields.put("spantype", "");
-        normalFields.put("spanlayer", "");
+        normalFields.put("spantype", "0");
+        normalFields.put("spanlayer", "HTTP");
         normalFields.put("remoteendpointname", "");
+        normalFields.put("remoteappsystem", "noah");
         normalFields.put("remoteservicename", "");
         normalFields.put("remoteserviceinstance", "");
-        normalFields.put("remoteip", "");
-        normalFields.put("addinformation", "");
-        jsonObject.put("normalFields", normalFields);
-
-        JSONObject dimensions = new JSONObject();
-        dimensions.put("endpoint", "http://10.182.200.92.8090");
-        dimensions.put("component", "cn.boccfc.tracer.plugin.springmvc.interceptor.RequestMappingMethodInterceptor");
-        dimensions.put("hostname", "cl-hsfw-1-ap01");
-        dimensions.put("ip", "10.35.76.209");
-        dimensions.put("serviceinstance", "10.35.76.208");
-        dimensions.put("calltype", "remote");
-        dimensions.put("operationname", "icmRPCCall");
-        dimensions.put("appsystem", "");
-        dimensions.put("servicename", "icmRPCCall");
-        dimensions.put("status", 0);
-        jsonObject.put("dimensions", dimensions);
-
-        JSONObject measures = new JSONObject();
-        measures.put("duration", new Random().nextInt(1000) + 100);
-        jsonObject.put("measures", measures);
-        return jsonObject;
-    }
-
-    private static JSONObject CallB(String traceId, String parentId) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("timestamp", DateUtil.getUTCTimeStr());
-        jsonObject.put("logtypename", "");
-        jsonObject.put("offset", 0);
-
-        JSONObject normalFields = new JSONObject();
-        normalFields.put("traceid", traceId);
-        normalFields.put("parentid", parentId);
-        normalFields.put("spanid", UUID.randomUUID().toString().replaceAll("-", ""));
-        normalFields.put("starttime", System.currentTimeMillis() + "");
-        normalFields.put("endtime", System.currentTimeMillis() + "");
-        normalFields.put("spanname", "SpringMvcSpan|0");
-        normalFields.put("code", "200");
-        normalFields.put("spantype", "");
-        normalFields.put("spanlayer", "");
-        normalFields.put("remoteendpointname", "");
-        normalFields.put("remoteservicename", "");
-        normalFields.put("remoteserviceinstance", "");
-        normalFields.put("remoteip", "");
+        normalFields.put("remoteip", "10.35.76.209");
         normalFields.put("addinformation", "");
         jsonObject.put("normalFields", normalFields);
 
@@ -148,13 +107,68 @@ public class MockChinaBankCallChainData {
         dimensions.put("serviceinstance", "10.35.76.209");
         dimensions.put("calltype", "remote");
         dimensions.put("operationname", "icmRPCCall");
-        dimensions.put("appsystem", "");
+        dimensions.put("appsystem", "noah");
         dimensions.put("servicename", "icmRPCCall");
-        dimensions.put("status", 0);
+        dimensions.put("status", "0");
         jsonObject.put("dimensions", dimensions);
 
         JSONObject measures = new JSONObject();
-        measures.put("duration", new Random().nextInt(1000) + 100);
+        measures.put("duration", randomDuration());
+        jsonObject.put("measures", measures);
+        return jsonObject;
+    }
+
+    private static Double randomDuration() {
+        Random random = new Random();
+        double MAX = 100000.0;
+        double MIN = 1000.0;
+        double result = 0;
+        for (int i = 0; i < 10; i++) {
+            result = MIN + (random.nextDouble() * (MAX - MIN));
+            result = (double) Math.round(result * 100) / 100;
+        }
+        return result;
+    }
+
+    private static JSONObject CallB(String traceId, String parentId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("timestamp", DateUtil.getUTCTimeStr());
+        jsonObject.put("logTypeName", "test");
+        jsonObject.put("offset", "0");
+
+        JSONObject normalFields = new JSONObject();
+        normalFields.put("traceid", traceId);
+        normalFields.put("parentid", PARENT_ID);
+        normalFields.put("spanid", UUID.randomUUID().toString().replaceAll("-", ""));
+        normalFields.put("starttime", System.currentTimeMillis() + "");
+        normalFields.put("endtime", System.currentTimeMillis() + "");
+        normalFields.put("spanname", "SpringMvcSpan|0");
+        normalFields.put("code", "200");
+        normalFields.put("spantype", "0");
+        normalFields.put("spanlayer", "HTTP");
+        normalFields.put("remoteendpointname", "");
+        normalFields.put("remoteappsystem", "noah");
+        normalFields.put("remoteservicename", "");
+        normalFields.put("remoteserviceinstance", "");
+        normalFields.put("remoteip", "10.35.76.208");
+        normalFields.put("addinformation", "");
+        jsonObject.put("normalFields", normalFields);
+
+        JSONObject dimensions = new JSONObject();
+        dimensions.put("endpoint", "http://10.182.200.92.8090");
+        dimensions.put("component", "cn.boccfc.tracer.plugin.springmvc.interceptor.RequestMappingMethodInterceptor");
+        dimensions.put("hostname", "cl-hsfw-1-ap01");
+        dimensions.put("ip", "10.35.76.208");
+        dimensions.put("serviceinstance", "10.35.76.208");
+        dimensions.put("calltype", "remote");
+        dimensions.put("operationname", "icmRPCCall");
+        dimensions.put("appsystem", "noah");
+        dimensions.put("servicename", "icmRPCCall");
+        dimensions.put("status", "0");
+        jsonObject.put("dimensions", dimensions);
+
+        JSONObject measures = new JSONObject();
+        measures.put("duration", randomDuration());
         jsonObject.put("measures", measures);
         return jsonObject;
     }
