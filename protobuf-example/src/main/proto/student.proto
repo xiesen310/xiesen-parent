@@ -1,0 +1,16 @@
+// 指定模板类的包路径
+option java_package = "com.github.xiesen.proto.dto";
+// 指定模板类的名称，名称必须是有实际业务意义的
+option java_outer_classname = "StudentProto";
+// 引入课程模板
+import "course.proto";
+
+// 定义学生模板
+message student{
+  // 学生名称
+  required string name = 1;
+  // 学生年龄
+  required int32 age = 2;
+  // 学生所修课程，可能是多门，是一组数组
+  repeated course course = 3;
+}

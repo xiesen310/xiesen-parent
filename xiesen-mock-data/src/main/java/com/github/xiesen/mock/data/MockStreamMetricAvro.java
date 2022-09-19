@@ -153,11 +153,11 @@ public class MockStreamMetricAvro {
             Map<String, Double> metrics = getRandomMetricsWithYm();
 
 
-            System.out.println(printData(metricSetName, timestamp, dimensions, metrics));
+            /// System.out.println(printData(metricSetName, timestamp, dimensions, metrics));
 
             CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
-            Thread.sleep(2000);
+            Thread.sleep(new Random().nextInt(5));
 //            System.exit(-1);
         }
         Thread.sleep(1000);

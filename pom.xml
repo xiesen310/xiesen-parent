@@ -38,6 +38,8 @@
         <module>xiesen-influxdb</module>
         <module>kafka-3.1.0</module>
         <module>protobuf-example</module>
+        <module>xiesen-oracle</module>
+        <module>read-hdfs</module>
         <!--        <module>xiesen-mysql</module>-->
 <!--        <module>xiesen-jython</module>-->
 <!--        <module>xiesen-Phoenix</module>-->

@@ -1,5 +1,6 @@
 package com.github.xiesen.influxdb;
 
+import com.github.xiesen.influxdb.datax.Constant;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
@@ -8,7 +9,10 @@ import org.influxdb.dto.Query;
 import org.influxdb.dto.QueryResult;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,7 +51,7 @@ public class InfluxDBConnect {
     /**
      * 连接时序数据库；获得InfluxDB
      **/
-    void connection() {
+    public void connection() {
         if (influxDB == null) {
             influxDB = InfluxDBFactory.connect(url, username, password);
         }
@@ -160,4 +164,63 @@ public class InfluxDBConnect {
         builder.time(timestamp.toEpochMilli(), TimeUnit.MILLISECONDS);
         influxDB.write(database, "default", builder.build());
     }
+
+    public Set<String> getMeasurements() {
+        Set<String> set = new HashSet<>();
+        QueryResult result = query("show measurements");
+        List<QueryResult.Result> results = result.getResults();
+        List<QueryResult.Series> series = results.get(0).getSeries();
+        List<List<Object>> values = series.get(0).getValues();
+        for (int i = 0; i < values.size(); i++) {
+            List<Object> objects = values.get(i);
+            Object o = objects.get(0);
+            set.add(String.valueOf(o));
+        }
+        System.out.println("measurements size is " + set.size());
+        return set;
+    }
+
+    public Set<String> getTagKeys(String measurement) {
+        Set<String> set = new HashSet<>();
+        QueryResult result = query("show tag keys from " + measurement);
+        List<QueryResult.Result> results = result.getResults();
+        List<QueryResult.Series> series = results.get(0).getSeries();
+        List<List<Object>> values = series.get(0).getValues();
+        for (int i = 0; i < values.size(); i++) {
+            List<Object> objects = values.get(i);
+            Object o = objects.get(0);
+            set.add(String.valueOf(o));
+        }
+        System.out.println(measurement + "tag size is " + set.size());
+        return set;
+    }
+
+    public Set<String> getFieldKeys(String measurement) {
+        Set<String> set = new HashSet<>();
+        QueryResult result = query("show field keys from " + measurement);
+        List<QueryResult.Result> results = result.getResults();
+        List<QueryResult.Series> series = results.get(0).getSeries();
+        List<List<Object>> values = series.get(0).getValues();
+        for (int i = 0; i < values.size(); i++) {
+            List<Object> objects = values.get(i);
+            Object o = objects.get(0);
+            set.add(String.valueOf(o));
+        }
+        System.out.println(measurement + "tag size is " + set.size());
+        return set;
+    }
+
+    public Set<String> getAllKeys(String measurement) {
+        Set<String> tagKeys = getTagKeys(measurement);
+        Set<String> fieldKeys = getFieldKeys(measurement);
+        Set<String> set = new LinkedHashSet<>(tagKeys.size() + fieldKeys.size() + 2);
+        set.add(Constant.UID);
+        set.add(Constant.TIME);
+
+        set.addAll(tagKeys);
+        set.addAll(fieldKeys);
+        return set;
+    }
+
+
 }

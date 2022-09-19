@@ -79,7 +79,7 @@ public class MockChinaBankCallChainData {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("timestamp", DateUtil.getUTCTimeStr());
         jsonObject.put("logTypeName", "test");
-        jsonObject.put("offset", "0");
+        jsonObject.put("offset", 0);
 
         JSONObject normalFields = new JSONObject();
         normalFields.put("traceid", traceId);
@@ -93,9 +93,16 @@ public class MockChinaBankCallChainData {
         normalFields.put("spanlayer", "HTTP");
         normalFields.put("remoteendpointname", "");
         normalFields.put("remoteappsystem", "noah");
-        normalFields.put("remoteservicename", "");
+        normalFields.put("remoteservicename", "remoteService");
         normalFields.put("remoteserviceinstance", "");
         normalFields.put("remoteip", "10.35.76.209");
+
+        normalFields.put("clientendpointname", "");
+        normalFields.put("clientappsystem", "noah");
+        normalFields.put("clientservicename", "");
+        normalFields.put("clientserviceinstance", "");
+        normalFields.put("clientip", "10.35.76.209");
+
         normalFields.put("addinformation", "");
         jsonObject.put("normalFields", normalFields);
 
@@ -134,7 +141,7 @@ public class MockChinaBankCallChainData {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("timestamp", DateUtil.getUTCTimeStr());
         jsonObject.put("logTypeName", "test");
-        jsonObject.put("offset", "0");
+        jsonObject.put("offset", 0);
 
         JSONObject normalFields = new JSONObject();
         normalFields.put("traceid", traceId);
@@ -148,9 +155,16 @@ public class MockChinaBankCallChainData {
         normalFields.put("spanlayer", "HTTP");
         normalFields.put("remoteendpointname", "");
         normalFields.put("remoteappsystem", "noah");
-        normalFields.put("remoteservicename", "");
+        normalFields.put("remoteservicename", "remoteService");
         normalFields.put("remoteserviceinstance", "");
         normalFields.put("remoteip", "10.35.76.208");
+
+        normalFields.put("clientendpointname", "");
+        normalFields.put("clientappsystem", "noah");
+        normalFields.put("clientservicename", "");
+        normalFields.put("clientserviceinstance", "");
+        normalFields.put("clientip", "10.35.76.209");
+
         normalFields.put("addinformation", "");
         jsonObject.put("normalFields", normalFields);
 

@@ -24,6 +24,7 @@ public class FlinkWordCount {
 
         env.getConfig().setGlobalJobParameters(params);
 
+
         // get input data
         DataSet<String> text;
         if (params.has("input")) {
