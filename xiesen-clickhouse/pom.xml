@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>xiesen-oracle</artifactId>
+    <artifactId>xiesen-clickhouse</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -18,17 +18,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/src/main/lib/ojdbc6-11.2.0.3.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.2.9</version>
+            <groupId>com.clickhouse</groupId>
+            <artifactId>clickhouse-jdbc</artifactId>
+            <version>0.3.2</version>
         </dependency>
 
     </dependencies>
