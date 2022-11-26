@@ -1,0 +1,9 @@
+server:
+  port: 9000
+spring:
+  datasource:
+    password: 123456
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://hadoop102:3306/testdb?serverTimezone=GMT
+    username: root
