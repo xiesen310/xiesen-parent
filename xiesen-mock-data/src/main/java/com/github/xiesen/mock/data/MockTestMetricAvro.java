@@ -34,9 +34,9 @@ public class MockTestMetricAvro {
         Random random = new Random();
         int i = random.nextInt(10);
         Map<String, String> dimensions = new HashMap<>(4);
-        dimensions.put("hostname", "DVJTY4-WEB406");
+        dimensions.put("hostname", "zork1-1");
         dimensions.put("appprogramname", "DVJTY4-WEB406_80");
-        dimensions.put("appsystem", "dev_test");
+        dimensions.put("appsystem", "dev_test1");
         dimensions.put("ip", "192.168.1.1");
         return dimensions;
     }
@@ -53,7 +53,8 @@ public class MockTestMetricAvro {
 
         for (int i = 0; i < size; i++) {
             String metricSetName = "log2metric";
-            String timestamp = DateUtil.getUTCTimeStr();
+//            String timestamp = DateUtil.getUTCTimeStr();
+            String timestamp = System.currentTimeMillis() + "";
 
             Map<String, String> dimensions = getRandomDimensions();
             Map<String, Double> metrics = getRandomMeasures();
@@ -67,7 +68,7 @@ public class MockTestMetricAvro {
 
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
 
-//            Thread.sleep(1000);
+            Thread.sleep(1000);
         }
         Thread.sleep(1000);
     }

@@ -157,7 +157,7 @@ public class MockShaojiaoMetricAvro {
 
     public static void main(String[] args) throws InterruptedException {
 
-        int size = 10;
+        int size = 1000000;
 
         CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
         for (int i = 0; i < size; i++) {

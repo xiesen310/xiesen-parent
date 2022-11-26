@@ -41,6 +41,8 @@
         <module>xiesen-oracle</module>
         <module>read-hdfs</module>
         <module>xiesen-clickhouse</module>
+        <module>xiesen-aviator</module>
+        <module>flink-cdc-test</module>
         <!--        <module>xiesen-mysql</module>-->
 <!--        <module>xiesen-jython</module>-->
 <!--        <module>xiesen-Phoenix</module>-->

@@ -15,9 +15,9 @@ import java.util.UUID;
  * @Date 2020/6/28 10:08
  */
 public class MockXiesenJson {
-    private static String topic = "json_source";
-    //private static String brokerAddr = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-    private static String brokerAddr = "192.168.70.109:9092";
+    private static String topic = "json-source";
+    private static String brokerAddr = "kafka-1:29092,kafka-2:29092,kafka-3:29092";
+//    private static String brokerAddr = "192.168.70.109:9092";
     private static ProducerRecord<String, String> producerRecord = null;
     private static KafkaProducer<String, String> producer = null;
 

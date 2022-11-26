@@ -16,22 +16,35 @@ import java.util.Random;
  */
 public class MockShaojiaoLogAvro {
 
+    /**
+     * "clustername": "集群",
+     * "hostname": "zork-rd-dev-7092",
+     * "appprogramname": "模块",
+     * "appsystem": "poctest",
+     * "servicename": "模块",
+     * "ip": "192.168.70.92",
+     * "servicecode": "模块"*
+     *
+     * @return
+     */
     private static Map<String, String> getRandomDimensions() {
         Random random = new Random();
         Map<String, String> dimensions = new HashMap<>(4);
-        dimensions.put("hostname", "DVJTY4-WEB406-shaojiao12");
-        dimensions.put("appprogramname", "DVJTY4-WEB406_80");
-        dimensions.put("servicecode", "WEB");
-        dimensions.put("clustername", "nginx");
-        dimensions.put("appsystem", "dev_test");
-        dimensions.put("servicename", "nginx");
-        dimensions.put("ip", "192.168.1.1");
+        dimensions.put("clustername", "集群");
+        dimensions.put("hostname", "zork-rd-dev-7092");
+        dimensions.put("appprogramname", "模块");
+        dimensions.put("appsystem", "poctest");
+        dimensions.put("ip", "192.168.70.92");
+        dimensions.put("servicecode", "模块");
+        dimensions.put("servicename", "模块");
         return dimensions;
     }
 
     private static Map<String, Double> getRandomMeasures() {
         Map<String, Double> measures = new HashMap<>(4);
-//        measures.put("cpu_used",0.8);
+        Random random = new Random();
+        int i = random.nextInt(90) + 5;
+        measures.put("lags", Double.valueOf(i));
 //        measures.put("memory_used",0.9);
         return measures;
     }
@@ -42,7 +55,6 @@ public class MockShaojiaoLogAvro {
                 "/gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ" +
                 "%3D%3D HTTP/1.1\" 200 872 ");
         normalFields.put("collecttime", DateUtil.getUTCTimeStr());
-//        normalFields.put("collecttime", "abc");
         return normalFields;
     }
 
@@ -51,12 +63,12 @@ public class MockShaojiaoLogAvro {
         if (args.length != 1) {
             throw new RuntimeException("请填写配置文件路径");
         }
-        
+
         long size = 100000000L * 1;
         for (int i = 0; i < size; i++) {
             String logTypeName = "default_analysis_template";
             String timestamp = DateUtil.getUTCTimeStr();
-            String source = "/var/log/nginx/access.log";
+            String source = "/var/log/test/access.log";
             String offset = "351870827";
 
             Map<String, String> dimensions = getRandomDimensions();
@@ -74,7 +86,7 @@ public class MockShaojiaoLogAvro {
             CustomerProducer producer = ProducerPool.getInstance(args[0]).getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
-            Thread.sleep(1000);
+            Thread.sleep(2);
         }
         Thread.sleep(1000);
     }

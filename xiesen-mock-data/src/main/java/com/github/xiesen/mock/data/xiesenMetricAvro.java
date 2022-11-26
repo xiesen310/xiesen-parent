@@ -1,5 +1,6 @@
 package com.github.xiesen.mock.data;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xiesen.common.avro.AvroSerializerFactory;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
@@ -7,6 +8,9 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
@@ -47,8 +51,9 @@ public class xiesenMetricAvro {
 
 
     private static byte[] buildAvroMessage() {
+        Map<String, Object> bigMap = new HashMap<>();
         //固定字段
-        String metricSetName = "streamx_metric_cpu";
+        String metricSetName = "streamx_metric_cpu2";
         long ts = System.currentTimeMillis();
         String timestamp = String.valueOf(ts);
 
@@ -65,7 +70,42 @@ public class xiesenMetricAvro {
         Map<String, Double> metrics = new HashMap<>();
 
         metrics.put("cpu_usage_rate", randomCpuUsageRate());
+        metrics.put("cpu_usage_rate2", randomCpuUsageRate());
+        metrics.put("cpu_usage_rate3", randomCpuUsageRate());
+        bigMap.put("metricsetname", metricSetName);
+        bigMap.put("timestamp", timestamp);
+        bigMap.put("dimensions", dimensions);
+        bigMap.put("metrics", metrics);
+        writeUsingFileWriter(JSON.toJSONString(bigMap));
+        return AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions
+                , metrics);
+    }
 
+    private static byte[] buildAvroMessage(String metricSetName, String timestamp) {
+        Map<String, Object> bigMap = new HashMap<>();
+        //固定字段
+        /// String metricSetName = "streamx_metric_cpu2";
+//        long ts = System.currentTimeMillis();
+//        String timestamp = String.valueOf(ts);
+
+
+        //维度列
+
+        Map<String, String> dimensions = new HashMap<>();
+        dimensions.put("appprogramname", "tomcat");
+        dimensions.put("appsystem", "streamx");
+        dimensions.put("hostname", "flink02");
+        dimensions.put("ip", "192.168.0.2");
+
+        //度量列
+        Map<String, Double> metrics = new HashMap<>();
+
+        metrics.put("cpu_usage_rate", randomCpuUsageRate());
+        bigMap.put("metricsetname", metricSetName);
+        bigMap.put("timestamp", timestamp);
+        bigMap.put("dimensions", dimensions);
+        bigMap.put("metrics", metrics);
+        writeUsingFileWriter(JSON.toJSONString(bigMap));
         return AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(metricSetName, timestamp, dimensions
                 , metrics);
     }
@@ -75,6 +115,26 @@ public class xiesenMetricAvro {
     private static Double randomCpuUsageRate() {
         Random random = new Random();
         return CPU_USAGE_RATE_ARR[random.nextInt(CPU_USAGE_RATE_ARR.length)];
+    }
+
+    private static void writeUsingFileWriter(String data) {
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter("D:\\tmp\\metrics\\streamx_metric_cpu2.json", true);
+            writer.write(data + "\n\r");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (null != writer) {
+                try {
+                    writer.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }
+
     }
 
     private static <T> void send(KafkaProducer<String, T> producer, String topic, T message) {
@@ -93,9 +153,9 @@ public class xiesenMetricAvro {
 
     public static void main(String[] args) throws InterruptedException {
         long start = System.currentTimeMillis();
-        String topic = "xieseselen_metric_data_test1";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
-        long records = 100000L;
+        String topic = "xiesen_metric_data_multi";
+        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
+        long records = 10000000L;
 
         KafkaProducer<String, byte[]> producer = buildProducer(bootstrapServers, ByteArraySerializer.class.getName());
         long index = 0;
@@ -103,9 +163,11 @@ public class xiesenMetricAvro {
             if (index % 1000 == 0) {
                 System.out.println("写入了 " + index + " 条数据");
             }
+            String metricSetNamePrefix = "streamx_metric_cpu";
+            long ts = System.currentTimeMillis();
             byte[] message = buildAvroMessage();
             send(producer, topic, message);
-            TimeUnit.MILLISECONDS.sleep(5);
+            TimeUnit.MILLISECONDS.sleep(2);
         }
 
         producer.flush();

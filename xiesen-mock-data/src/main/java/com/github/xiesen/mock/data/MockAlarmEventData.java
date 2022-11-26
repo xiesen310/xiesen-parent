@@ -67,8 +67,8 @@ public class MockAlarmEventData {
         map.put("alarmContent", "[CST May 25 10:49:15]");
         map.put("alarmCount", "1");
         map.put("lastTime", DateUtil.getUTCTimeStr());
-        map.put("eventId", "nAeVq3kB7nfzsGWqruMT");
-//        map.put("eventId", UUID.randomUUID().toString().replaceAll("-", ""));
+//        map.put("eventId", "nAeVq3kB7nfzsGWqruMT");
+        map.put("eventId", UUID.randomUUID().toString().replaceAll("-", ""));
         map.put("alarmTime", DateUtil.getUTCTimeStr());
         map.put("alarmId", UUID.randomUUID().toString().replaceAll("-", ""));
         map.put("alarmLevel", "5");
@@ -80,7 +80,7 @@ public class MockAlarmEventData {
     public static String buildNewMsg() {
         Map<String, Object> map = new HashMap<>();
         map.put("alarmContent", "[CST May 25 10:49:15]");
-
+        map.put("alarmTypeName","alarm_metric");
 
         map.put("lastTime", DateUtil.getUTCTimeStr());
 
@@ -126,8 +126,9 @@ public class MockAlarmEventData {
 
     public static void main(String[] args) throws InterruptedException {
 //        String topic = "hzy_alarm_real";
-        String topic = "xiesen_test";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String topic = "dwd_alarm_real";
+//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
 //        String bootstrapServers = "node120:9092,node121:9092,node122:9092";
         long records = 10000L;
 
