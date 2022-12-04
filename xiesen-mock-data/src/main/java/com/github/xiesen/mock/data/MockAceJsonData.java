@@ -24,9 +24,10 @@ public class MockAceJsonData {
 
     public static void main(String[] args) throws InterruptedException {
 //        String topic = "ace_xs_source";
-        String topic = "aesinput";
+        String topic = "test";
 //        String bootstrapServers = "192.168.70.219:9092";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
         long records = 1000L;
 
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());

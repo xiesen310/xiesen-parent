@@ -3,6 +3,7 @@ package com.github.xiesen.mock.data;
 import com.github.xiesen.common.utils.DateUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
+import org.mortbay.util.ajax.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,9 +61,9 @@ public class MockShaojiaoLogAvro {
 
 
     public static void main(String[] args) throws Exception {
-        if (args.length != 1) {
+       /* if (args.length != 1) {
             throw new RuntimeException("请填写配置文件路径");
-        }
+        }*/
 
         long size = 100000000L * 1;
         for (int i = 0; i < size; i++) {
@@ -82,7 +83,7 @@ public class MockShaojiaoLogAvro {
             map.put("dimensions", dimensions);
             map.put("measures", measures);
             map.put("normalFields", normalFields);
-//            System.out.println(JSON.toString(map));
+            System.out.println(JSON.toString(map));
             CustomerProducer producer = ProducerPool.getInstance(args[0]).getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
