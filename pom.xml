@@ -18,7 +18,7 @@
 <!--        <module>xiesen-junit-test</module>-->
 <!--        <module>xiesen-web</module>-->
 <!--        <module>xiesen-kafka</module>-->
-        <module>xiesen-elasticsearch6</module>
+<!--        <module>xiesen-elasticsearch6</module>-->
 <!--        <module>xiesen-algorithm</module>-->
 <!--        <module>xiesen-kudu</module>-->
 <!--        <module>xiesen-hbase</module>-->
@@ -30,20 +30,20 @@
         <module>xiesen-mock-data-241</module>
 <!--        <module>xiesen-redisson</module>-->
 <!--        <module>xiesen-asynchbase</module>-->
-<!--        <module>flink112-example</module>-->
+        <module>flink112-example</module>
 <!--        <module>update-jar-metadata</module>-->
 <!--        <module>xiesen-json</module>-->
 <!--        <module>xiesen-hive</module>-->
 <!--        <module>xiesen-siddhi</module>-->
-        <module>xiesen-influxdb</module>
-        <module>kafka-3.1.0</module>
-        <module>protobuf-example</module>
-        <module>xiesen-oracle</module>
-        <module>read-hdfs</module>
-        <module>xiesen-clickhouse</module>
-        <module>xiesen-aviator</module>
+<!--        <module>xiesen-influxdb</module>-->
+<!--        <module>kafka-3.1.0</module>-->
+<!--        <module>protobuf-example</module>-->
+<!--        <module>xiesen-oracle</module>-->
+<!--        <module>read-hdfs</module>-->
+<!--        <module>xiesen-clickhouse</module>-->
+<!--        <module>xiesen-aviator</module>-->
         <module>flink-cdc-test</module>
-        <module>springboot-mybatis-plus</module>
+<!--        <module>springboot-mybatis-plus</module>-->
         <!--        <module>xiesen-mysql</module>-->
 <!--        <module>xiesen-jython</module>-->
 <!--        <module>xiesen-Phoenix</module>-->

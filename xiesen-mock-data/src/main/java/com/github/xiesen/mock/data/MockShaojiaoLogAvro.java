@@ -30,7 +30,7 @@ public class MockShaojiaoLogAvro {
      */
     private static Map<String, String> getRandomDimensions() {
         Random random = new Random();
-        Map<String, String> dimensions = new HashMap<>(4);
+        Map<String, String> dimensions = new HashMap<>(8);
         dimensions.put("clustername", "集群");
         dimensions.put("hostname", "zork-rd-dev-7092");
         dimensions.put("appprogramname", "模块");
@@ -61,9 +61,9 @@ public class MockShaojiaoLogAvro {
 
 
     public static void main(String[] args) throws Exception {
-       /* if (args.length != 1) {
+        if (args.length != 1) {
             throw new RuntimeException("请填写配置文件路径");
-        }*/
+        }
 
         long size = 100000000L * 1;
         for (int i = 0; i < size; i++) {
@@ -87,7 +87,7 @@ public class MockShaojiaoLogAvro {
             CustomerProducer producer = ProducerPool.getInstance(args[0]).getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
-            Thread.sleep(2);
+            Thread.sleep(500);
         }
         Thread.sleep(1000);
     }

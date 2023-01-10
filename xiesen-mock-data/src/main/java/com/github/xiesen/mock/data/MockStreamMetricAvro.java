@@ -83,10 +83,10 @@ public class MockStreamMetricAvro {
         Map<String, String> dimensions = new HashMap<>();
 
         dimensions.put("hostname", "DESKTOP-4I4I8U3");
-        dimensions.put("ruler_id", "2");
-        dimensions.put("source", "D:\\opt\\smartdata-streamx\\a.log");
+//        dimensions.put("ruler_id", "2");
+//        dimensions.put("source", "D:\\opt\\smartdata-streamx\\a.log");
         dimensions.put("ip", "192.168.70.170");
-        dimensions.put("monitor_name", "filebeat");
+//        dimensions.put("monitor_name", "filebeat");
         dimensions.put("appsystem", "dev_test");
 
         return dimensions;
@@ -152,8 +152,8 @@ public class MockStreamMetricAvro {
 //            Map<String, Double> metrics = getRandomMetrics();
             Map<String, Double> metrics = getRandomMetricsWithYm();
 
-
-            /// System.out.println(printData(metricSetName, timestamp, dimensions, metrics));
+            Thread.sleep(1000);
+             System.out.println(printData(metricSetName, timestamp, dimensions, metrics));
 
             CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);

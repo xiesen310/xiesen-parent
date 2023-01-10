@@ -1,5 +1,6 @@
 package com.github.xiesen.mock.data;
 
+import cn.hutool.core.date.DateTime;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.avro.AvroSerializerFactory;
 import com.github.xiesen.common.utils.DateUtil;
@@ -9,6 +10,7 @@ import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
 
+import java.text.DateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -26,13 +28,14 @@ public class MockLogHadoopData {
     private static String[] operator_status = {"success", "fail"};
 
     public static void main(String[] args) throws InterruptedException {
-        String topic = "xiesen_log2es_avro";
-        String bootstrapServers = "kafka-1:9092,kafka-2:9092,kafka-3:9092";
+        String topic = "hadoop";
+        String bootstrapServers = "zork1-91.host.com:19092";
         long records = 100000000L;
 
         KafkaProducer<String, byte[]> producer = buildProducer(bootstrapServers, ByteArraySerializer.class.getName());
         for (long index = 0; index < records; index++) {
             send(producer, topic, mockNetWorkLog());
+            Thread.sleep(1000);
         }
 
         Thread.sleep(2000);
@@ -59,11 +62,11 @@ public class MockLogHadoopData {
         props.put("buffer.memory", 33554432);
 
         // kerberos 认证
-        /*System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
-        System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_server_jaas.conf");
+        System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
+        System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_client_jaas.conf");
         props.put("security.protocol", "SASL_PLAINTEXT");
         props.put("sasl.kerberos.service.name", "kafka");
-        props.put("sasl.mechanism", "GSSAPI");*/
+        props.put("sasl.mechanism", "GSSAPI");
 
         // sasl 认证
         /*props.put("security.protocol", "SASL_PLAINTEXT");
@@ -115,9 +118,11 @@ public class MockLogHadoopData {
 
     private static Map<String, String> getRandomNormalFields() {
         Map<String, String> normalFields = new HashMap<>();
-        normalFields.put("logdate", "2020-10-08");
-        normalFields.put("anstime", "2020-10-08 21:34:28.820");
-        normalFields.put("readtime", "2020-10-08 21:35:14.382");
+        final DateTime now = DateTime.now();
+        final String s = now.toString(DateFormat.getInstance());
+        normalFields.put("logdate", now.toDateStr());
+        normalFields.put("anstime", s);
+        normalFields.put("readtime", s);
         normalFields.put("conncetmsg", "IP:X.X.X.X MAC:X 线程:001 通道ID:001 事务ID:001");
         normalFields.put("message",
                 "[res]=21:34:28.820 成功处理 IP:X.X.X.X MAC:X 线程:001 通道ID:001 事务ID:001 请求:(0-061)XX 营业部:XXX 耗时A:78 耗时B:0 " +
