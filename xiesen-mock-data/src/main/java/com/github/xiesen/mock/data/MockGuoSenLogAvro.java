@@ -123,7 +123,7 @@ public class MockGuoSenLogAvro {
             CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
-            Thread.sleep(1000);
+//            Thread.sleep(1000);
         }
         Thread.sleep(1000);
     }

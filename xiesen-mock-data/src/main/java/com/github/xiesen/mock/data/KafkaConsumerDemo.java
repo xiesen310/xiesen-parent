@@ -23,7 +23,7 @@ public class KafkaConsumerDemo {
         props.put("bootstrap.servers", "kafka-1:19092,kafka-2:19092,kafka-3:19092");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("group.id", "xiesen3");
+        props.put("group.id", "xiesen11");
 
         // 可选设置属性
         props.put("enable.auto.commit", "true");
@@ -34,7 +34,9 @@ public class KafkaConsumerDemo {
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
 
 //        consumer.subscribe(Collections.singletonList("xiesen_test"));
-        consumer.subscribe(Collections.singletonList("ods_jzjy_log17_with_gbk"));
+//        consumer.subscribe(Collections.singletonList("ods_jzjy_log17_with_gbk"));
+//        consumer.subscribe(Collections.singletonList("ods_jzjy_log21"));
+        consumer.subscribe(Collections.singletonList("ods_jzjy_log_test5"));
 //        consumer.subscribe(Collections.singletonList("ods_jzjy_result"));
         AtomicLong i = new AtomicLong();
         AtomicLong j = new AtomicLong();
@@ -50,12 +52,15 @@ public class KafkaConsumerDemo {
 //                        record.partition(),
 //                        record.offset(), record.key(), record.value());
                 final String value = record.value();
+                final String key = record.key();
                 final JSONObject jsonObject = JSON.parseObject(value);
                 final String message = jsonObject.getString("message");
-                if (message.contains("[   98]") || message.contains("[   99]")) {
-                    j.getAndIncrement();
-                }
-                System.out.println("消费了 " + i + " 条数据,其中包含 98 或 99 的是 " + j + " 条数据");
+                System.out.println(key + " " + message + " " + record.offset());
+
+//                if (message.contains("[   98]") || message.contains("[   99]")) {
+//                    j.getAndIncrement();
+//                }
+//                System.out.println("消费了 " + i + " 条数据,其中包含 98 或 99 的是 " + j + " 条数据");
             });
         }
 

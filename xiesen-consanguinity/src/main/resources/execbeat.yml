@@ -1,0 +1,37 @@
+execbeat:
+  commands:
+
+
+
+    -
+      schedule: "@every 5s"
+      command: 'sh'
+      args: '/usr/local/gse_ext/test.sh java poctest'
+fields:
+  appsystem: poctest
+  servicename: 模块
+  servicecode: 模块
+  clustername: 集群
+  appprogramname: 模块
+  collectruleid: 209
+  collector_type: execbeat
+  ip: 192.168.70.92
+  topicname: ods_all_metric
+fields_under_root: true
+
+output.console:
+  enable: true
+
+#output.file:
+#  path: "/usr/local/gse_ext/execbeat/test"
+#  filename: execbeat.txt
+#  number_of_files: 2
+
+output.logstash:
+  enabled: true
+  hosts: ["192.168.70.92:10001","192.168.70.92:10002","192.168.70.92:10003"]
+  loadbalance: true
+
+
+
+

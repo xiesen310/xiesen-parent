@@ -22,7 +22,7 @@
 <!--        <module>xiesen-algorithm</module>-->
 <!--        <module>xiesen-kudu</module>-->
 <!--        <module>xiesen-hbase</module>-->
-        <module>xiesen-redis</module>
+<!--        <module>xiesen-redis</module>-->
 <!--        <module>xiesen-sqlserver</module>-->
 <!--        <module>xiesen-pulsar</module>-->
 <!--        <module>xiesen-learnning</module>-->
@@ -43,7 +43,8 @@
 <!--        <module>xiesen-clickhouse</module>-->
 <!--        <module>xiesen-aviator</module>-->
         <module>flink-cdc-test</module>
-<!--        <module>springboot-mybatis-plus</module>-->
+        <module>xiesen-consanguinity</module>
+        <!--        <module>springboot-mybatis-plus</module>-->
         <!--        <module>xiesen-mysql</module>-->
 <!--        <module>xiesen-jython</module>-->
 <!--        <module>xiesen-Phoenix</module>-->

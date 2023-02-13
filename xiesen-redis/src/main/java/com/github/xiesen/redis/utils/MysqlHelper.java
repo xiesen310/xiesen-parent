@@ -17,6 +17,7 @@ import java.util.Set;
 public class MysqlHelper {
     public static final int batchSize = 20000;
 
+
     /**
      * 将模型数据写入到 mysql*
      *
@@ -35,7 +36,7 @@ public class MysqlHelper {
                 ps.executeBatch();
                 conn.commit();
             }
-            
+
             if (data.size() > batchSize) {
                 int i = 0;
                 for (Map.Entry<String, MetricModel> metricModelEntry : data.entrySet()) {

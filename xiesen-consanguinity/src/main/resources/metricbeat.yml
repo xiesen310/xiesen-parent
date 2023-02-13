@@ -1,0 +1,339 @@
+metricbeat.modules:
+
+
+
+- module: system
+  metricsets: ["cpu","memory","network","diskio","load","filesystem","fsstat","process_summary","uptime"]
+  filesystem.ignore_types: [sysfs, rootfs, ramfs, bdev, proc, cpuset, cgroup, tmpfs, devtmpfs, debugfs, tracefs, securityfs, sockfs, bpf, pipefs, devpts, hugetlbfs, ecryptfs, fuse, fusectl, pstore, mqueue, rpc_pipefs,overlay]
+  cpu.metrics: [percentages, normalized_percentages]
+  period: 10s
+  fields:
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 1
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+- module: docker
+  metricsets: [ "cpu" , "container" , "diskio" , "info" , "image" , "memory" , "network" ]
+  period: 30s
+  hosts: ["unix:///var/run/docker.sock"]
+  fields:
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 9
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+- module: mongodb
+  metricsets: [ "collstats" , "dbstats" , "status" ]
+  period: 30s
+  hosts: ["127.0.0.1:27017"]
+  fields:
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 12
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+- module: mysql
+  metricsets: [ "status" ]
+  period: 30s
+  hosts: ["root:zorkdata.8888@tcp(127.0.0.1:3306)/"]
+  fields:
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 13
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+- module: system
+  metricsets:
+    - process
+  processes: [ "java" ]
+  process.cgroups.enabled: false
+  period: 10s
+  processors:
+    - drop_event:
+        when:
+          and:
+            - not.contains:
+                system.process.cmdline: "flink"
+
+  fields:
+    displayname: flink
+    uniquerulerid: process_2_2
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 19
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+
+- module: system
+  metricsets:
+    - process
+  processes: [ "java" ]
+  process.cgroups.enabled: false
+  period: 10s
+  processors:
+    - drop_event:
+        when:
+          and:
+            - not.contains:
+                system.process.cmdline: "smartdata"
+
+  fields:
+    displayname: smartdata
+    uniquerulerid: process_3_3
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 20
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+
+- module: system
+  metricsets:
+    - process
+  processes: [ "java" ]
+  process.cgroups.enabled: false
+  period: 10s
+  processors:
+    - drop_event:
+        when:
+          and:
+            - not.contains:
+                system.process.cmdline: "job-exec"
+
+  fields:
+    displayname: job-exec
+    uniquerulerid: process_4_4
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 21
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+
+- module: system
+  metricsets:
+    - process
+  processes: [ "java" ]
+  process.cgroups.enabled: false
+  period: 10s
+  processors:
+    - drop_event:
+        when:
+          and:
+            - not.contains:
+                system.process.cmdline: "logstash"
+
+  fields:
+    displayname: logstash
+    uniquerulerid: process_5_5
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 22
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+
+- module: system
+  metricsets:
+    - process
+  processes: [ "zorkagent" ]
+  process.cgroups.enabled: false
+  period: 10s
+  processors:
+    - drop_event:
+        when:
+          and:
+            - not.contains:
+                system.process.cmdline: "zorkagent"
+
+  fields:
+    displayname: zorkagent
+    uniquerulerid: process_6_6
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 25
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+
+- module: system
+  metricsets:
+    - process
+  processes: [ "java" ]
+  process.cgroups.enabled: false
+  period: 10s
+  processors:
+    - drop_event:
+        when:
+          and:
+            - not.contains:
+                system.process.cmdline: "agentserver-exec"
+
+  fields:
+    displayname: agentserver-exec
+    uniquerulerid: process_8_8
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 40
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+
+- module: system
+  metricsets:
+    - process
+  processes: [ "java" ]
+  process.cgroups.enabled: false
+  period: 10s
+  processors:
+    - drop_event:
+        when:
+          and:
+            - not.contains:
+                system.process.cmdline: "/zork/zkce/app/node/node-exec"
+
+  fields:
+    displayname: /zork/zkce/app/node/node-exec
+    uniquerulerid: process_9_9
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 41
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+
+- module: mssql
+  metricsets: [ "performance" ]
+  period: 30s
+  hosts: ["sqlserver://sa:zork.8888@192.168.70.56:1433"]
+  fields:
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 42
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+- module: vsphere
+  metricsets: [ "datastore" , "host" , "virtualmachine" ]
+  period: 30s
+  hosts: ["https://vc.zorkdata.com/sdk"]
+  username: zhaojiaolong@zork.com.cn
+  password: Zorkdata.202011
+  insecure: true
+  fields:
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 43
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+- module: system
+  metricsets:
+    - process
+  processes: [ "metricbeat" ]
+  process.cgroups.enabled: false
+  period: 10s
+  processors:
+    - drop_event:
+        when:
+          and:
+            - not.contains:
+                system.process.cmdline: "metricbeat"
+
+  fields:
+    displayname: metricbeat
+    uniquerulerid: process_11_11
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 53
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+
+- module: elasticsearch
+  metricsets: [ "index" , "index_summary" , "node" , "node_stats" , "shard" , "pending_tasks" , "cluster_stats" , "index_recovery" , "ccr" , "ml_job" ]
+  period: 30s
+  hosts: ["http://127.0.0.1:9200"]
+  fields:
+    appsystem: poctest
+    servicename: 模块
+    servicecode: 模块
+    clustername: 集群
+    appprogramname: 模块
+    collectruleid: 171
+    ip: 192.168.70.92
+    topicname: ods_all_metric
+  fields_under_root: true
+
+processors:
+  - add_host_metadata: ~
+output.logstash:
+  enabled: true
+  hosts: ["192.168.70.92:10001","192.168.70.92:10002","192.168.70.92:10003"]
+  loadbalance: true
+
+
+
+
