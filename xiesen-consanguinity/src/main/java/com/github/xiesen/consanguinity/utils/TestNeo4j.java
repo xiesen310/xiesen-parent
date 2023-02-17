@@ -1,10 +1,6 @@
 package com.github.xiesen.consanguinity.utils;
 
-import com.github.xiesen.consanguinity.model.BeatModel;
 import org.neo4j.driver.*;
-
-
-import static org.neo4j.driver.Values.parameters;
 
 /**
  * @author xiesen
@@ -25,15 +21,15 @@ public class TestNeo4j {
 //        session.run("MATCH (student1:Person),(student2:Person) where student1.name = 'Steven' AND student2.name = 'Mary' CREATE (student1)-[:classmate] ->(student2) RETURN student1,student2");
 
         // filebeat
-        session.run("CREATE (node91:filebeat {name: '192.168.1.91', type: 'filebeat',appSystem:'poc 测试'})");
-        session.run("CREATE (node92:filebeat {name: '192.168.1.92', type: 'filebeat',appSystem:'poc 测试'})");
-//        session.run("CREATE (node93:filebeat {name: '192.168.1.93', type: 'filebeat',appSystem:'poc 测试'})");
-//        session.run("CREATE (node94:filebeat {name: '192.168.1.94', type: 'filebeat',appSystem:'poc 测试'})");
-//        session.run("CREATE (node95:filebeat {name: '192.168.1.95', type: 'filebeat',appSystem:'poc 测试'})");
+        session.run("CREATE (node91:filebeat {name: '192.168.1.91', type: 'filebeat',appSystem:'poc 测试',serviceName:'模块',serviceCode:'模块',clusterName:'集群',appProgramName:'模块',ip:'92.168.1.91'})");
+        session.run("CREATE (node92:filebeat {name: '192.168.1.92', type: 'filebeat',appSystem:'poc 测试',serviceName:'模块',serviceCode:'模块',clusterName:'集群',appProgramName:'模块',ip:'92.168.1.91'})");
+//        session.run("CREATE (node93:filebeat {name: '192.168.1.93', type: 'filebeat',appSystem:'poc 测试',serviceName:'模块',serviceCode:'模块',clusterName:'集群',appProgramName:'模块',ip:'92.168.1.91'})");
+//        session.run("CREATE (node94:filebeat {name: '192.168.1.94', type: 'filebeat',appSystem:'poc 测试',serviceName:'模块',serviceCode:'模块',clusterName:'集群',appProgramName:'模块',ip:'92.168.1.91'})");
+//        session.run("CREATE (node95:filebeat {name: '192.168.1.95', type: 'filebeat',appSystem:'poc 测试',serviceName:'模块',serviceCode:'模块',clusterName:'集群',appProgramName:'模块',ip:'92.168.1.91'})");
 
         // metricbeat
-        session.run("CREATE (node96:metricbeat {name: '192.168.1.96', type: 'metricbeat',appSystem:'poc 测试'})");
-        session.run("CREATE (node97:metricbeat {name: '192.168.1.97', type: 'metricbeat',appSystem:'poc 测试'})");
+        session.run("CREATE (node96:metricbeat {name: '192.168.1.96', type: 'metricbeat',appSystem:'poc 测试',serviceName:'模块',serviceCode:'模块',clusterName:'集群',appProgramName:'模块',ip:'92.168.1.91'})");
+        session.run("CREATE (node97:metricbeat {name: '192.168.1.97', type: 'metricbeat',appSystem:'poc 测试',serviceName:'模块',serviceCode:'模块',clusterName:'集群',appProgramName:'模块',ip:'92.168.1.91'})");
 
         // logstash
         session.run("CREATE (node2_92:logstash {name:'192.168.2.92',type: 'logstash',networkArea: '集中交易'})");
@@ -44,6 +40,7 @@ public class TestNeo4j {
         session.run("CREATE (node4:kafka {name:'192.168.70.6:19092,192.168.70.7:19092,192.168.70.7:19092',type: 'kafka',topic: 'ods_all_metric'})");
         session.run("CREATE (node5:kafka {name:'192.168.70.6:19092,192.168.70.7:19092,192.168.70.7:19092',type: 'kafka',topic: 'dwd_default_log'})");
         session.run("CREATE (node6:kafka {name:'192.168.70.6:19092,192.168.70.7:19092,192.168.70.7:19092',type: 'kafka',topic: 'dwd_all_metric'})");
+
         session.run("CREATE (node3_1:streamx {name:'merge_analysis_task_ods_default_log',type: '数据解析',topic: 'dwd_default_log',format:'log'})");
         session.run("CREATE (node3_2:streamx {name:'merge_analysis_task_ods_all_metric',type: '数据解析',topic: 'dwd_all_metric',format:'metric'})");
         session.run("CREATE (node4_1:streamx {name:'log2es_dwd_default_log',type: '数据入库Es',index: 'dwd_default_log' ,format:'log'})");

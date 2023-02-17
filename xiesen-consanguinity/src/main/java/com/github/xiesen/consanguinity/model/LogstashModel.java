@@ -18,5 +18,4 @@ public class LogstashModel {
     private List<String> hosts;
     private boolean enabled;
     private boolean loadBalance;
-    private KafkaModel kafka;
 }

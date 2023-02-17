@@ -1,7 +1,5 @@
+name: node_192_168_70_91
 filebeat.inputs:
-
-
-
 - type: log
   paths:
     - /home/inoah-deploy/docker/run-all/logs/flink/*.log
@@ -11,7 +9,6 @@ filebeat.inputs:
   ignore_older: 24h
 
   encoding: utf-8
-
 
 
   fields:
@@ -46,72 +43,72 @@ filebeat.inputs:
      ip: 192.168.70.92
      topicname: ods_default_log
   fields_under_root: true
-- type: syslog
-    
-  protocol.tcp:
-    host: 192.168.70.92:514
-  ignore_older: 24h
-
-  encoding: gbk
-
-  fields:
-     appsystem: poctest
-     servicename: 模块
-     servicecode: 模块
-     clustername: 集群
-     appprogramname: 模块
-     collector_type: filebeat
-     collectruleid: 49
-     ip: 192.168.70.92
-     topicname: ods_default_log
-  fields_under_root: true
-- type: log
-  paths:
-    - /var/log/*.log
-  scan_frequency: 5s
-  close_inactive: 3m
-  close_timeout: 5m
-  ignore_older: 24h
-
-  encoding: gbk
-
-
-
-  fields:
-     appsystem: poctest
-     servicename: 模块
-     servicecode: 模块
-     clustername: 集群
-     appprogramname: 模块
-     collector_type: filebeat
-     collectruleid: 167
-     ip: 192.168.70.92
-     topicname: ods_default_log
-  fields_under_root: true
-- type: log
-  paths:
-    - /home/runlog0.log
-  scan_frequency: 5s
-  close_inactive: 3m
-  close_timeout: 5m
-  ignore_older: 24h
-
-  encoding: utf-8
-
-  exclude_lines: 100
-
-
-  fields:
-     appsystem: poctest
-     servicename: 模块
-     servicecode: 模块
-     clustername: 集群
-     appprogramname: 模块
-     collector_type: filebeat
-     collectruleid: 196
-     ip: 192.168.70.92
-     topicname: ods_default_log
-  fields_under_root: true
+#- type: syslog
+#
+#  protocol.tcp:
+#    host: 192.168.70.92:514
+#  ignore_older: 24h
+#
+#  encoding: gbk
+#
+#  fields:
+#     appsystem: poctest
+#     servicename: 模块
+#     servicecode: 模块
+#     clustername: 集群
+#     appprogramname: 模块
+#     collector_type: filebeat
+#     collectruleid: 49
+#     ip: 192.168.70.92
+#     topicname: ods_default_log
+#  fields_under_root: true
+#- type: log
+#  paths:
+#    - /var/log/*.log
+#  scan_frequency: 5s
+#  close_inactive: 3m
+#  close_timeout: 5m
+#  ignore_older: 24h
+#
+#  encoding: gbk
+#
+#
+#
+#  fields:
+#     appsystem: poctest
+#     servicename: 模块
+#     servicecode: 模块
+#     clustername: 集群
+#     appprogramname: 模块
+#     collector_type: filebeat
+#     collectruleid: 167
+#     ip: 192.168.70.92
+#     topicname: ods_default_log
+#  fields_under_root: true
+#- type: log
+#  paths:
+#    - /home/runlog0.log
+#  scan_frequency: 5s
+#  close_inactive: 3m
+#  close_timeout: 5m
+#  ignore_older: 24h
+#
+#  encoding: utf-8
+#
+#  exclude_lines: 100
+#
+#
+#  fields:
+#     appsystem: poctest
+#     servicename: 模块
+#     servicecode: 模块
+#     clustername: 集群
+#     appprogramname: 模块
+#     collector_type: filebeat
+#     collectruleid: 196
+#     ip: 192.168.70.92
+#     topicname: ods_default_log
+#  fields_under_root: true
 processors:
   - add_host_metadata: ~
 output.logstash:

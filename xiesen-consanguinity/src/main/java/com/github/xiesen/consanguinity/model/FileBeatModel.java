@@ -14,21 +14,17 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BeatModel {
+public class FileBeatModel {
+    /**
+     * 节点名称*
+     */
+    private String name;
     /**
      * beat 类型*
      */
-    private String type;
+    private String type = "filebeat";
 
-    /**
-     * topic 列表*
-     */
-    private List<String> topicName;
-
-    /**
-     * ip 实例
-     */
-    private List<String> ip;
+    private List<FilebeatInputType> filebeatTypeInstances;
 
     private LogstashModel logstash;
 
