@@ -1,6 +1,5 @@
 package com.github.xiesen.influxdb;
 
-import com.github.xiesen.influxdb.datax.Constant;
 import org.influxdb.InfluxDB;
 import org.influxdb.InfluxDBFactory;
 import org.influxdb.dto.BatchPoints;
@@ -214,8 +213,8 @@ public class InfluxDBConnect {
         Set<String> tagKeys = getTagKeys(measurement);
         Set<String> fieldKeys = getFieldKeys(measurement);
         Set<String> set = new LinkedHashSet<>(tagKeys.size() + fieldKeys.size() + 2);
-        set.add(Constant.UID);
-        set.add(Constant.TIME);
+//        set.add(Constant.UID);
+//        set.add(Constant.TIME);
 
         set.addAll(tagKeys);
         set.addAll(fieldKeys);

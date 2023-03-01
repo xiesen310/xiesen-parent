@@ -20,12 +20,12 @@ public class MockTestLogAvro {
     private static Map<String, String> getRandomDimensions() {
         Random random = new Random();
         Map<String, String> dimensions = new HashMap<>(4);
-        dimensions.put("hostname", "DVJTY4-WEB406-zzg");
-        dimensions.put("appprogramname", "DVJTY4-WEB406_80");
-        dimensions.put("servicecode", "WEB");
-        dimensions.put("clustername", "nginx");
+//        dimensions.put("hostname", "DVJTY4-WEB406-zzg");
+//        dimensions.put("appprogramname", "DVJTY4-WEB406_80");
+//        dimensions.put("servicecode", "WEB");
+//        dimensions.put("clustername", "nginx");
         dimensions.put("appsystem", "tdx");
-        dimensions.put("servicename", "nginx");
+//        dimensions.put("servicename", "nginx");
         dimensions.put("ip", "192.168.1.1");
         return dimensions;
     }
@@ -37,12 +37,11 @@ public class MockTestLogAvro {
 
     private static Map<String, String> getRandomNormalFields() {
         Map<String, String> normalFields = new HashMap<>(2);
-        normalFields.put("message", "183.95.248.189 - - [23/Jul/2020:08:26:32 +0800] \"GET " +
-                "/gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ" +
-                "%3D%3D HTTP/1.1\" 200 872 ");
-        normalFields.put("collecttime", DateUtil.getUTCTimeStr());
-        String kv = new Random().nextBoolean() ? "": "a";
-        normalFields.put("kv",kv);
+        final int num = new Random().nextInt(10);
+        normalFields.put("message", "code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ[123]: IsActive " + num);
+//        normalFields.put("collecttime", DateUtil.getUTCTimeStr());
+//        String kv = new Random().nextBoolean() ? "": "a";
+//        normalFields.put("kv",kv);
         return normalFields;
     }
 

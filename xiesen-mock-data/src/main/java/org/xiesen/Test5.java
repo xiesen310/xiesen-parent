@@ -4,6 +4,7 @@ import cn.hutool.core.map.MapUtil;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * @author xiesen
@@ -23,6 +24,13 @@ public class Test5 {
             System.out.println(FUNCTION_ID_STR + " = " + functionId);
         } else {
             System.out.println(FUNCTION_ID_STR + " is null.");
+        }
+
+
+        for (int i =0; i < 100; i++) {
+            final int num = new Random().nextInt(10);
+            System.out.println(num);
+
         }
     }
 }

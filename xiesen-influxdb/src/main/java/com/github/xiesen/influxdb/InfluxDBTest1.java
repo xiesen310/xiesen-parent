@@ -13,7 +13,7 @@ public class InfluxDBTest1 {
         String password = "admin";
 //        String openurl = "http://192.168.1.95:8086";
         String openurl = "http://192.168.70.170:8086";
-        String database = "dwd_all_metric";
+        String database = "xiesen";
 
         InfluxDBConnect connect = new InfluxDBConnect(username, password, openurl, database, 1, 2);
         connect.connection();
@@ -53,6 +53,7 @@ public class InfluxDBTest1 {
         influxDbRow.setFields(fields);
 
 //        connect.insert(influxDbRow);
+        
     }
 
     /**

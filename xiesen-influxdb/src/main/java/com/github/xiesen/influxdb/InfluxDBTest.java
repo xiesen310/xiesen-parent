@@ -10,7 +10,7 @@ public class InfluxDBTest {
     public static void main(String[] args) {
         String username = "admin";
         String password = "admin";
-        String openurl = "http://192.168.1.95:8086";
+        String openurl = "http://192.168.70.92:8086";
         String database = "xiesen";
         InfluxDBTest influxDBTest = new InfluxDBTest();
 
@@ -24,7 +24,7 @@ public class InfluxDBTest {
     private List<InfluxDbRow> getRows() {
         List<InfluxDbRow> list = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            InfluxDbRow influxDbRow = new InfluxDbRow();
+            com.github.xiesen.influxdb.InfluxDbRow influxDbRow = new InfluxDbRow();
             String measurement = "kafkaConsumer";
             influxDbRow.setTimeSecond(System.currentTimeMillis());
             influxDbRow.setMeasurement(measurement);

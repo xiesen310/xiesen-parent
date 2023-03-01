@@ -38,7 +38,7 @@ public class KafkaConsumerAvroDemo {
 //        props.put("auto.offset.reset", "earliest");
         KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Collections.singletonList("test"));
+        consumer.subscribe(Collections.singletonList("metric-test-result"));
         AtomicLong i = new AtomicLong();
         while (true) {
             //  从服务器开始拉取数据

@@ -78,12 +78,14 @@ public class MockLogJson {
 
     public static void main(String[] args) throws Exception {
 
-        String topic = "test";
-        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
+        String topic = "input-test-2";
+        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+//        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
         long records = 1000L;
 
         KafkaProducer<String, String> producer = KafkaTools.buildProducer(bootstrapServers, StringSerializer.class.getName());
         for (long index = 0; index < records; index++) {
+            System.out.println(mockJsonLogData());
             KafkaTools.send(producer, topic, mockJsonLogData());
             Thread.sleep(2000);
         }
