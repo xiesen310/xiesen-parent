@@ -44,6 +44,7 @@
 <!--        <module>xiesen-aviator</module>-->
         <module>flink-cdc-test</module>
         <module>xiesen-consanguinity</module>
+        <module>test-excel</module>
         <!--        <module>springboot-mybatis-plus</module>-->
         <!--        <module>xiesen-mysql</module>-->
 <!--        <module>xiesen-jython</module>-->

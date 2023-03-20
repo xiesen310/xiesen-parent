@@ -22,7 +22,8 @@ public class KafkaConsumerMetricDemo {
         Properties props = new Properties();
 
         // 必须设置的属性
-        props.put("bootstrap.servers", "kafka-1:19092,kafka-2:19092,kafka-3:19092");
+//        props.put("bootstrap.servers", "kafka-1:19092,kafka-2:19092,kafka-3:19092");
+        props.put("bootstrap.servers", "192.168.70.6:29092,192.168.70.7:29092");
         props.put("key.deserializer", StringDeserializer.class.getName());
         props.put("value.deserializer", ByteArrayDeserializer.class.getName());
         props.put("group.id", "group11");
@@ -34,7 +35,7 @@ public class KafkaConsumerMetricDemo {
         props.put("auto.offset.reset", "earliest");
         KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Collections.singletonList("xiesen_metric3"));
+        consumer.subscribe(Collections.singletonList("kcbp_metric_with_funcid"));
         AtomicLong i = new AtomicLong();
         while (true) {
             //  从服务器开始拉取数据
@@ -50,10 +51,10 @@ public class KafkaConsumerMetricDemo {
 //                    System.out.println(value);
                 }
 
-                /*System.out.printf("topic = %s ,partition = %d,offset = %d, key = %s, value = %s%n", record.topic(),
+                System.out.printf("topic = %s ,partition = %d,offset = %d, key = %s, value = %s%n", record.topic(),
                         record.partition(),
                         record.offset(), record.key(), AvroDeserializerFactory.getMetricDeserializer().deserializing
-                        (record.value()));*/
+                        (record.value()));
 
 
                 System.out.println("消费了 " + i + " 条数据");
