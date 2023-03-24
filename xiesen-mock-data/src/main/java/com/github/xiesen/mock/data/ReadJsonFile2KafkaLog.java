@@ -22,7 +22,7 @@ import java.util.Set;
  */
 public class ReadJsonFile2KafkaLog {
     public static void main(String[] args) {
-        String filePath = "D:\\tmp\\relation";
+        String filePath = "D:\\tmp\\原始topic.txt";
         CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
 
         try {
@@ -35,6 +35,12 @@ public class ReadJsonFile2KafkaLog {
                     System.out.println(file.getName() + " 数据总条数: " + lineCount);
                     bufferedReader.close();
                 }
+            }else {
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(dir), "UTF-8"));
+                int lineCount = insertToKafka(producer, bufferedReader);
+                System.out.println(dir.getName() + " 数据总条数: " + lineCount);
+                bufferedReader.close();
+
             }
         } catch (Exception e) {
             e.printStackTrace();
