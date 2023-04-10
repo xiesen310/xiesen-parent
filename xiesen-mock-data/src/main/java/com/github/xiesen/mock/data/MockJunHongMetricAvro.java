@@ -140,8 +140,9 @@ public class MockJunHongMetricAvro {
         return Double.valueOf(nf.format(new Random().nextDouble()));
     }
 
-    public static final List<String> METRIC_SET_NAMES = Arrays.asList("cpu", "tomcat_raw_zabbix", "nginx_raw_zabbix",
-            "redis_raw_zabbix", "zookeeper_raw_zabbix", "mysql_raw_zabbix", "kafka_beat", "router_beat", "memory", "filesystem", "status_apache", "process_num");
+    //    public static final List<String> METRIC_SET_NAMES = Arrays.asList("cpu", "tomcat_raw_zabbix", "nginx_raw_zabbix",
+//            "redis_raw_zabbix", "zookeeper_raw_zabbix", "mysql_raw_zabbix", "kafka_beat", "router_beat", "memory", "filesystem", "status_apache", "process_num");
+    public static final List<String> METRIC_SET_NAMES = Arrays.asList("cpu", "cpu_system_mb", "memory_system_mb", "filesystem", "process_num");
 
     public static final List<String> JHSYSTEM_METRIC_SET_NAMES = Arrays.asList("jhapp_hq_zx", "jhapp_hq_init", "jhapp_hq_online",
             "jhapp_hq_refresh", "JhMsSql2005");

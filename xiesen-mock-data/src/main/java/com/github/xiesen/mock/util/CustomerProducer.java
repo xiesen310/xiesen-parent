@@ -3,12 +3,14 @@ package com.github.xiesen.mock.util;
 import com.github.xiesen.common.avro.AvroSerializerFactory;
 import com.github.xiesen.common.utils.PropertiesUtil;
 import com.github.xiesen.common.utils.StringUtil;
+import org.apache.commons.collections.MapUtils;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
@@ -134,6 +136,16 @@ public class CustomerProducer {
             producer.send(new ProducerRecord<String, byte[]>(topics, null, bytes));
         } catch (Exception e) {
             log.error("sendLog-插入Kafka失败", e);
+        }
+    }
+
+    public void sendMetric(Map<String, Object> data) {
+        try {
+            long startTime = System.currentTimeMillis();
+            byte[] bytes = AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(data);
+            producer.send(new ProducerRecord<String, byte[]>(topics, null, bytes));
+        } catch (Exception e) {
+            log.error("sendMetric-插入Kafka失败", e);
         }
     }
 

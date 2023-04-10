@@ -10,6 +10,7 @@ import org.apache.avro.io.DatumWriter;
 import org.apache.avro.io.Encoder;
 import org.apache.avro.io.EncoderFactory;
 import org.apache.avro.util.Utf8;
+import org.apache.commons.collections.MapUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -238,6 +239,25 @@ public class AvroSerializer {
      */
     public synchronized byte[] serializingMetric(String metricSetName, String timestamp, Map<String, String> dimensions, Map<String, Double> metrics) {
         GenericRecord datum = new GenericData.Record(this.schema);
+        // 将数据加到datum中
+        datum.put(0, metricSetName);
+        datum.put(1, timestamp);
+        datum.put(2, dimensions);
+        datum.put(3, metrics);
+
+        return serializing(datum);
+    }
+
+    /**
+     * 序列化对象
+     */
+    public synchronized byte[] serializingMetric(Map<String, Object> data) {
+        GenericRecord datum = new GenericData.Record(this.schema);
+
+        String metricSetName = MapUtils.getString(data, "metricsetname");
+        String timestamp = MapUtils.getString(data, "timestamp");
+        Map<String, String> dimensions = MapUtils.getMap(data, "dimensions");
+        Map<String, Double> metrics = MapUtils.getMap(data, "metrics");
         // 将数据加到datum中
         datum.put(0, metricSetName);
         datum.put(1, timestamp);

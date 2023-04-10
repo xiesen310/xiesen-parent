@@ -1,0 +1,30 @@
+package com.github.xiesen.expiring.map;
+
+import cn.hutool.core.util.StrUtil;
+
+/**
+ * @author xiesen
+ */
+public class Test1 {
+    public static final String msg = "[20230322-074412][   261047203][1070-1cd8][   99] Req: LBM=888102,NodeId=39101,QueueId=109,MsgId=390001010003315E27F3D14C,Len=2378,Buf=01200001200001000000100000000000000000163E0002EAKCXP00  GV2gODkBbGg=                          888102  02252000000          167_CA=2.4&_SYSID=39101&_ENDIAN=0&_RS_1=MESSAGE;3;LEVEL,CODE,MSG;1&_1=0,0,导入准备成功!&_RC=1&_CC=3&_TL=3:1;&g_serverid=&g_operid=&g_operpwd=&g_operway=&g_stationaddr=&g_checksno=&source=ISSUE_REFINANCE_IMP&recbuf=_BASE64_recbuf&_BASE64_recbuf=MzcKT0JKRUNUSUQKU0VDQ09ERQpTRUNOQU1FCkRFQ0xBUkVEQVRFClJFRklOQU5DRV9UWVBFClNFQ19UWVBFClBVUl9DT0RFMQpQVVJfTkFNRTEKUFVSX0NPREUyClBVUl9OQU1FMgpJU1NVRV9RVFkKQUNUX0FNVApJU1NVRV9QUklDRQpQTEFDSU5HX1BST1BPUlRJT04KSVNTVUVfU19EQVRFCklTU1VFX0VfREFURQpUT1RBTF9CX1FUWQpUT1RBTF9BX1FUWQpUUkFOU19CX1FUWQpUUkFOU19BX1FUWQpMSVNUSU5HX0RBVEUKUl9SRUNfREFURQpYUl9EQVRFCklTU1VFX09CSkVDVApNRU1PClJFQ1RJTUUKTU9EVElNRQpJU1ZBTElEClNFUUlEClVQREFURUREQVRFCklTU1VFX1NFQ0NPREUKSVNTVUVfU0VDTkFNRQpTVUJTX01FVEgKU1VCU19NRVRIX0NPREUKUFVSX0VfREFURQpSRUNFSVZFX0RBVEVUCkxBU1RfTU9ESUZZX0RBVEVUCjMKNTk3NzQ5NzQwOAEwMDIzODYuc3oBzOzUrbnJt90BMjAyMy0wMy0yMiAwMDowMDowMC4wMDABtqjP8tT2t6IBQbnJAQEBAQEyODY1My4yOTUxATE5OTk5OS45OTk4ATYuOTgwMAEBMjAyMy0wMy0wNgEyMDIzLTAzLTA2AQEBAQEBAQHEvLyv18q98LXEt6LQ0LbUz/POqtLLsfa3otW5v9i5ybyvzcXT0M/euavLvqGixe3A7rHzoaJVQlMgQUe1yLmyvMYyMcP7zbbXytXfoaMBATIwMjMtMDMtMjEgMTk6NDY6MDUuMDAwAQExATkzNzYyNzIzMzEBATAwMjM4Ni5zegHM7NStucm33QEwNDkwMTgBt8e5q7+qt6LQ0AEBMjAyMy0wMy0yMiAwNjowNToyOS4wMDABMjAyMy0wMy0yMiAwNjowNToyOS4wMDAwMDAwAQo1OTc3NDk3MDcwATAwMjgxNS5zegGz57TvvLzK9QEyMDIzLTAzLTIyIDAwOjAwOjAwLjAwMAG2qM/y1Pa3ogFBuckBAQEBATIwMjgzLjk3NTYBMTk5OTk5Ljk5OTQBOS44NjAwAQEyMDIzLTAzLTAyATIwMjMtMDMtMDIBAQEBAQEBAcS8vK/Xyr3wtcS3otDQttTP886qssbNqLv5vfC53MDt09DP3rmry76holVCUyBBR7XIubK8xjE5w/vNttfK1d+howEBMjAyMy0wMy0yMSAxOTozOTowOS4wMDABATEBOTM3NjI3MTUwMgEBMDAyODE1LnN6AbPntO+8vMr1ATA0OTAxOAG3x7mrv6q3otDQAQEyMDIzLTAzLTIyIDA2OjA1OjI5LjAwMAEyMDIzLTAzLTIyIDA2OjA1OjI5LjAwMDAwMDABCjU5NTcwMjYwOTgBMzAwNTMwLnN6AbTv1r6/xry8ATIwMjMtMDMtMjIgMDA6MDA6MDAuMDAwAbaoz/LU9reiAUG5yQEBAQEBMTM1Ni4wODA0ATMwOTk5Ljk5NzkBMjIuODYwMAEBMjAyMy0wMy0wNwEyMDIzLTAzLTA3ATE1ODEzLjk0NTABMTcxNzAuMDI1NAEBATIwMjMtMDMtMjMBAQHEvLyv18q98LXEt6LQ0LbUz/POqrr+xM+64sXBtq/BprrPu+/G89K1o6jT0M/eus+776OpoaMBATIwMjMtMDMtMTAgMTk6MzU6NTYuMDAwATIwMjMtMDMtMjEgMjI6NTY6NDUuMDAwATEBOTM3NjQ4NzM5OAEBMzAwNTMwLnN6AbTv1r6/xry8ATA0OTAxOAG3x7mrv6q3otDQAQEyMDIzLTAzLTIyIDA2OjA1OjI5LjAwMAEyMDIzLTAzLTIyIDA2OjA1OjI5LjAwMDAwMDABCg@3D@3D&buflen=1456&g_funcid=888102&_EORS_1=1&_RC=1&_CC=3&_TL=3:1;3:1;";
+
+    public static void main(String[] args) {
+        System.out.println(getValueByComma("Len=", msg));
+        String msgId = null;
+        System.out.println(StrUtil.isNotBlank(msgId));
+        System.out.println(StrUtil.isNotBlank(""));
+        System.out.println(StrUtil.isNotBlank(" "));
+
+    }
+
+    private static String getValueByComma(String key, String str) {
+        String separator = ",";
+        return getValue(key, str, separator);
+    }
+
+    private static String getValue(String key, String str, String separator) {
+        int i = StrUtil.indexOfIgnoreCase(str, key);
+        int i2 = StrUtil.indexOfIgnoreCase(str, separator, i);
+        return i2 == -1 ? StrUtil.sub(str, i + key.length(), str.length()) : StrUtil.sub(str, i + key.length(), i2);
+    }
+}

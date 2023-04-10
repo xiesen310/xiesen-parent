@@ -11,7 +11,7 @@
     <modules>
         <module>xiesen-mock-data</module>
         <module>xiesen-common</module>
-        <module>xiesen-flink-test</module>
+<!--        <module>xiesen-flink-test</module>-->
 <!--        <module>xiesn-mock-data-0.8</module>-->
 <!--        <module>xiesen-mock-jmeter</module>-->
 <!--        <module>consumer-avro-tools</module>-->
@@ -30,7 +30,7 @@
         <module>xiesen-mock-data-241</module>
 <!--        <module>xiesen-redisson</module>-->
 <!--        <module>xiesen-asynchbase</module>-->
-        <module>flink112-example</module>
+<!--        <module>flink112-example</module>-->
 <!--        <module>update-jar-metadata</module>-->
 <!--        <module>xiesen-json</module>-->
 <!--        <module>xiesen-hive</module>-->
@@ -42,9 +42,10 @@
 <!--        <module>read-hdfs</module>-->
 <!--        <module>xiesen-clickhouse</module>-->
 <!--        <module>xiesen-aviator</module>-->
-        <module>flink-cdc-test</module>
-        <module>xiesen-consanguinity</module>
+<!--        <module>flink-cdc-test</module>-->
+<!--        <module>xiesen-consanguinity</module>-->
         <module>test-excel</module>
+        <module>expiringmap-test</module>
         <!--        <module>springboot-mybatis-plus</module>-->
         <!--        <module>xiesen-mysql</module>-->
 <!--        <module>xiesen-jython</module>-->
