@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author xiesen
@@ -47,6 +48,13 @@ public class Testq {
 //        dynamicProperties.forEach((k, v) -> System.out.println(k + "=" + v));
         long msTime = getMsTime("2022-06-21T20:56:34.278+08:00");
         System.out.println(msTime);
+
+        Map<String, Double> metrics = new ConcurrentHashMap<>(1);
+        if (metrics.isEmpty()) {
+            System.out.println("metric is null");
+        }else {
+            System.out.println("metric is not null");
+        }
     }
 
 

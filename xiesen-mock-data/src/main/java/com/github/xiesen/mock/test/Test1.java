@@ -3,6 +3,7 @@ package com.github.xiesen.mock.test;
 import cn.hutool.cache.Cache;
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @author xiesen
@@ -25,5 +26,15 @@ public class Test1 {
         //由于缓存容量只有3，当加入第四个元素的时候，根据LRU规则，最少使用的将被移除（2被移除）
         String value2 = lruCache.get("key");//null
 
+        System.out.println("开始时间: " + (System.currentTimeMillis() - 5 * 60 * 1000));
+        System.out.println("结束时间: " + System.currentTimeMillis());
+
+        String a = "2023-04-17T18:27:00+08:00";
+        final int t = StrUtil.indexOf(a, 'T');
+        final String s = StrUtil.sub(a, t + 1, t + 1 + 8);
+
+        System.out.println(s);
+
+        System.out.println("aaaa\n\rbbbb");
     }
 }

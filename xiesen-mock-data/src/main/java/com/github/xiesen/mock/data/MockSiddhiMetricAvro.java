@@ -1,6 +1,7 @@
 package com.github.xiesen.mock.data;
 
 import cn.hutool.core.lang.Console;
+import cn.hutool.core.util.NumberUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
@@ -137,12 +138,50 @@ public class MockSiddhiMetricAvro {
         map6.put("clustername", "交易中间件");
         map6.put("appprogramname", "卡园");
 
+
+        HashMap<String, String> map7 = new HashMap<>();
+        map7.put("hostname", "jzc1-kcbp6");
+        map7.put("ip", "10.180.1.21");
+        map7.put("appsystem", "jzjy");
+        map7.put("servicename", "BP");
+        map7.put("clustername", "核心1");
+        map7.put("appprogramname", "BP");
+
+        HashMap<String, String> map8 = new HashMap<>();
+        map8.put("hostname", "jzc1-kcbp4");
+        map8.put("ip", "10.180.1.14");
+        map8.put("appsystem", "jzjy");
+        map8.put("servicename", "BP");
+        map8.put("clustername", "核心1");
+        map8.put("appprogramname", "BP");
+
+        HashMap<String, String> map9 = new HashMap<>();
+        map9.put("hostname", "jzc2-shof");
+        map9.put("ip", "10.180.2.31");
+        map9.put("appsystem", "jzjy");
+        map9.put("servicename", "OF");
+        map9.put("clustername", "核心2");
+        map9.put("appprogramname", "OF");
+
+        HashMap<String, String> map10 = new HashMap<>();
+        map10.put("hostname", "jzc2-szof");
+        map10.put("ip", "10.180.2.32");
+        map10.put("appsystem", "jzjy");
+        map10.put("servicename", "OF");
+        map10.put("clustername", "核心2");
+        map10.put("appprogramname", "OF");
+
         cacheListDim.add(map1);
         cacheListDim.add(map2);
         cacheListDim.add(map3);
         cacheListDim.add(map4);
         cacheListDim.add(map5);
         cacheListDim.add(map6);
+        cacheListDim.add(map7);
+        cacheListDim.add(map8);
+        cacheListDim.add(map9);
+        cacheListDim.add(map10);
+
     }
 
     /**
@@ -166,20 +205,25 @@ public class MockSiddhiMetricAvro {
 
         data.put("dimensions", dimensions);
         Map<String, Double> metrics = new HashMap<>();
-        metrics.put("total", 32.0);
-        metrics.put("used_bytes", 18.0);
-        metrics.put("free", 1.8);
-        metrics.put("used_pct", 0.8);
-        metrics.put("actual_used_bytes", 2.8);
-        metrics.put("actual_free", 3.8);
-        metrics.put("actual_used_pct", 4.8);
-        metrics.put("swap_total", 5.8);
-        metrics.put("swap_used_bytes", 6.8);
-        metrics.put("swap_free", 7.8);
-        metrics.put("swap_used_pct", 8.8);
+        metrics.put("total", randomDouble(1, 10));
+        metrics.put("used_bytes", randomDouble(10, 20));
+        metrics.put("free", randomDouble(3, 5));
+        metrics.put("used_pct", randomDouble(1, 5));
+        metrics.put("actual_used_bytes", randomDouble(1, 10));
+        metrics.put("actual_free", randomDouble(1, 10));
+        metrics.put("actual_used_pct", randomDouble(1, 10));
+        metrics.put("swap_total", randomDouble(1, 10));
+        metrics.put("swap_used_bytes", randomDouble(1, 10));
+        metrics.put("swap_free", randomDouble(1, 10));
+        metrics.put("swap_used_pct", randomDouble(1, 10));
 
         data.put("metrics", metrics);
         return data;
+    }
+
+    private static Double randomDouble(int start, int end) {
+        final int[] values = NumberUtil.generateRandomNumber(start, end, 1);
+        return (double) values[0];
     }
 
     /**
@@ -297,7 +341,7 @@ public class MockSiddhiMetricAvro {
             System.exit(-1);
         }
         long size = 50000000;
-        String prefix = "memory_system_mb_0";
+        String prefix = "memory_system_mb";
         for (int i = 0; i < size; i++) {
             CustomerProducer producer = ProducerPool.getInstance(confPath).getProducer();
             for (int j = 0; j < cacheListDim.size(); j++) {

@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
  * @Date 2020/12/14 13:21
  */
 public class MockDQMetricData {
-    private static String topic = "test";
+    private static String topic = "xiesen_metric_data_multi";
     private static String brokerAddr = "kafka-1:29092,kafka-2:29092,kafka-3:29092";
     private static ProducerRecord<String, String> producerRecord = null;
     private static KafkaProducer<String, String> producer = null;
