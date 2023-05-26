@@ -182,6 +182,19 @@ public class MockSiddhiMetricAvro {
         cacheListDim.add(map9);
         cacheListDim.add(map10);
 
+        for (int i = 1; i < 255; i++) {
+            for (int j = 1; j < 255; j++) {
+                HashMap<String, String> map = new HashMap<>();
+                map.put("hostname", "zork" + i + "-" + j + "host.com");
+                map.put("ip", "192.167." + i + "." + j);
+                map.put("appsystem", "jzjy");
+                map.put("servicename", "OF");
+                map.put("clustername", "核心2");
+                map.put("appprogramname", "OF");
+                cacheListDim.add(map);
+            }
+        }
+
     }
 
     /**

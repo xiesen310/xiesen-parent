@@ -63,7 +63,10 @@ public class MockDQMetricData {
         return new KafkaProducer<>(props);
     }
 
-    public static final List<String> METRIC_SET_NAMES = Arrays.asList("mock_disk_system_mb", "mock_cpu_system_mb", "mock_memory_system_mb");
+    public static final List<String> METRIC_SET_NAMES = Arrays.asList(
+//            "mock_disk_system_mb",
+//            "mock_cpu_system_mb",
+            "mock_memory_system_mb");
 
     public static String randomMetricSetName() {
         return METRIC_SET_NAMES.get(new Random().nextInt(METRIC_SET_NAMES.size()));
@@ -142,6 +145,7 @@ public class MockDQMetricData {
             map.put("metrics", metrics);
             final String message = JSON.toString(map);
             System.out.println(message);
+
             send(producer, topic, message);
             num++;
             i += 10000;
@@ -154,7 +158,9 @@ public class MockDQMetricData {
     }
 
     public static void mockJsonWithIAndMetricSetName(long startTime, long endTime, String ipPrefix, String metricSetName) throws ExecutionException, InterruptedException {
-        final KafkaProducer<String, Object> producer = buildProducer(brokerAddr, StringSerializer.class.getName());
+        if (producer == null) {
+            producer = buildProducer(brokerAddr, StringSerializer.class.getName());
+        }
         long i = startTime;
         int num = 0;
         while (i < endTime) {
@@ -178,8 +184,9 @@ public class MockDQMetricData {
             map.put("dimensions", dimensions);
             map.put("metrics", metrics);
             final String message = JSON.toString(map);
-            // System.out.println(message);
+             System.out.println(message);
             send(producer, topic, message);
+            Thread.sleep(2000);
             num++;
             i += 10000;
         }
@@ -193,7 +200,7 @@ public class MockDQMetricData {
     }
 
     public static void buildMessage(String metricSetName) throws ExecutionException, InterruptedException {
-        for (int i = 0; i < 255; i++) {
+        for (int i = 0; i < 10; i++) {
             long start = System.currentTimeMillis();
             final long startDateTime = getStartDateTime(new Date());
             final long endDateTime = getEndDateTime(new Date());
