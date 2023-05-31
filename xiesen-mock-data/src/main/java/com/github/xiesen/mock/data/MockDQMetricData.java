@@ -65,7 +65,7 @@ public class MockDQMetricData {
 
     public static final List<String> METRIC_SET_NAMES = Arrays.asList(
 //            "mock_disk_system_mb",
-//            "mock_cpu_system_mb",
+            "mock_cpu_system_mb",
             "mock_memory_system_mb");
 
     public static String randomMetricSetName() {
