@@ -46,6 +46,15 @@ public class RedisHelper {
         }
     }
 
+    public void insert(Map<String, String> map) {
+        Jedis jedis = jedisPool.getResource();
+        map.forEach((k, v) -> {
+            jedis.set(k, v);
+        });
+
+        close(jedis);
+    }
+
     public Map<String, MetricModel> getDataByKey(String outerKey) {
         Jedis jedis = jedisPool.getResource();
         final Map<String, String> mapList = jedis.hgetAll(outerKey);

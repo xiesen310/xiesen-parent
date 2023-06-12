@@ -242,6 +242,20 @@ public class MysqlHelper {
         }
     }
 
+    public static void readCmdbTopo() throws SQLException {
+        final Connection conn = BaseDao.getConn();
+        String sql = "SELECT YWJC as appsystem, MKMC as moduleName,ZUJIANMC as hostname, IP as ip FROM Topo WHERE WHZMC in ('集中交易系统','君弘');";
+
+        final PreparedStatement statement = conn.prepareStatement(sql);
+        final ResultSet resultSet = statement.executeQuery();
+        while (resultSet.next()) {
+            System.out.println(resultSet.getString(1));
+        }
+        resultSet.close();
+        statement.close();
+        conn.close();
+    }
+
     /**
      * 写入指标集详情数据*
      *
@@ -294,9 +308,10 @@ public class MysqlHelper {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 //        final boolean flag = existMetricSetName("xiesen_metric671");
 //        System.out.println(flag);
-        testTruncateTables();
+//        testTruncateTables();
+        readCmdbTopo();
     }
 }

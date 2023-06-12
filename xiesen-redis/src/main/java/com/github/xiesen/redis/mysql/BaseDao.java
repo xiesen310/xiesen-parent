@@ -28,7 +28,7 @@ public class BaseDao {  //  静态工具类，用于创建数据库连接对象�
         Connection conn = null;
         try {
             //  rewriteBatchedStatements=true,一次插入多条数据，只插入一次
-            conn = DriverManager.getConnection("jdbc:mysql://192.168.1.222:3306/xiesen?rewriteBatchedStatements=true&useSSL=false", "root", "Mysql@123");
+            conn = DriverManager.getConnection("jdbc:mysql://192.168.1.222:3306/cmdb?rewriteBatchedStatements=true&useSSL=false", "root", "Mysql@123");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

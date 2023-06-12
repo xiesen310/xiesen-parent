@@ -18,6 +18,28 @@ import java.sql.SQLException;
  */
 public class Test {
     public static void main(String[] args) throws SQLException {
+//        search();
+
+    }
+
+
+    private static void insertData() throws SQLException {
+        String driverName = "ru.yandex.clickhouse.ClickHouseDriver";
+        String database = "xiesen";
+        String url = "jdbc:clickhouse://192.168.90.25:8123/xiesen";
+        String user = "default";
+        String password = "admin";
+        ClickHouseProperties prop = new ClickHouseProperties();
+        prop.setUser(user);
+        prop.setPassword(password);
+        prop.setDatabase(database);
+        ClickHouseDataSource clickHouseDataSource = new ClickHouseDataSource(url, prop);
+        ClickHouseConnection connection = clickHouseDataSource.getConnection();
+
+        ClickHouseUtils clickHouseUtils = new ClickHouseUtils();
+    }
+
+    private static void search() throws SQLException {
         String driverName = "ru.yandex.clickhouse.ClickHouseDriver";
         String database = "xiesen";
         String url = "jdbc:clickhouse://192.168.90.25:8123/xiesen";

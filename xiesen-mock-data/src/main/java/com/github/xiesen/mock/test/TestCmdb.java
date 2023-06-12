@@ -26,5 +26,9 @@ public class TestCmdb {
         bigMap.put("192.168.1.1", defaultLatency);
 
         System.out.println(JSON.toJSONString(bigMap));
+
+        String instance = "192.168.90.2";
+        String ip = instance.split(":")[0];
+        System.out.println(ip);
     }
 }

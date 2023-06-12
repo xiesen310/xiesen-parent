@@ -22,7 +22,7 @@
 <!--        <module>xiesen-algorithm</module>-->
 <!--        <module>xiesen-kudu</module>-->
 <!--        <module>xiesen-hbase</module>-->
-<!--        <module>xiesen-redis</module>-->
+        <module>xiesen-redis</module>
 <!--        <module>xiesen-sqlserver</module>-->
 <!--        <module>xiesen-pulsar</module>-->
 <!--        <module>xiesen-learnning</module>-->
@@ -40,7 +40,7 @@
 <!--        <module>protobuf-example</module>-->
 <!--        <module>xiesen-oracle</module>-->
 <!--        <module>read-hdfs</module>-->
-<!--        <module>xiesen-clickhouse</module>-->
+        <module>xiesen-clickhouse</module>
 <!--        <module>xiesen-aviator</module>-->
 <!--        <module>flink-cdc-test</module>-->
 <!--        <module>xiesen-consanguinity</module>-->
