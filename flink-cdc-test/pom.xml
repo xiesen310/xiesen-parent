@@ -17,7 +17,7 @@
         <flink.version>1.13.6</flink.version>
         <scala.version>2.11</scala.version>
         <hadoop.version>3.1.3</hadoop.version>
-        <mysql.version>5.1.49</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <fastjson.version>1.2.75</fastjson.version>
     </properties>
 
