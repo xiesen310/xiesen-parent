@@ -12,7 +12,7 @@
     <artifactId>xiesen-pulsar</artifactId>
 
     <properties>
-        <pulsar.version>2.7.0</pulsar.version>
+        <pulsar.version>2.7.5</pulsar.version>
     </properties>
 
     <dependencies>
