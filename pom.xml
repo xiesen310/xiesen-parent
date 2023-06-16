@@ -22,7 +22,7 @@
 <!--        <module>xiesen-algorithm</module>-->
 <!--        <module>xiesen-kudu</module>-->
 <!--        <module>xiesen-hbase</module>-->
-        <module>xiesen-redis</module>
+<!--        <module>xiesen-redis</module>-->
 <!--        <module>xiesen-sqlserver</module>-->
 <!--        <module>xiesen-pulsar</module>-->
 <!--        <module>xiesen-learnning</module>-->
@@ -46,6 +46,8 @@
 <!--        <module>xiesen-consanguinity</module>-->
         <module>test-excel</module>
         <module>expiringmap-test</module>
+        <module>xiesen-ds-test</module>
+        <module>xiesen-mock-kcbp</module>
         <!--        <module>springboot-mybatis-plus</module>-->
         <!--        <module>xiesen-mysql</module>-->
 <!--        <module>xiesen-jython</module>-->
