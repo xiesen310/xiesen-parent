@@ -14,7 +14,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <proto.verion>3.21.2</proto.verion>
+        <proto.verion>3.21.7</proto.verion>
     </properties>
 
 
