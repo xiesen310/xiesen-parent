@@ -5,6 +5,10 @@ import org.joda.time.DateTime;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.DateTimeException;
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 
 /**
@@ -74,6 +78,18 @@ public class DateUtil {
         return format.format(new Date(currentTimeMillis + interval)).toString();
     }
 
+    public static long utcToTimestamp(String dateTimeString) {
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
+            TemporalAccessor temporalAccessor = formatter.parse(dateTimeString);
+            Instant instant = Instant.from(temporalAccessor);
+            return instant.toEpochMilli();
+        } catch (DateTimeException e) {
+            System.out.println(e.getMessage());
+            return 0L;
+        }
+    }
+
     public static void main(String[] args) throws ParseException {
         String timeStr = getUTCTimeStr();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+08:00");
@@ -82,5 +98,16 @@ public class DateUtil {
         System.out.println(date.getTime());
 
         System.out.println(getParseTimeStr());
+
+        System.out.println("===================================");
+        String dateTimeString1 = "2023-08-14T05:38:15-140813659Z";
+        String dateTimeString2 = "2023-08-14T05:38:15.099Z";
+
+        long timestamp1 = utcToTimestamp(dateTimeString1);
+        long timestamp2 = utcToTimestamp(dateTimeString2);
+
+        System.out.println(timestamp1);
+        System.out.println(timestamp2);
+
     }
 }

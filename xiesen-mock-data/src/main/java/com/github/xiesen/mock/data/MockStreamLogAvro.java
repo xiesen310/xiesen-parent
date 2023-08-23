@@ -8,10 +8,7 @@ import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
 import org.joda.time.DateTime;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author xiese
@@ -68,11 +65,12 @@ public class MockStreamLogAvro {
 
     private static Map<String, String> getRandomDimensions() {
         Random random = new Random();
-        int i = random.nextInt(10);
+        ///int i = random.nextInt(10);
+        int i = 1;
         Map<String, String> dimensions = new HashMap<>();
 
-        dimensions.put("hostname", "autotest-1");//"zorkdata" + i);
-        dimensions.put("ip", "192.168.70.85");
+        dimensions.put("hostname", "zorkdata-" + i);
+        dimensions.put("ip", "192.168.70." + i);
         dimensions.put("appprogramname", "tc50");
         dimensions.put("appsystem", "dev_test");
 
@@ -98,6 +96,13 @@ public class MockStreamLogAvro {
         return normalFields;
     }
 
+    static List<String> LogTypeNames = Arrays.asList("default_analysis_template", "jzjy", "tdx");
+
+    private static String randomLogTypeName() {
+        final int i = new Random().nextInt(LogTypeNames.size());
+        return LogTypeNames.get(i);
+    }
+
     public static void main(String[] args) throws Exception {
         if (args.length == 0) {
             System.out.println("请指定配置文件");
@@ -107,7 +112,8 @@ public class MockStreamLogAvro {
         long size = getSize(propertiesName);
 
         for (int i = 0; i < size; i++) {
-            String logTypeName = "default_analysis_template";
+//            String logTypeName = "default_analysis_template";
+            String logTypeName = randomLogTypeName();
             String timestamp = DateUtil.getUTCTimeStr();
             String source = "/var/log/" + DateUtil.getDate() + ".log";
             String offset = getRandomOffset();
@@ -120,7 +126,7 @@ public class MockStreamLogAvro {
 //            System.out.println(timestamp);
             CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
-//            Thread.sleep(200);
+            Thread.sleep(200);
         }
         Thread.sleep(1000);
     }

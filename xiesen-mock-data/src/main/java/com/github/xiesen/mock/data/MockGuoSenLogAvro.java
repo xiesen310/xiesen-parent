@@ -38,11 +38,11 @@ public class MockGuoSenLogAvro {
         dimensions.put("hostname", "DVJTY4-WEB406");
         dimensions.put("appprogramname", "DVJTY4-WEB406_80");
         dimensions.put("servicecode", "WEB");
-        dimensions.put("url1", "/gsnews/");
+//        dimensions.put("url1", "/gsnews/");
         dimensions.put("clustername", "东莞");
-        dimensions.put("url2", "/gsnews/gsf10/");
+//        dimensions.put("url2", "/gsnews/gsf10/");
         dimensions.put("httpresponsecode", randomResponseCode());
-        dimensions.put("browser", "nil");
+//        dimensions.put("browser", "nil");
         dimensions.put("appsystem", "JJR");
         dimensions.put("servicename", "金太阳4接入服务nginx");
         dimensions.put("url", "/gsnews/gsf10/capital/main/");
@@ -103,9 +103,11 @@ public class MockGuoSenLogAvro {
 //        String topicName = "stream_guosen_log_data";
         String topicName = "xiesen";
         for (int i = 0; i < size; i++) {
-            String logTypeName = "nginx_access_filebeat";
+            String logTypeName = "tomcat_access_filebeat";
             String timestamp = DateUtil.getUTCTimeStr();
-            String source = "/var/log/nginx/access.log";
+//            String source = "/var/log/nginx/access.log";
+//            String source = "/var/log/tomcat/access1.log";
+            String source = "/var/log/tomcat/access.log";
             String offset = "351870827";
 
             Map<String, String> dimensions = getRandomDimensions();
@@ -124,6 +126,7 @@ public class MockGuoSenLogAvro {
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
 //            Thread.sleep(1000);
+//            Thread.sleep(10);
         }
         Thread.sleep(1000);
     }

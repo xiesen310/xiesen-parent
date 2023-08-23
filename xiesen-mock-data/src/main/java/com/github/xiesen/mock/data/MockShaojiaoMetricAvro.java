@@ -66,7 +66,7 @@ public class MockShaojiaoMetricAvro {
         }
     }
 
-//    public static final List<String> METRIC_SET_NAMES = Arrays.asList("core_system_mb", "cpu_system_mb", "memory_system_mb");
+    //    public static final List<String> METRIC_SET_NAMES = Arrays.asList("core_system_mb", "cpu_system_mb", "memory_system_mb");
     public static final List<String> METRIC_SET_NAMES = Arrays.asList("core_system_mb");
 
     public static String randomMetricSetName() {
@@ -172,6 +172,7 @@ public class MockShaojiaoMetricAvro {
 //            dimensions.put("servicename", "lmt模块");
 //            dimensions.put("clustername", "基础监控");
             dimensions.put("appprogramname", "lmt模块");
+            dimensions.put("name", UUID.randomUUID().toString().replaceAll("-", ""));
 
             Map<String, Double> metrics = new HashMap<>();
 
@@ -189,7 +190,7 @@ public class MockShaojiaoMetricAvro {
             System.out.println(JSON.toString(map));
 
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
-            Thread.sleep(1000L);
+            Thread.sleep(2L);
         }
 
         Thread.sleep(1000L);

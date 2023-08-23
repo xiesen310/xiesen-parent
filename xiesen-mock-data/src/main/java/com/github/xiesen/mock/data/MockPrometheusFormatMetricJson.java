@@ -2,9 +2,7 @@ package com.github.xiesen.mock.data;
 
 import com.alibaba.fastjson.JSON;
 import com.github.xiesen.common.utils.DateUtil;
-import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.KafkaTools;
-import com.github.xiesen.mock.util.ProducerPool;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
@@ -18,7 +16,7 @@ import java.util.Random;
  * @Email xiesen310@163.com
  * @Date 2020/7/24 17:02
  */
-public class MockLogJson {
+public class MockPrometheusFormatMetricJson {
     /**
      * 获取维度信息*
      *
@@ -76,18 +74,34 @@ public class MockLogJson {
         return JSON.toJSONString(bigMap);
     }
 
+    public static String mockPrometheusFormatMetric() {
+        Map<String, Object> bigMap = new HashMap<>();
+        Map<String, Object> labels = new HashMap<>();
+        labels.put("__name__", "node_cpu_guest_seconds_total");
+        labels.put("cpu", "3");
+        labels.put("instance", "192.168.70.1:9100");
+        labels.put("job", "node_exporter");
+        labels.put("mode", "user");
+
+        bigMap.put("labels", labels);
+        bigMap.put("name", "node_cpu_guest_seconds_total");
+        bigMap.put("value", new Random().nextInt(10));
+        bigMap.put("timestamp", String.valueOf(System.currentTimeMillis()));
+        return JSON.toJSONString(bigMap);
+    }
+
     public static void main(String[] args) throws Exception {
 
-        String topic = "weblog";
+        String topic = "prometheus-format-metric";
         String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
 //        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
         long records = 1000L;
 
         KafkaProducer<String, String> producer = KafkaTools.buildProducer(bootstrapServers, StringSerializer.class.getName());
         for (long index = 0; index < records; index++) {
-            System.out.println(mockJsonLogData());
-            KafkaTools.send(producer, topic, mockJsonLogData());
-            Thread.sleep(200);
+            System.out.println(mockPrometheusFormatMetric());
+            KafkaTools.send(producer, topic, mockPrometheusFormatMetric());
+            Thread.sleep(5000);
         }
 
         Thread.sleep(2000);
