@@ -1,5 +1,6 @@
 package com.github.xiesen.influxdb;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,8 +13,9 @@ public class InfluxDBTest1 {
         String username = "admin";
         String password = "admin";
 //        String openurl = "http://192.168.1.95:8086";
-        String openurl = "http://192.168.70.170:8086";
-        String database = "xiesen";
+//        String openurl = "http://192.168.70.170:8086";
+        String openurl = "http://192.168.90.24:8086";
+        String database = "test";
 
         InfluxDBConnect connect = new InfluxDBConnect(username, password, openurl, database, 1, 2);
         connect.connection();
@@ -36,13 +38,15 @@ public class InfluxDBTest1 {
          * tm_id=container_e21_1620721691038_1860_01_000002
          * value=-? 1625536453966000000': invalid number
          */
-        String measurement = "taskmanager_job_task_operator_KafkaConsumer";
+//        String measurement = "taskmanager_job_task_operator_KafkaConsumer";
+        String measurement = "中国电信后端运营费用";
         Map<String, String> tags = new HashMap<>();
         tags.put("host", "dpombd-omhd063");
         tags.put("job_id", "647e666036a69f34ebd5847661a823b2");
         tags.put("job_name", "log2es_log_jty4_1_checked_02171220");
 //        tags.put("operator_id", "b8537c9c45484f0f0bcb3f3105ae455a");
 //        tags.put("operator_name", "Source:\\ zorkdata_default_kafka_table");
+        tags.put("区局产品部","浦东");
 
         Map<String, Object> fields = new HashMap<>();
         fields.put("value", 0.3);
@@ -51,9 +55,11 @@ public class InfluxDBTest1 {
         influxDbRow.setMeasurement(measurement);
         influxDbRow.setTags(tags);
         influxDbRow.setFields(fields);
+//        connect.insertData(influxDbRow);
 
-//        connect.insert(influxDbRow);
-        
+        System.out.println(new Date().getTime());
+        // 1692773739660
+
     }
 
     /**

@@ -135,7 +135,7 @@ public class MockMomoAlarmData {
 //        String topic = "test2";
 //        String bootstrapServers = "yf172:9092,yf171:9092,yf170:9092";
 //        String bootstrapServers = "autotest-3:9092,autotest-2:9092,autotest-1:9092";
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
 //        String bootstrapServers = "kafka1:9092,kafka2:9093,kafka3:9094";
         long records = 100L;
 
@@ -148,9 +148,9 @@ public class MockMomoAlarmData {
             System.out.println(message);
             send(producer, topic, message);
             TimeUnit.SECONDS.sleep(1);
+            producer.flush();
         }
 
-        producer.flush();
         producer.close();
         Thread.sleep(1000L);
 
