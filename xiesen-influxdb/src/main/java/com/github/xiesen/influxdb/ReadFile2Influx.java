@@ -62,10 +62,45 @@ public class ReadFile2Influx {
             final String 部门 = innerJsonObject.getString("部门");
             final String 指标名称 = innerJsonObject.getString("指标名称");
             final String 月份 = innerJsonObject.getString("月份");
-            final String 指标值 = innerJsonObject.getString("指标值");
-            final String 公司累计排名 = innerJsonObject.getString("公司累计排名");
-            final String 公司分月中位值 = innerJsonObject.getString("公司分月中位值");
-            final String 区局分月中位值 = innerJsonObject.getString("区局（/BD）分月中位值");
+            String 指标值 = innerJsonObject.getString("指标值");
+            Double metricValue = 0.0;
+            if (null == 指标值 || "".equalsIgnoreCase(指标值)) {
+                try {
+                    metricValue = Double.valueOf(指标值);
+                } catch (Exception e) {
+                    Console.error("指标值转换 Double 失败: {}", innerJsonObject.toJSONString());
+                }
+            }
+            String 公司累计排名 = innerJsonObject.getString("公司累计排名");
+            Double rankValue = 0.0;
+            if (null == 公司累计排名 || "".equalsIgnoreCase(公司累计排名)) {
+                try {
+                    rankValue = Double.valueOf(公司累计排名);
+                } catch (Exception e) {
+                    Console.error("公司累计排名转换 Double 失败: {}", innerJsonObject.toJSONString());
+                }
+            }
+
+            String 公司分月中位值 = innerJsonObject.getString("公司分月中位值");
+
+            Double companyMedian = 0.0;
+            if (null == 公司分月中位值 || "".equalsIgnoreCase(公司分月中位值)) {
+                try {
+                    companyMedian = Double.valueOf(公司分月中位值);
+                } catch (Exception e) {
+                    Console.error("公司分月中位值转换 Double 失败: {}", innerJsonObject.toJSONString());
+                }
+            }
+            String 区局分月中位值 = innerJsonObject.getString("区局（/BD）分月中位值");
+
+            Double medianValueOfDistrictBranch = 0.0;
+            if (null == 区局分月中位值 || "".equalsIgnoreCase(区局分月中位值)) {
+                try {
+                    medianValueOfDistrictBranch = Double.valueOf(区局分月中位值);
+                } catch (Exception e) {
+                    Console.error("区局分月中位值转换 Double 失败: {}", innerJsonObject.toJSONString());
+                }
+            }
             String measurement = prefix + 指标名称;
             tags.put("人力编码", 人力编码.trim());
             tags.put("姓名", 姓名.trim());
@@ -74,10 +109,10 @@ public class ReadFile2Influx {
             tags.put("部门", 部门.trim());
             tags.put("月份", 月份.trim());
             Map<String, Object> fields = new HashMap<>();
-            fields.put("指标值", 指标值);
-            fields.put("公司累计排名", 公司累计排名);
-            fields.put("公司分月中位值", 公司分月中位值);
-            fields.put("区局BD分月中位值", 区局分月中位值);
+            fields.put("指标值", metricValue);
+            fields.put("公司累计排名", rankValue);
+            fields.put("公司分月中位值", companyMedian);
+            fields.put("区局BD分月中位值", medianValueOfDistrictBranch);
             if (!"".equalsIgnoreCase(月份)) {
                 metricSize.getAndIncrement();
                 Long time = null;
