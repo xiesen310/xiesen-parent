@@ -62,18 +62,19 @@ public class ReadFile2Influx {
             final String 部门 = innerJsonObject.getString("部门");
             final String 指标名称 = innerJsonObject.getString("指标名称");
             final String 月份 = innerJsonObject.getString("月份");
-            String 指标值 = innerJsonObject.getString("指标值");
+            String 指标值 = innerJsonObject.getString("指标值").replaceAll(",", "");
             Double metricValue = 0.0;
-            if (null == 指标值 || "".equalsIgnoreCase(指标值)) {
+            if (!"".equalsIgnoreCase(指标值)) {
                 try {
                     metricValue = Double.valueOf(指标值);
                 } catch (Exception e) {
                     Console.error("指标值转换 Double 失败: {}", innerJsonObject.toJSONString());
+                    e.printStackTrace();
                 }
             }
-            String 公司累计排名 = innerJsonObject.getString("公司累计排名");
+            String 公司累计排名 = innerJsonObject.getString("公司累计排名").replaceAll(",", "");
             Double rankValue = 0.0;
-            if (null == 公司累计排名 || "".equalsIgnoreCase(公司累计排名)) {
+            if (!"".equalsIgnoreCase(公司累计排名)) {
                 try {
                     rankValue = Double.valueOf(公司累计排名);
                 } catch (Exception e) {
@@ -81,20 +82,20 @@ public class ReadFile2Influx {
                 }
             }
 
-            String 公司分月中位值 = innerJsonObject.getString("公司分月中位值");
+            String 公司分月中位值 = innerJsonObject.getString("公司分月中位值").replaceAll(",", "");
 
             Double companyMedian = 0.0;
-            if (null == 公司分月中位值 || "".equalsIgnoreCase(公司分月中位值)) {
+            if (!"".equalsIgnoreCase(公司分月中位值)) {
                 try {
                     companyMedian = Double.valueOf(公司分月中位值);
                 } catch (Exception e) {
                     Console.error("公司分月中位值转换 Double 失败: {}", innerJsonObject.toJSONString());
                 }
             }
-            String 区局分月中位值 = innerJsonObject.getString("区局（/BD）分月中位值");
+            String 区局分月中位值 = innerJsonObject.getString("区局（/BD）分月中位值").replaceAll(",", "");
 
             Double medianValueOfDistrictBranch = 0.0;
-            if (null == 区局分月中位值 || "".equalsIgnoreCase(区局分月中位值)) {
+            if (!"".equalsIgnoreCase(区局分月中位值)) {
                 try {
                     medianValueOfDistrictBranch = Double.valueOf(区局分月中位值);
                 } catch (Exception e) {

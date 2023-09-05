@@ -15,8 +15,8 @@ public class InfluxDBTestDelete {
         String username = "admin";
         String password = "Admin@123";
         String openurl = "http://10.144.98.226:8086";
-        String database = "big-screen-prod";
-//        String database = "test";
+//        String database = "big-screen-prod";
+        String database = "test";
         List<String> allMeasurements = new ArrayList<>();
         List<String> realMeasurements = new ArrayList<>();
         List<String> offLineMeasurements = new ArrayList<>();
