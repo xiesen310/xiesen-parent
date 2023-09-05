@@ -15,12 +15,13 @@ public class InfluxDBTestDelete {
         String username = "admin";
         String password = "Admin@123";
         String openurl = "http://10.144.98.226:8086";
-        String database = "big-screen-prod";
-//        String database = "test";
+//        String database = "big-screen-prod";
+        String database = "test";
         List<String> allMeasurements = new ArrayList<>();
         List<String> realMeasurements = new ArrayList<>();
         List<String> offLineMeasurements = new ArrayList<>();
         List<String> manMeasurements = new ArrayList<>();
+        List<String> detailMeasurements = new ArrayList<>();
 
         InfluxDBConnect connect = new InfluxDBConnect(username, password, openurl, database, 1, 2);
         connect.connection();
@@ -43,6 +44,10 @@ public class InfluxDBTestDelete {
                         if (o.toString().startsWith("人员组织")) {
                             manMeasurements.add(o.toString());
                         }
+
+                        if (o.toString().startsWith("人效分析清单_")) {
+                            detailMeasurements.add(o.toString());
+                        }
                     }
                 }
             }
@@ -58,14 +63,33 @@ public class InfluxDBTestDelete {
         });*/
 //        final int size = offLineMeasurements.size();
 //        System.out.println(size);
-        System.out.println("人员组织: " + manMeasurements.size());
+        /*System.out.println("人员组织: " + manMeasurements.size());
         manMeasurements.forEach(m -> {
             StringBuilder builder = new StringBuilder();
             builder.append("drop measurement \"" + m + "\"");
             String sql1 = builder.toString();
             System.out.println(sql1);
             connect.query(builder.toString());
+        });*/
+
+        /*System.out.println("实时数据: " + realMeasurements.size());
+        realMeasurements.forEach(m -> {
+            StringBuilder builder = new StringBuilder();
+            builder.append("drop measurement \"" + m + "\"");
+            String sql1 = builder.toString();
+            System.out.println(sql1);
+            connect.query(builder.toString());
+        });*/
+
+        System.out.println("人效数据 : " + detailMeasurements.size());
+        detailMeasurements.forEach(m -> {
+            StringBuilder builder = new StringBuilder();
+            builder.append("drop measurement \"" + m + "\"");
+            String sql1 = builder.toString();
+            System.out.println(sql1);
+//            connect.query(builder.toString());
         });
+
         System.out.println("=============");
 
     }
