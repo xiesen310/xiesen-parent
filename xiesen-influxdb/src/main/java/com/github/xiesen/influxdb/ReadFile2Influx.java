@@ -39,7 +39,7 @@ public class ReadFile2Influx {
     public static final String username = "admin";
     public static final String password = "Admin@123";
     public static final String openurl = "http://10.144.98.226:8086";
-        public static final String database = "big-screen-prod";
+    public static final String database = "big-screen-prod";
 //    public static final String database = "test";
 
     private static final AtomicLong metricSize = new AtomicLong(0L);
@@ -102,11 +102,15 @@ public class ReadFile2Influx {
                     Console.error("区局分月中位值转换 Double 失败: {}", innerJsonObject.toJSONString());
                 }
             }
+            String unit = 单位.trim();
+            if ("政企全业务新增销售额".equalsIgnoreCase(指标名称) && 单位.endsWith("电信局")) {
+                unit = 单位.trim().substring(0, 单位.trim().length() - 3);
+            }
             String measurement = prefix + 指标名称;
             tags.put("人力编码", 人力编码.trim());
             tags.put("姓名", 姓名.trim());
             tags.put("人效岗位名称", 人效岗位名称.trim());
-            tags.put("单位", 单位.trim());
+            tags.put("单位", unit);
             tags.put("部门", 部门.trim());
             tags.put("月份", 月份.trim());
             Map<String, Object> fields = new HashMap<>();
