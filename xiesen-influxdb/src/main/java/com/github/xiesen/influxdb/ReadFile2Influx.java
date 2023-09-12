@@ -103,7 +103,7 @@ public class ReadFile2Influx {
                 }
             }
             String unit = 单位.trim();
-            if ("政企全业务新增销售额".equalsIgnoreCase(指标名称) && 单位.endsWith("电信局")) {
+            if (单位.endsWith("电信局")) {
                 unit = 单位.trim().substring(0, 单位.trim().length() - 3);
             }
             String measurement = prefix + 指标名称;
