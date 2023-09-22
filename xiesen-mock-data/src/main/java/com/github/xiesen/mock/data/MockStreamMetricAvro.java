@@ -8,10 +8,7 @@ import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
 
 import java.text.DecimalFormat;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author xiese
@@ -20,6 +17,13 @@ import java.util.Random;
  * @Date 2020/6/28 10:05
  */
 public class MockStreamMetricAvro {
+    private static final List<String> METRIC_SET_LIST = Arrays.asList("ym7", "cpu", "memory");
+
+
+    public static String randomMetricSetName() {
+        return METRIC_SET_LIST.get(new Random().nextInt(METRIC_SET_LIST.size()));
+    }
+
     /**
      * 获取 log size
      *
@@ -154,7 +158,8 @@ public class MockStreamMetricAvro {
              *   }
              * }
              */
-            String metricSetName = "ym7";
+//            String metricSetName = "ym7";
+            String metricSetName = randomMetricSetName();
             String timestamp = DateUtil.getCurrentTimestamp();
 //            Map<String, String> dimensions = getRandomDimensions();
             Map<String, String> dimensions = getRandomDimensionsWithYm();
