@@ -23,7 +23,8 @@ public class KafkaConsumerAvroDemo {
 
         // 必须设置的属性
 //        props.put("bootstrap.servers", "cs56:9092,cs55:9092,cs54:9092");
-        props.put("bootstrap.servers", "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092");
+//        props.put("bootstrap.servers", "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092");
+        props.put("bootstrap.servers", "hadoop102:9092");
 //        props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("key.deserializer", StringDeserializer.class.getName());
 //        props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
@@ -36,9 +37,16 @@ public class KafkaConsumerAvroDemo {
         // 自动提交offset,每1s提交一次
         props.put("auto.commit.interval.ms", "1000");
 //        props.put("auto.offset.reset", "earliest");
+
+        System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
+        System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_server_jaas.conf");
+        props.put("security.protocol", "SASL_PLAINTEXT");
+        props.put("sasl.kerberos.service.name", "kafka");
+        props.put("sasl.mechanism", "GSSAPI");
+
         KafkaConsumer<String, byte[]> consumer = new KafkaConsumer<>(props);
 
-        consumer.subscribe(Collections.singletonList("metric-test-result"));
+        consumer.subscribe(Collections.singletonList("metric-avro"));
         AtomicLong i = new AtomicLong();
         while (true) {
             //  从服务器开始拉取数据

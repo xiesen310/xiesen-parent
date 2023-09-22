@@ -113,7 +113,16 @@ public class MockStreamMetricAvro {
      */
     private static Map<String, Double> getRandomMetricsWithYm() {
         Map<String, Double> metrics = new HashMap<>();
-        metrics.put("delay", Double.valueOf(1111111));
+        metrics.put("delay", 1.0);
+        metrics.put("cost", 2.0);
+        metrics.put("collect_time", Double.valueOf(System.currentTimeMillis()));
+        return metrics;
+    }
+
+    private static Map<String, Double> getRandomMetricsWithYm2() {
+        Map<String, Double> metrics = new HashMap<>();
+        metrics.put("delay", 2.0);
+        metrics.put("cost", 4.0);
         metrics.put("collect_time", Double.valueOf(System.currentTimeMillis()));
         return metrics;
     }
@@ -151,14 +160,16 @@ public class MockStreamMetricAvro {
             Map<String, String> dimensions = getRandomDimensionsWithYm();
 //            Map<String, Double> metrics = getRandomMetrics();
             Map<String, Double> metrics = getRandomMetricsWithYm();
+            CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
 
             Thread.sleep(1000);
-             System.out.println(printData(metricSetName, timestamp, dimensions, metrics));
-
-            CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
-            Thread.sleep(new Random().nextInt(5));
-//            System.exit(-1);
+            System.out.println(printData(metricSetName, timestamp, dimensions, metrics));
+
+            Thread.sleep(1000);
+            final Map<String, Double> metrics2 = getRandomMetricsWithYm2();
+            producer.sendMetric(metricSetName, timestamp, dimensions, metrics2);
+            System.out.println(printData(metricSetName, timestamp, dimensions, metrics2));
         }
         Thread.sleep(1000);
     }
