@@ -20,10 +20,10 @@ public class KafkaConsumerDemo {
         Properties props = new Properties();
 
         // 必须设置的属性
-        props.put("bootstrap.servers", "kafka-1:19092,kafka-2:19092,kafka-3:19092");
+        props.put("bootstrap.servers", "kafka-25:9092");
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
-        props.put("group.id", "xiesen11");
+        props.put("group.id", "test3");
 
         // 可选设置属性
         props.put("enable.auto.commit", "true");
@@ -31,36 +31,25 @@ public class KafkaConsumerDemo {
         props.put("auto.commit.interval.ms", "1000");
         props.put("auto.offset.reset", "earliest");
 //        props.put("client.id", "zy_client_id");
-        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+//        System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
+        System.setProperty("java.security.krb5.conf", "/etc/krb5.conf");
+//        System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_server_jaas.conf");
+        System.setProperty("java.security.auth.login.config", "/zork/apps/kerberos/kafka_conf/jaas.conf");
+        props.put("security.protocol", "SASL_PLAINTEXT");
+        props.put("sasl.kerberos.service.name", "kafka");
+        props.put("sasl.mechanism", "GSSAPI");
 
-//        consumer.subscribe(Collections.singletonList("xiesen_test"));
-//        consumer.subscribe(Collections.singletonList("ods_jzjy_log17_with_gbk"));
-//        consumer.subscribe(Collections.singletonList("ods_jzjy_log21"));
-        consumer.subscribe(Collections.singletonList("ods_jzjy_log_test5"));
-//        consumer.subscribe(Collections.singletonList("ods_jzjy_result"));
+        KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
+        consumer.subscribe(Collections.singletonList("default"));
         AtomicLong i = new AtomicLong();
-        AtomicLong j = new AtomicLong();
         while (true) {
             //  从服务器开始拉取数据
-
             ConsumerRecords<String, String> records = consumer.poll(100);
-
             records.forEach(record -> {
                 i.getAndIncrement();
-//                System.out.println("数据写入到 kafka 的时间: " + record.timestamp());
-//                System.out.printf("topic = %s ,partition = %d,offset = %d, key = %s, value = %s%n", record.topic(),
-//                        record.partition(),
-//                        record.offset(), record.key(), record.value());
                 final String value = record.value();
                 final String key = record.key();
-                final JSONObject jsonObject = JSON.parseObject(value);
-                final String message = jsonObject.getString("message");
-                System.out.println(key + " " + message + " " + record.offset());
-
-//                if (message.contains("[   98]") || message.contains("[   99]")) {
-//                    j.getAndIncrement();
-//                }
-//                System.out.println("消费了 " + i + " 条数据,其中包含 98 或 99 的是 " + j + " 条数据");
+                System.out.println(key + " " + value + " " + record.offset());
             });
         }
 

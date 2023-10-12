@@ -15,8 +15,8 @@ import java.util.Properties;
  * @Date 2020/6/28 10:08
  */
 public class MockStreamJson {
-    private static String topic = "streamx_avro_log_zw";
-    private static String brokerAddr = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+    private static String topic = "test";
+    private static String brokerAddr = "192.168.70.92:9092";
     private static ProducerRecord<String, String> producerRecord = null;
     private static KafkaProducer<String, String> producer = null;
 
@@ -30,6 +30,14 @@ public class MockStreamJson {
         props.put("batch.size", 16384);
         props.put("linger.ms", 1);
         props.put("buffer.memory", 33554432);
+        /**
+         * kerberos 认证
+         */
+        /*System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
+        System.setProperty("java.security.auth.login.config", "D:\\tmp\\kerberos\\kafka_server_jaas.conf");
+        props.put("security.protocol", "SASL_PLAINTEXT");
+        props.put("sasl.kerberos.service.name", "kafka");
+        props.put("sasl.mechanism", "GSSAPI");*/
         producer = new KafkaProducer<String, String>(props);
     }
 
