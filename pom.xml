@@ -53,6 +53,7 @@
 <!--        <module>xiesen-jython</module>-->
 <!--        <module>xiesen-Phoenix</module>-->
 <!--        <module>test-trino</module>-->
+        <module>xiesen-rabbitmq</module>
     </modules>
 
     <parent>

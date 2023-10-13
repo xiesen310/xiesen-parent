@@ -11,8 +11,12 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RabbitMqSender {
-    @Autowired
-    private RabbitTemplate rabbitTemplate;
+
+    final RabbitTemplate rabbitTemplate;
+
+    public RabbitMqSender(RabbitTemplate rabbitTemplate) {
+        this.rabbitTemplate = rabbitTemplate;
+    }
 
     public void send() {
         Message message = new Message("hello".getBytes());
