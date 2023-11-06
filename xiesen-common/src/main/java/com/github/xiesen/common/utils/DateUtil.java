@@ -56,6 +56,10 @@ public class DateUtil {
         return format.format(new Date()).toString();
     }
 
+    public static String getUTCTime() {
+        return parseFormat.format(new Date()).toString();
+    }
+
     public static String getParseTimeStr() {
         return parseFormat.format(new Date()).toString();
     }
