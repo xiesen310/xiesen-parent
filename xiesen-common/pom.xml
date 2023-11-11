@@ -45,6 +45,13 @@
             <artifactId>ip2region</artifactId>
             <version>2.7.0</version>
         </dependency>
+        <!--sm4加密算法-->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>1.66</version>
+        </dependency>
+
     </dependencies>
 
 </project>
