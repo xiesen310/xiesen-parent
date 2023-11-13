@@ -35,25 +35,25 @@
 <!--        <module>xiesen-json</module>-->
 <!--        <module>xiesen-hive</module>-->
 <!--        <module>xiesen-siddhi</module>-->
-        <module>xiesen-influxdb</module>
+<!--        <module>xiesen-influxdb</module>-->
 <!--        <module>kafka-3.1.0</module>-->
 <!--        <module>protobuf-example</module>-->
 <!--        <module>xiesen-oracle</module>-->
 <!--        <module>read-hdfs</module>-->
-        <module>xiesen-clickhouse</module>
+<!--        <module>xiesen-clickhouse</module>-->
 <!--        <module>xiesen-aviator</module>-->
 <!--        <module>flink-cdc-test</module>-->
 <!--        <module>xiesen-consanguinity</module>-->
-        <module>test-excel</module>
-        <module>expiringmap-test</module>
-        <module>xiesen-ds-test</module>
-        <module>xiesen-mock-kcbp</module>
+<!--        <module>test-excel</module>-->
+<!--        <module>expiringmap-test</module>-->
+<!--        <module>xiesen-ds-test</module>-->
+<!--        <module>xiesen-mock-kcbp</module>-->
         <!--        <module>springboot-mybatis-plus</module>-->
         <!--        <module>xiesen-mysql</module>-->
 <!--        <module>xiesen-jython</module>-->
 <!--        <module>xiesen-Phoenix</module>-->
 <!--        <module>test-trino</module>-->
-        <module>xiesen-rabbitmq</module>
+<!--        <module>xiesen-rabbitmq</module>-->
     </modules>
 
     <parent>
