@@ -27,5 +27,13 @@ public class TestDate {
         String encode2 = SecureUtil.md5("abcdefg");
         System.out.println(encode);
         System.out.println(encode2);
+
+        System.out.printf("===============");
+
+        String timestamp = "";
+
+//        org.joda.time.DateTime(timestamp).toDate().getTime();
+
+
     }
 }

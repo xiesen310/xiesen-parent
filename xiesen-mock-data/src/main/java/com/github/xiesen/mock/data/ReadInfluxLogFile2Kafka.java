@@ -21,7 +21,8 @@ import java.util.Properties;
 public class ReadInfluxLogFile2Kafka {
     public static void main(String[] args) {
         String topic = "ods-influxdb";
-        String filePath = "D:\\tmp\\data_20231107\\DL_ODS_INFLUXDB_METRIC.log";
+//        String filePath = "D:\\tmp\\data_20231107\\DL_ODS_INFLUXDB_METRIC.log";
+        String filePath = "/Users/xiesen/Downloads/data_20231107/DL_ODS_INFLUXDB_METRIC.log";
 
 
         String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";

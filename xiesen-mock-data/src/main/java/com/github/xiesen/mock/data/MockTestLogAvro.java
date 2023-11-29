@@ -1,13 +1,15 @@
 package com.github.xiesen.mock.data;
 
+import cn.hutool.core.date.StopWatch;
+import cn.hutool.core.lang.Console;
 import com.github.xiesen.common.utils.DateUtil;
+import com.github.xiesen.common.utils.PropertiesUtil;
+import com.github.xiesen.common.utils.StringUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
 import org.mortbay.util.ajax.JSON;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author xiese
@@ -27,6 +29,7 @@ public class MockTestLogAvro {
         dimensions.put("appsystem", "tdx");
 //        dimensions.put("servicename", "nginx");
         dimensions.put("ip", "192.168.1.1");
+
         return dimensions;
     }
 
@@ -45,10 +48,25 @@ public class MockTestLogAvro {
         return normalFields;
     }
 
+    private static long getSize(String propertiesName) throws Exception {
+        Properties properties = PropertiesUtil.getProperties(propertiesName);
+        long logSize = StringUtil.getLong(properties.getProperty("log.size", "5000").trim(), 1);
+        return logSize;
+    }
 
     public static void main(String[] args) throws Exception {
-        long size = 1000000L * 1;
+        if (args.length == 0) {
+            System.out.println("请指定配置文件");
+            System.exit(-1);
+        }
+        String propertiesName = args[0];
+        long size = getSize(propertiesName);
+        System.out.println("配置文件：" + propertiesName);
+        System.out.println("生成数据条数：" + size);
         String topicName = "xiesen_ods_default_log";
+        StopWatch sw = new StopWatch();
+        sw.start();
+        Console.log("生成聚合数据任务开始: {}", cn.hutool.core.date.DateUtil.format(cn.hutool.core.date.DateUtil.date(), "yyyy-MM-dd HH:mm:ss"));
         for (int i = 0; i < size; i++) {
             String logTypeName = "default_analysis_template";
             String timestamp = DateUtil.getUTCTimeStr();
@@ -56,6 +74,7 @@ public class MockTestLogAvro {
             String offset = "351870827";
 
             Map<String, String> dimensions = getRandomDimensions();
+            dimensions.put("uuid", UUID.randomUUID().toString());
             Map<String, Double> measures = getRandomMeasures();
             Map<String, String> normalFields = getRandomNormalFields();
             Map<String, Object> map = new HashMap<>();
@@ -66,12 +85,16 @@ public class MockTestLogAvro {
             map.put("dimensions", dimensions);
             map.put("measures", measures);
             map.put("normalFields", normalFields);
-            System.out.println(JSON.toString(map));
-            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+//            System.out.println(JSON.toString(map));
+            CustomerProducer producer = ProducerPool.getInstance(propertiesName).getProducer();
             producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
-
-            Thread.sleep(1000);
+//            Thread.sleep(10);
         }
+        sw.stop();
+        Console.log("每秒产生 {} 条数据", 1000 * Math.ceil(size / sw.getTotalTimeMillis()));
+        Console.log("生成聚合数据任务结束: {},总耗时: {}ms,一共生成了 {} 条数据.",
+                cn.hutool.core.date.DateUtil.format(cn.hutool.core.date.DateUtil.date(), "yyyy-MM-dd HH:mm:ss"),
+                sw.getTotalTimeMillis(), size);
         Thread.sleep(1000);
     }
 }

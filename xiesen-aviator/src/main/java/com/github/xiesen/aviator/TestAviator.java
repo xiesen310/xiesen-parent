@@ -1,10 +1,14 @@
 package com.github.xiesen.aviator;
 
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSON;
 import com.github.xiesen.aviator.func.DimensionFunction;
 import com.github.xiesen.aviator.func.MapsFunction;
 import com.googlecode.aviator.AviatorEvaluator;
+import org.joda.time.DateTime;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,6 +50,9 @@ public class TestAviator {
         Map map = JSON.parseObject(s, Map.class);
         return map;
     }
+    private static Long timestamp(String timestamp) {
+        return new DateTime(timestamp).toDate().getTime();
+    }
 
     public static void main(String[] args) {
         AviatorEvaluator.addFunction(new MapsFunction());
@@ -62,5 +69,18 @@ public class TestAviator {
 //        String prometheus_anomaly_detection = "metricsetname=='prometheus_prometheus_engine_query_duration_seconds_sum'";
 //        String prometheus_anomaly_detection2 = "string.contains(str(metricsetname),'prometheus')";
 //        System.out.println(metricCheck(prometheus_anomaly_detection2, mockPrometheusMetricData()));
+
+//        private static DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+08:00");
+//        String ts = "1700289870000";
+        String ts = "2023-11-23T22:33:22.234";
+        System.out.println(timestamp(ts));
+
+        long timestamp = 1637250000234L; // 假设这是一个 13 位时间戳
+
+        // 将 13 位时间戳格式化为指定格式的字符串
+        String formattedString = DateUtil.format(new java.util.Date(timestamp), "yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+        System.out.println(formattedString);  // 输出格式化后的字符串
+
     }
 }
