@@ -1,10 +1,8 @@
 package com.github.xiesen.mock.data;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
-import com.github.xiesen.mock.util.CustomerProducer;
-import com.github.xiesen.mock.util.ProducerPool;
-import org.mortbay.util.ajax.JSON;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -81,25 +79,25 @@ public class MockGuoSenLogAvro {
         normalFields.put("full_url", "/gsnews/gsf10/capital/main/1.0");
         normalFields.put("RequestMethod", "");
         normalFields.put("IP", "183.95.248.189");
-        normalFields.put("logstash_deal_name", "logstash-0");
-        normalFields.put("logchecktime", DateUtil.getUTCTimeStr());
+//        normalFields.put("logstash_deal_name", "logstash-0");
+//        normalFields.put("logchecktime", DateUtil.getUTCTimeStr());
         normalFields.put("message", "183.95.248.189 - - [23/Jul/2020:08:26:32 +0800] \"GET " +
                 "/gsnews/gsf10/capital/main/1.0?code=601618&market=SH&gs_proxy_params=eyJnc19yZXFfdHlwZSI6ImRhdGEifQ" +
-                "%3D%3D HTTP/1.1\" 200 872 ");
+                "%3D%3D HTTP/1.1\" 200 872");
         normalFields.put("res_url", "http://goldsundg.guosen.com.cn:1445/asset/webF10/dist/pages/index.html");
         normalFields.put("collecttime", DateUtil.getUTCTimeStr());
-        normalFields.put("logcheckip", "10.33.209.53");
-        normalFields.put("GoldSumTime", "");
+//        normalFields.put("logcheckip", "10.33.209.53");
+//        normalFields.put("GoldSumTime", "");
         normalFields.put("deserializerTime", DateUtil.getUTCTimeStr());
         normalFields.put("target_ip", "10.33.124.240");
         normalFields.put("logstash_deal_ip", "10.33.196.130");
-        normalFields.put("DevPath", "[\"Thanos-WebEngine-Android\"]");
+//        normalFields.put("DevPath", "[\"Thanos-WebEngine-Android\"]");
         return normalFields;
     }
 
 
     public static void main(String[] args) throws Exception {
-        long size = 10000000L * 1;
+        long size = 3L * 1;
 //        String topicName = "stream_guosen_log_data";
         String topicName = "xiesen";
         for (int i = 0; i < size; i++) {
@@ -121,9 +119,11 @@ public class MockGuoSenLogAvro {
             map.put("dimensions", dimensions);
             map.put("measures", measures);
             map.put("normalFields", normalFields);
-            System.out.println(JSON.toString(map));
-            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
-            producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
+            System.out.println("size: " + JSON.toJSONString(map).length());
+            System.out.println(JSON.toJSONString(map));
+
+//            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+//            producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
 //            Thread.sleep(1000);
 //            Thread.sleep(10);

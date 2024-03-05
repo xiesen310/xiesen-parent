@@ -7,28 +7,19 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
+import static com.github.xiesen.common.param.Constants.N;
+import static com.github.xiesen.common.param.Constants.SUBTRACT_CHAR;
 import static com.github.xiesen.common.param.Constants.*;
-import static com.github.xiesen.common.param.TaskConstants.MULTIPLY_CHAR;
-
 import static com.github.xiesen.common.param.TaskConstants.ADD_CHAR;
-import static com.github.xiesen.common.param.TaskConstants.ADD_MONTHS;
 import static com.github.xiesen.common.param.TaskConstants.ADD_STRING;
-import static com.github.xiesen.common.param.TaskConstants.COMMA;
 import static com.github.xiesen.common.param.TaskConstants.DIVISION_CHAR;
 import static com.github.xiesen.common.param.TaskConstants.DIVISION_STRING;
 import static com.github.xiesen.common.param.TaskConstants.LEFT_BRACE_CHAR;
 import static com.github.xiesen.common.param.TaskConstants.LEFT_BRACE_STRING;
-import static com.github.xiesen.common.param.TaskConstants.MONTH_BEGIN;
-import static com.github.xiesen.common.param.TaskConstants.MONTH_END;
 import static com.github.xiesen.common.param.TaskConstants.MULTIPLY_CHAR;
-import static com.github.xiesen.common.param.TaskConstants.MULTIPLY_STRING;
 import static com.github.xiesen.common.param.TaskConstants.P;
-import static com.github.xiesen.common.param.TaskConstants.PARAMETER_FORMAT_TIME;
 import static com.github.xiesen.common.param.TaskConstants.RIGHT_BRACE_CHAR;
 import static com.github.xiesen.common.param.TaskConstants.SUBTRACT_STRING;
-import static com.github.xiesen.common.param.TaskConstants.TIMESTAMP;
-import static com.github.xiesen.common.param.TaskConstants.WEEK_BEGIN;
-import static com.github.xiesen.common.param.TaskConstants.WEEK_END;
 
 
 /**

@@ -1,8 +1,8 @@
 package com.github.xiesen.common.avro2.avro;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xiesen.common.utils.DateUtil;
 import org.apache.avro.generic.GenericRecord;
-import org.mortbay.util.ajax.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +47,7 @@ public class LogSchemaTest {
         map.put("offset", offset);
         map.put("dimensions", dimensions);
         map.put("normalFields", normalFields);
-        System.out.println("日志原始数据: " + JSON.toString(map));
+        System.out.println("日志原始数据: " + JSON.toJSONString(map));
 
         byte[] bytesMap = AvroSerializerFactory.getLogAvroSerializer()
                 .serializingLog(map);

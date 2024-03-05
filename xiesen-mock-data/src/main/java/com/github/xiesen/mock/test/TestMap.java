@@ -1,11 +1,7 @@
 package com.github.xiesen.mock.test;
 
-import org.apache.hadoop.yarn.webapp.hamlet.Hamlet;
-import org.mortbay.util.ajax.JSON;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * @author xiesen

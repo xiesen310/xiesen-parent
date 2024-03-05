@@ -7,7 +7,6 @@ import com.github.xiesen.common.utils.PropertiesUtil;
 import com.github.xiesen.common.utils.StringUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
-import org.mortbay.util.ajax.JSON;
 
 import java.util.*;
 

@@ -1,8 +1,8 @@
 package com.github.xiesen.mock.data;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
-import org.mortbay.util.ajax.JSON;
 
 import java.util.*;
 
@@ -73,7 +73,7 @@ public class MockPrometheusAvroData {
             CustomerProducer producer = ProducerPool.getInstance(confPath).getProducer();
 
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
-            System.out.println(JSON.toString(map));
+            System.out.println(JSON.toJSONString(map));
 
             Thread.sleep(10000);
         }

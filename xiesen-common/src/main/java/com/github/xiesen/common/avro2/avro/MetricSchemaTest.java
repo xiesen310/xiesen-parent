@@ -1,8 +1,8 @@
 package com.github.xiesen.common.avro2.avro;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xiesen.common.utils.DateUtil;
 import org.apache.avro.generic.GenericRecord;
-import org.mortbay.util.ajax.JSON;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +39,7 @@ public class MetricSchemaTest {
         map.put("ts", ts);
         map.put("dimensions", dimensions);
         map.put("value", value);
-        System.out.println("指标原始数据: " + JSON.toString(map));
+        System.out.println("指标原始数据: " + JSON.toJSONString(map));
 
         byte[] bytesMap = AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(map);
         System.out.println("指标序列化 Map 类型数据: " + new String(bytesMap));

@@ -1,5 +1,6 @@
 package com.github.xiesen.mock.data;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
@@ -9,7 +10,6 @@ import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.mortbay.util.ajax.JSON;
 
 import java.util.*;
 
@@ -174,7 +174,7 @@ public class MockXiesenMetricAvro {
             map.put("timestamp", timestamp);
             map.put("dimensions", dimensions);
             map.put("metrics", metrics);
-            System.out.println(JSON.toString(map));
+            System.out.println(JSON.toJSONString(map));
 
             producer.sendMetric(metricSetName, timestamp, dimensions, metrics);
             Thread.sleep(10L);

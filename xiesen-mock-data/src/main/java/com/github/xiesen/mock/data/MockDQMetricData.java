@@ -1,5 +1,6 @@
 package com.github.xiesen.mock.data;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
@@ -10,7 +11,6 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
-import org.mortbay.util.ajax.JSON;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -143,7 +143,7 @@ public class MockDQMetricData {
             map.put("timestamp", timestamp);
             map.put("dimensions", dimensions);
             map.put("metrics", metrics);
-            final String message = JSON.toString(map);
+            final String message = JSON.toJSONString(map);
             System.out.println(message);
 
             send(producer, topic, message);
@@ -183,7 +183,7 @@ public class MockDQMetricData {
             map.put("timestamp", timestamp);
             map.put("dimensions", dimensions);
             map.put("metrics", metrics);
-            final String message = JSON.toString(map);
+            final String message = JSON.toJSONString(map);
              System.out.println(message);
             send(producer, topic, message);
             Thread.sleep(2000);

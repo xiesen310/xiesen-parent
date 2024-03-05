@@ -1,15 +1,15 @@
 package com.github.xiesen.mock.data;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xiesen.common.utils.DateUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
 import com.github.xiesen.mock.util.ProducerPool;
-import org.mortbay.util.ajax.JSON;
 
 import java.util.*;
 
 /**
  * @author xiese
- * @Description 模拟测试数据
+ * @Description 模拟测试数据Ø
  * @Email xiesen310@163.com
  * @Date 2020/7/24 17:02
  */
@@ -68,7 +68,7 @@ public class MockZcMetricAvroData {
             map.put("timestamp", timestamp);
             map.put("dimensions", dimensions);
             map.put("metrics", metrics);
-            System.out.println(JSON.toString(map));
+            System.out.println(JSON.toJSONString(map));
             Thread.sleep(new Random().nextInt(1000));
             CustomerProducer producer = ProducerPool.getInstance(confPath).getProducer();
 
