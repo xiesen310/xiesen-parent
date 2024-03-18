@@ -60,13 +60,13 @@ public class InfluxDBConnect {
      * 设置数据保存策略
      * defalut 策略名 /database 数据库名/ 30d 数据保存时限30天/ 1  副本个数为1/ 结尾DEFAULT 表示 设为默认的策略
      */
-    void createRetentionPolicy() {
+    public void createRetentionPolicy() {
         String command = String.format("CREATE RETENTION POLICY \"%s\" ON \"%s\" DURATION %s REPLICATION %s DEFAULT",
                 "default", database, retentionDay + "d", replicationCount);
         this.query(command);
     }
 
-    void createDatabase(String database) {
+    public void createDatabase(String database) {
         this.influxDB.createDatabase(database);
     }
 

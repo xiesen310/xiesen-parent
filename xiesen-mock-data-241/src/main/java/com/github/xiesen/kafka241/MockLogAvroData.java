@@ -1,11 +1,11 @@
 package com.github.xiesen.kafka241;
 
+import com.alibaba.fastjson.JSON;
 import com.github.xiesen.common.avro.AvroSerializerFactory;
 import com.github.xiesen.common.utils.DateUtil;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.common.serialization.ByteArraySerializer;
-import org.mortbay.util.ajax.JSON;
 
 import javax.security.auth.login.Configuration;
 import java.util.HashMap;
@@ -113,7 +113,7 @@ public class MockLogAvroData {
             map.put("dimensions", dimensions);
             map.put("measures", measures);
             map.put("normalFields", normalFields);
-            System.out.println(JSON.toString(map));
+            System.out.println(JSON.toJSONString(map));
 
             byte[] bytes = AvroSerializerFactory.getLogAvroSerializer().serializingLog(logTypeName, timestamp, source,
                     offset, dimensions, measures, normalFields);
