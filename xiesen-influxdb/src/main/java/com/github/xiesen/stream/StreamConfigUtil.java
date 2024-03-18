@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 public class StreamConfigUtil {
+    public static final String FOUR_SPACES = "    ";
+
     /**
      * 将 streamx 配置文件对象{@Config config}转换成 map 结构
      *
@@ -52,6 +54,43 @@ public class StreamConfigUtil {
         List<? extends Config> transformEnv = config.getConfigList("transform");
         for (Config conf : transformEnv) {
             Map<String, Object> stringObjectMap = pluginConfObject2Map(conf);
+            transformList.add(stringObjectMap);
+        }
+        bigMap.put("transform", transformList);
+
+        return bigMap;
+    }
+
+    public static Map<String, Object> configComment2Map(Config config) {
+        Map<String, Object> bigMap = new HashMap<>(5);
+        Config jobEnv = config.getConfig("job.env");
+        Map<String, Object> jobEnvMap = pluginConfCommentObject2Map(jobEnv);
+        bigMap.put("job.env", jobEnvMap);
+
+        Config ddl = config.getConfig("ddl");
+        Map<String, Object> ddlMap = pluginConfObject2Map(ddl);
+        bigMap.put("ddl", ddlMap);
+
+        List<Map<String, Object>> sourceList = new ArrayList<>();
+        List<? extends Config> sourceEnv = config.getConfigList("source");
+        for (Config conf : sourceEnv) {
+            Map<String, Object> stringObjectMap = pluginConfCommentObject2Map(conf);
+            sourceList.add(stringObjectMap);
+        }
+        bigMap.put("source", sourceList);
+
+        List<Map<String, Object>> sinkList = new ArrayList<>();
+        List<? extends Config> sinkEnv = config.getConfigList("sink");
+        for (Config conf : sinkEnv) {
+            Map<String, Object> stringObjectMap = pluginConfCommentObject2Map(conf);
+            sinkList.add(stringObjectMap);
+        }
+        bigMap.put("sink", sinkList);
+
+        List<Map<String, Object>> transformList = new ArrayList<>();
+        List<? extends Config> transformEnv = config.getConfigList("transform");
+        for (Config conf : transformEnv) {
+            Map<String, Object> stringObjectMap = pluginConfCommentObject2Map(conf);
             transformList.add(stringObjectMap);
         }
         bigMap.put("transform", transformList);
@@ -111,11 +150,32 @@ public class StreamConfigUtil {
                     hostList.add(v.render().replaceAll("^\"|\"$", ""));
                 }
                 map.put(key, hostList);
+            } else if ("NUMBER".equalsIgnoreCase(valueType)) {
+                int value = config.getInt(key);
+                map.put(key, value);
             } else {
                 ConfigValue value = config.getValue(key);
                 String render = value.render();
                 String v = render.replaceAll("^\"|\"$", "");
                 map.put(key, unescapeJavaString(v));
+            }
+        }
+        return map;
+    }
+
+    private static Map<String, Object> pluginConfCommentObject2Map(Config config) {
+        Map<String, Object> map = new HashMap<>();
+        for (Map.Entry<String, ConfigValue> valueEntry : config.entrySet()) {
+            String key = valueEntry.getKey();
+            String valueType = config.getValue(key).valueType().name();
+            if ("LIST".equalsIgnoreCase(valueType)) {
+                ConfigList configList = config.getList(key);
+                List<String> comments = configList.origin().comments();
+                map.put(key, comments.toString().substring(1, comments.toString().length() - 1));
+            } else {
+                ConfigValue value = config.getValue(key);
+                List<String> comments = value.origin().comments();
+                map.put(key, comments.toString().substring(1, comments.toString().length() - 1));
             }
         }
         return map;
@@ -172,6 +232,59 @@ public class StreamConfigUtil {
         return builder.toString();
     }
 
+    public static String toConfigString(Config newConfig, Config oldConfig) {
+        StringBuilder builder = new StringBuilder();
+        Config jobEnv = newConfig.getConfig("job.env");
+        Config oldJobEnv = oldConfig.getConfig("job.env");
+        builder.append("job.env {").append("\r\n");
+        for (Map.Entry<String, ConfigValue> valueEntry : jobEnv.entrySet()) {
+            String key = valueEntry.getKey();
+            String v = jobEnv.getValue(key).render();
+            List<String> comments = oldJobEnv.getValue(key).origin().comments();
+            if (comments.size() > 0) {
+                builder.append(FOUR_SPACES).append("# ").append(comments.toString().substring(1, comments.toString().length() - 1)).append("\r\n");
+            }
+            builder.append(FOUR_SPACES).append(key).append(" = ").append(v).append("\r\n");
+        }
+        builder.append("}").append("\r\n");
+
+        builder.append("source {").append("\r\n");
+        List<? extends Config> source = newConfig.getConfigList("source");
+        List<? extends Config> oldSource = oldConfig.getConfigList("source");
+        for (int i = 0; i < source.size(); i++) {
+            builder.append(FOUR_SPACES).append(printPluginConf(source.get(i), oldSource.get(i)));
+        }
+        builder.append("}").append("\r\n");
+
+        Config ddlEnv = newConfig.getConfig("ddl");
+        builder.append("ddl {").append("\r\n");
+        for (Map.Entry<String, ConfigValue> valueEntry : ddlEnv.entrySet()) {
+            String key = valueEntry.getKey();
+            String v = ddlEnv.getValue(key).render();
+            builder.append(FOUR_SPACES).append(key).append(" = ").append(v).append("\r\n");
+        }
+        builder.append("}").append("\r\n");
+
+        builder.append("transform {").append("\r\n");
+        List<? extends Config> transform = newConfig.getConfigList("transform");
+        List<? extends Config> oldTransform = oldConfig.getConfigList("transform");
+        for (int i = 0; i < transform.size(); i++) {
+            builder.append(FOUR_SPACES).append(printPluginConf(transform.get(i), oldTransform.get(i)));
+        }
+        builder.append("}").append("\r\n");
+
+        builder.append("sink {").append("\r\n");
+        List<? extends Config> sink = newConfig.getConfigList("sink");
+        List<? extends Config> oldSink = oldConfig.getConfigList("sink");
+        for (int i = 0; i < sink.size(); i++) {
+            builder.append(FOUR_SPACES).append(printPluginConf(sink.get(i), oldSink.get(i)));
+        }
+        builder.append("}").append("\r\n");
+
+//        System.out.println(builder.toString());
+        return builder.toString();
+    }
+
     /**
      * 拼接插件信息
      *
@@ -207,6 +320,46 @@ public class StreamConfigUtil {
             }
         }
         builder.append("}").append("\r\n");
+        return builder.toString();
+    }
+
+    private static String printPluginConf(Config config, Config oldConfig) {
+        StringBuilder builder = new StringBuilder();
+        String pluginName = config.getString("plugin_name");
+        builder.append(pluginName).append("  { \r\n");
+        for (Map.Entry<String, ConfigValue> valueEntry : config.entrySet()) {
+            String key = valueEntry.getKey();
+            String valueType = config.getValue(key).valueType().name();
+
+            if ("LIST".equalsIgnoreCase(valueType)) {
+                List<String> hostList = new ArrayList();
+                ConfigList configList = config.getList(key);
+                for (ConfigValue v : configList) {
+                    hostList.add(v.render());
+                }
+                StringBuilder builderList = new StringBuilder();
+                builderList.append("[");
+                for (String o : hostList) {
+                    builderList.append(o).append(",");
+                }
+                List<String> comments = oldConfig.getList(key).origin().comments();
+                if (comments.size() > 0) {
+                    builder.append(FOUR_SPACES).append(FOUR_SPACES).append("# ").append(comments.toString().substring(1, comments.toString().length() - 1)).append("\r\n");
+                }
+                String substring = builderList.toString().substring(0, builderList.toString().length() - 1) + "]";
+                builder.append(FOUR_SPACES).append(FOUR_SPACES).append(key).append(" = ").append(substring).append("\r\n");
+            } else {
+                ConfigValue value = config.getValue(key);
+                String render = value.render();
+                String v = render;
+                List<String> comments = oldConfig.getValue(key).origin().comments();
+                if (comments.size() > 0) {
+                    builder.append(FOUR_SPACES).append(FOUR_SPACES).append("# ").append(comments.toString().substring(1, comments.toString().length() - 1)).append("\r\n");
+                }
+                builder.append(FOUR_SPACES).append(FOUR_SPACES).append(key).append(" = ").append(v).append("\r\n");
+            }
+        }
+        builder.append(FOUR_SPACES).append("}").append("\r\n");
         return builder.toString();
     }
 
@@ -306,6 +459,7 @@ public class StreamConfigUtil {
             "        mq.password = \"admin\"\n" +
             "        # rabbitmq 数据接入关系通知队列\n" +
             "        mq.queue.fanout = \"smartdata.datarelationship.e.q.f\"\n" +
+            "        producer.max.request.size = 1097856\n" +
             "    }\n" +
             "}";
 
@@ -315,7 +469,7 @@ public class StreamConfigUtil {
         Map<String, Object> jobEnv = (Map<String, Object>) map.get("job.env");
         jobEnv.put("job.name", jobEnv.get("job.name").toString() + "-update");
         Config newConfig = ConfigFactory.parseMap(map);
-        String configString = StreamConfigUtil.toConfigString(newConfig);
+        String configString = StreamConfigUtil.toConfigString(newConfig, config);
         System.out.println(configString);
         Boolean check = check(CHECK_INTERFACE_URL, configString);
         if (check) {
