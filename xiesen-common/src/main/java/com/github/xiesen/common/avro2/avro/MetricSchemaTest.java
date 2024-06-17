@@ -52,8 +52,8 @@ public class MetricSchemaTest {
         byte[] bytes = AvroSerializerFactory.getMetricAvroSerializer().serializingMetric(name, ts, dimensions, value);
         System.out.println("指标序列化数据: " + new String(bytes));
 
-        GenericRecord record = AvroDeserializerFactory.getMetricDeserializer().deserializing(bytesMap);
-        System.out.println("指标反序列化数据: " + record);
+//        GenericRecord record = AvroDeserializerFactory.getMetricDeserializer().deserializing(bytesMap);
+//        System.out.println("指标反序列化数据: " + record);
 
 
     }

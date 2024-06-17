@@ -1,5 +1,6 @@
 package com.github.xiesen.mock.data;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
 import com.github.xiesen.mock.util.CustomerProducer;
@@ -167,10 +168,10 @@ public class MockJunHongMetricAvro {
         for (int i = 0; i < size; i++) {
             String timestamp = DateUtil.getCurrentTimestamp();
             Map<String, Double> metrics = getRandomMetrics();
-
+            System.out.println(printData(getJZJYRandomMetricSetName(), timestamp, getJZJYDimensions(), metrics));
             CustomerProducer producer = ProducerPool.getInstance(confPath).getProducer();
-            producer.sendMetric(getJZJYRandomMetricSetName(), timestamp, getJZJYDimensions(), metrics);
-            producer.sendMetric(getJHRandomMetricSetName(), timestamp, getJHSystemDimensions(), metrics);
+//            producer.sendMetric(getJZJYRandomMetricSetName(), timestamp, getJZJYDimensions(), metrics);
+//            producer.sendMetric(getJHRandomMetricSetName(), timestamp, getJHSystemDimensions(), metrics);
             Thread.sleep(1000);
         }
         Thread.sleep(1000);

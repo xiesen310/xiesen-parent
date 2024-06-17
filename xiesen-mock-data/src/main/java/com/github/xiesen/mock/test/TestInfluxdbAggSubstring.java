@@ -1,8 +1,13 @@
 package com.github.xiesen.mock.test;
 
+import cn.hutool.core.lang.Console;
+import org.apache.commons.collections.MapUtils;
 import org.joda.time.DateTime;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class TestInfluxdbAggSubstring {
     public static long getMsTime(String str) {
@@ -38,5 +43,13 @@ public class TestInfluxdbAggSubstring {
 
         long msTime = getMsTime("1712815740098");
         System.out.println(msTime);
+
+
+        Map<String, Object> valueMap = new HashMap<>(16);
+        valueMap.put("offset", 1.0);
+
+        String s1 = String.valueOf(MapUtils.getLong(valueMap, "offset"));
+        String s2 = MapUtils.getString(valueMap, "offset");
+        Console.log("s1 = {}; s2 = {}", s1, s2);
     }
 }
