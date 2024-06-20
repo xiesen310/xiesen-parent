@@ -19,7 +19,7 @@ public class LogAviator {
     public static final Map<String, Object> ipsMap = new HashMap();
     public static String ips = "";
     public static final List<String> ipsList = new ArrayList<>();
-    public static final int ipNums = 500;
+    public static final int ipNums = 5000;
 
     static {
         for (int i = 1; i < ipNums; i++) {
