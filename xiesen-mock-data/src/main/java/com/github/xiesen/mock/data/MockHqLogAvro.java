@@ -13,7 +13,7 @@ import java.util.*;
  * @Email xiesen310@163.com
  * @Date 2020/7/24 17:02
  */
-public class MockErrorLogAvro {
+public class MockHqLogAvro {
 
     private static final DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+08:00");
 
