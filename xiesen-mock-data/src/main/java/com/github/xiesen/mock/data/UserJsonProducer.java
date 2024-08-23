@@ -1,19 +1,17 @@
 package com.github.xiesen.mock.data;
 
+import cn.hutool.core.util.RandomUtil;
 import com.alibaba.fastjson.JSONObject;
-import com.github.xiesen.common.avro.AvroSerializerFactory;
 import com.github.xiesen.common.utils.DateUtil;
-import com.github.xiesen.mock.util.SaslConfig;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
 import org.apache.kafka.clients.producer.RecordMetadata;
-import org.apache.kafka.common.serialization.ByteArraySerializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
-import javax.security.auth.login.Configuration;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -23,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @Email xiesen310@163.com
  * @Date 2020/8/5 17:53
  */
-public class ZhangWeiJsonProducer {
+public class UserJsonProducer {
 
     private static <T> KafkaProducer<String, T> buildProducer(String bootstrapServers, String serializerClassName) {
         Properties props = new Properties();
@@ -54,68 +52,33 @@ public class ZhangWeiJsonProducer {
 
 
     public static String buildMsg() {
-        JSONObject filebeatJson = new JSONObject();
-        JSONObject beat = new JSONObject();
-        JSONObject host = new JSONObject();
-        JSONObject log = new JSONObject();
-        JSONObject path = new JSONObject();
-        log.put("file", path);
-        path.put("path", "/var/log/access.log");
-        JSONObject metadata = new JSONObject();
-        metadata.put("beat", "filebeat");
-        metadata.put("type", "doc");
-        metadata.put("version", "6.8.1");
-        JSONObject prospector = new JSONObject();
-        prospector.put("type", "log");
-
-        beat.put("hostname", "zorkdata-151");
-        beat.put("name", "zorkdata-151");
-        beat.put("version", "6.8.1");
-
-        host.put("containerized", "false");
-        host.put("name", "zorkdata-151");
-        host.put("architecture", "x86_64");
-
-        String message = "";
-        filebeatJson.put("offset", "1593590026413");
-        filebeatJson.put("log", log);
-        filebeatJson.put("@metadata", metadata);
-        filebeatJson.put("prospector", prospector);
-        filebeatJson.put("logTypeName", "test_topic_log8");
-        filebeatJson.put("source", "/var/log/nginx/access.log");
-        filebeatJson.put("message", message);
-        filebeatJson.put("collectorruleid", "1");
-        filebeatJson.put("appprogramname", "test_appprogramname8");
-        filebeatJson.put("@timestamp", DateUtil.getUTCTimeStr());
-
-        filebeatJson.put("servicecode", "test_cdde8");
-        filebeatJson.put("appsystem", "test_appsystem8");
-        filebeatJson.put("ip", "192.168.1.92");
-        filebeatJson.put("beat", beat);
-        filebeatJson.put("host", host);
-        filebeatJson.put("servicename", "test_appprogramname8");
-        filebeatJson.put("grokmessage", "192.168.1.151 - - [29/Jun/2020:16:09:23 +0800] \"GET " +
-                "/webserver/scene/getSceneList.do?menuItemId=1039&sceneGroupId=&templateFlag= HTTP/1.0\" 200 3167");
-        filebeatJson.put("datemessage", "2020-07-06T08:22:00.666Z");
-        filebeatJson.put("jsonmessage", "{\"testmessage\":\"test\"}");
-        filebeatJson.put("geoipmessage", "151.101.230.217");
-        filebeatJson.put("csvmessage", "aaaa,bbbbb,cccc");
-        filebeatJson.put("kvmessage", "pin=12345~0&d=123&e=foo@bar.com&oq=bobo&ss=12345");
-        filebeatJson.put("mutatemessage", "8e3dfc85999b4e02bae4adf4b92b909a");
-        int length = filebeatJson.toJSONString().length();
-
-        StringBuilder msg = new StringBuilder();
-        String strs = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-
-        while (length <= 1024) {
-            msg.append(strs);
-            message = message + msg;
-            length += strs.length();
+        JSONObject jsonObject = new JSONObject();
+        if (RandomUtil.randomBoolean()) {
+            jsonObject.put("user_id", "543462");
+            jsonObject.put("item_id", "1715");
+            jsonObject.put("category_id", "1464116");
+            jsonObject.put("behavior", "pv");
+            jsonObject.put("ts", createFormattedLocalDateTime());
+        } else {
+            jsonObject.put("user_id", "662867");
+            jsonObject.put("item_id", "2244074");
+            jsonObject.put("category_id", "1575622");
+            jsonObject.put("behavior", "learning flink");
+            jsonObject.put("ts", createFormattedLocalDateTime());
         }
-        filebeatJson.put("message", message);
-        return filebeatJson.toJSONString();
+        return jsonObject.toJSONString();
     }
 
+    public static String createFormattedLocalDateTime() {
+        // 创建 LocalDateTime 对象
+        LocalDateTime dateTime = LocalDateTime.now();
+
+        // 创建 DateTimeFormatter 对象
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+
+        // 格式化 LocalDateTime 并返回
+        return dateTime.format(formatter);
+    }
 
     private static <T> void send(KafkaProducer<String, T> producer, String topic, T message) {
         ProducerRecord<String, T> producerRecord = new ProducerRecord<>(topic, null, message);
