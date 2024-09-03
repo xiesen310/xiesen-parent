@@ -1,9 +1,6 @@
 package com.github.xiesen.mock.util;
 
-import org.apache.kafka.clients.producer.Callback;
-import org.apache.kafka.clients.producer.KafkaProducer;
-import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
+import org.apache.kafka.clients.producer.*;
 
 import java.util.Properties;
 
@@ -34,6 +31,7 @@ public class KafkaTools {
         props.put("batch.size", 16384);
         props.put("linger.ms", 0);
         props.put("buffer.memory", 33554432);
+        props.put(ProducerConfig.CLIENT_ID_CONFIG, "mock-producer");
 
         // kerberos 认证
         /*System.setProperty("java.security.krb5.conf", "D:\\tmp\\kerberos\\krb5.conf");
@@ -64,7 +62,7 @@ public class KafkaTools {
             @Override
             public void onCompletion(RecordMetadata metadata, Exception exception) {
                 if (null != exception) {
-                    System.out.println(String.format("消息发送失败：%s", metadata.toString()));
+                    System.out.println(String.format("消息发送失败：%s", exception));
                     exception.printStackTrace();
                 }
             }
