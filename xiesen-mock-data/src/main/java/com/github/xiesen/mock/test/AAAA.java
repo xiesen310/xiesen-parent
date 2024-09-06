@@ -1,5 +1,7 @@
 package com.github.xiesen.mock.test;
 
+import java.util.Date;
+
 /**
  * @author xiesen
  */
@@ -11,6 +13,10 @@ public class AAAA {
         final String s = str.replaceAll("\\\\,", "");
         System.out.println("原始: " + str);
         System.out.println("过滤: " + s);
+
+
+        Date date = new Date(1725292800000L);
+        System.out.println(date);
 
     }
 }
