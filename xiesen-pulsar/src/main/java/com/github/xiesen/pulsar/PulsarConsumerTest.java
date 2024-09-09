@@ -12,13 +12,15 @@ import org.apache.pulsar.client.api.PulsarClientException;
  * @Date 2021/1/23 18:42
  */
 public class PulsarConsumerTest {
+    public static final String PULSAR_URL = "pulsar://192.168.80.21:31286";
     public static void main(String[] args) throws PulsarClientException {
         PulsarClient client = PulsarClient.builder()
-                .serviceUrl("pulsar://192.168.42.140:6650")
+                .serviceUrl(PULSAR_URL)
                 .build();
 
         Consumer consumer = client.newConsumer()
-                .topic("my-topic")
+//                .topic("my-topic")
+                .topic("flink-topic")
                 .subscriptionName("my-subscription")
                 .subscribe();
 
