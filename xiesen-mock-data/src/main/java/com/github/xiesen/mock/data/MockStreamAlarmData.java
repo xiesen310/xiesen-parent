@@ -48,6 +48,7 @@ public class MockStreamAlarmData {
                 "time < 1594209720000ms GROUP BY time(1m),\"hostname\",\"ip\",\"appsystem\" fill(null)";
         JSONObject extFieldsJson = JSONObject.parseObject(extFields);
         extFieldsJson.put("searchSentence", searchSentence);
+        extFieldsJson.put("createtime", DateUtil.getUTCTimeStr());
         alarmJson.put("extFields", extFieldsJson);
         Map<String, Object> sourceMap = new HashMap<>(4);
         sourceMap.put("hostname", "zorkdata" + i);
@@ -69,12 +70,18 @@ public class MockStreamAlarmData {
     }
 
     public static void main(String[] args) throws InterruptedException {
+        String confPath = null;
+        if (args.length == 1) {
+            confPath = args[0];
+        } else {
+            System.exit(-1);
+        }
+
         long size = 10000000L * 1;
         for (int i = 0; i < size; i++) {
             String json = buildAlarmJson();
             System.out.println(json);
-            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen\\xiesen-parent" +
-                    "\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+            CustomerProducer producer = ProducerPool.getInstance(confPath).getProducer();
 
             producer.sendJsonLog(json);
             Thread.sleep(1000);

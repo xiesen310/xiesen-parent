@@ -20,11 +20,11 @@ import java.util.Properties;
  */
 public class ReadPrometheusLogFile2Kafka {
     public static void main(String[] args) {
-        String topic = "ods-prometheus";
-        String filePath = "D:\\tmp\\data_20231107\\prometheus.log";
+        String topic = "test-prometheus";
+        String filePath = "/Users/xiesen/Desktop/prometh1.txt";
 
 
-        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
+        String bootstrapServers = "192.168.70.6:9092,192.168.70.7:9092,192.168.70.8:9092";
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
 
