@@ -159,8 +159,9 @@ public class InfluxDBConnect {
         if (influxDbRow.getTimeSecond() != null) {
             builder.time(influxDbRow.getTimeSecond(), TimeUnit.SECONDS);
         }
-        Instant timestamp = Instant.now();
-        builder.time(timestamp.toEpochMilli(), TimeUnit.MILLISECONDS);
+//        Instant timestamp = Instant.now();
+//        builder.time(timestamp.toEpochMilli(), TimeUnit.MILLISECONDS);
+        builder.time(1733187907757708088L, TimeUnit.MILLISECONDS);
         influxDB.write(database, "default", builder.build());
     }
 
