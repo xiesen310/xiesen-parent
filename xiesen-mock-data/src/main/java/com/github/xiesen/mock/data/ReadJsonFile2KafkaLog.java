@@ -22,8 +22,9 @@ import java.util.Set;
  */
 public class ReadJsonFile2KafkaLog {
     public static void main(String[] args) {
-        String filePath = "D:\\tmp\\原始topic.txt";
-        CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
+//        String filePath = "D:\\tmp\\原始topic.txt";
+        String filePath = "/Users/xiesen/Desktop/esb.log";
+        CustomerProducer producer = ProducerPool.getInstance("/Users/xiesen/workspaces/xiesen-parent/xiesen-mock-data/src/main/resources/config.properties").getProducer();
 
         try {
             File dir = new File(filePath);

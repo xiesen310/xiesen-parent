@@ -20,11 +20,12 @@ import java.util.Properties;
  */
 public class ReadLogFile2Kafka {
     public static void main(String[] args) {
-        String topic = "ods_xiesen";
-        String filePath = "D:\\tmp\\原始topic.txt";
+        String topic = "ods_ht_log";
+//        String filePath = "D:\\tmp\\原始topic.txt";
+//        String filePath = "/Users/xiesen/Desktop/esb.log";
+        String filePath = "/Users/xiesen/Downloads/normal.log";
 
-
-        String bootstrapServers = "kafka-1:19092,kafka-2:19092,kafka-3:19092";
+        String bootstrapServers = "192.168.70.6:9092,192.168.70.7:9092,192.168.70.8:9092";
         KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
 

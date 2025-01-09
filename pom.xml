@@ -22,7 +22,7 @@
 <!--        <module>xiesen-algorithm</module>-->
 <!--        <module>xiesen-kudu</module>-->
 <!--        <module>xiesen-hbase</module>-->
-<!--        <module>xiesen-redis</module>-->
+        <module>xiesen-redis</module>
 <!--        <module>xiesen-sqlserver</module>-->
 <!--        <module>xiesen-pulsar</module>-->
 <!--        <module>xiesen-learnning</module>-->
