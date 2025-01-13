@@ -65,7 +65,7 @@ public class MockStatusData2Redis {
             pipelined.hset(jobName, "ts", String.valueOf(System.currentTimeMillis()));
 
             // 控制缓存过期时间
-            pipelined.expire(jobName, expireTime);
+//            pipelined.expire(jobName, expireTime);
             pipelined.sync();
         } catch (Exception e) {
             Console.error("Failed to write status to Redis: ", e);
