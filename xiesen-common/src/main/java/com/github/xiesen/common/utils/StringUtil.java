@@ -74,7 +74,7 @@ public class StringUtil {
      */
     public static String replaceChar4MetricKey(String str) {
         str = str.replaceAll("\"", "").replaceAll(",", "_").replaceAll("\\[", "").replaceAll("]", "").replaceAll(
-                "\\\\", "").replaceAll(" ", "_").replaceAll("=", "").replaceAll(":", "")
+                        "\\\\", "").replaceAll(" ", "_").replaceAll("=", "").replaceAll(":", "")
                 .replaceAll("\\.", "_");
         return str;
     }
@@ -159,6 +159,18 @@ public class StringUtil {
         str = str.trim();
         try {
             return Integer.valueOf(str);
+        } catch (Exception Ex) {
+            return defaultValue;
+        }
+    }
+
+    public static String getStr(String str, String defaultValue) {
+        if (str == null) {
+            return defaultValue;
+        }
+        str = str.trim();
+        try {
+            return str;
         } catch (Exception Ex) {
             return defaultValue;
         }

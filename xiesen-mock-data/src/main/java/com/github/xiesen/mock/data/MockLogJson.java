@@ -2,14 +2,15 @@ package com.github.xiesen.mock.data;
 
 import com.alibaba.fastjson.JSON;
 import com.github.xiesen.common.utils.DateUtil;
-import com.github.xiesen.mock.util.CustomerProducer;
+import com.github.xiesen.common.utils.PropertiesUtil;
+import com.github.xiesen.common.utils.StringUtil;
 import com.github.xiesen.mock.util.KafkaTools;
-import com.github.xiesen.mock.util.ProducerPool;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.StringSerializer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Random;
 
 /**
@@ -36,12 +37,13 @@ public class MockLogJson {
         return dimensions;
     }
 
-    private static Map<String, Double> getRandomMeasures() {
+    private static Map<String, Double> getRandomMeasures(int num) {
         Map<String, Double> measures = new HashMap<>(4);
         Random random = new Random();
         int i = random.nextInt(90) + 5;
         measures.put("lags", (double) i);
         measures.put("memory_used", 0.9);
+        measures.put("serial_number", (double) num);
         return measures;
     }
 
@@ -55,7 +57,7 @@ public class MockLogJson {
     }
 
 
-    public static String mockJsonLogData() {
+    public static String mockJsonLogData(int num) {
         Map<String, Object> bigMap = new HashMap<>();
         String logTypeName = "default_analysis_template";
         String timestamp = DateUtil.getUTCTimeStr();
@@ -63,7 +65,7 @@ public class MockLogJson {
         String offset = String.valueOf(new Random().nextInt(100000000));
 
         Map<String, String> dimensions = getRandomDimensions();
-        Map<String, Double> measures = getRandomMeasures();
+        Map<String, Double> measures = getRandomMeasures(num);
         Map<String, String> normalFields = getRandomNormalFields();
 
         bigMap.put("logTypeName", logTypeName);
@@ -76,19 +78,47 @@ public class MockLogJson {
         return JSON.toJSONString(bigMap);
     }
 
-    public static void main(String[] args) throws Exception {
+    private static long getSize(String propertiesName) throws Exception {
+        Properties properties = PropertiesUtil.getProperties(propertiesName);
+        return StringUtil.getLong(properties.getProperty("log.size", "5000").trim(), 1);
+    }
 
-        String topic = "weblog";
-//        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
-        String bootstrapServers = "192.168.80.21:30092";
-//        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
-        long records = 100000000000L;
+    private static String getTopic(String propertiesName) throws Exception {
+        Properties properties = PropertiesUtil.getProperties(propertiesName);
+        return properties.getProperty("log.topic", "dwd_default_log").trim();
+    }
+
+    private static String getBroker(String propertiesName) throws Exception {
+        Properties properties = PropertiesUtil.getProperties(propertiesName);
+        return properties.getProperty("kafka.servers", "192.168.70.6:9092,192.168.70.7:29092,192.168.70.8:9092").trim();
+    }
+
+    private static int getSleepMs(String propertiesName) throws Exception {
+        Properties properties = PropertiesUtil.getProperties(propertiesName);
+        return StringUtil.getInt(properties.getProperty("log.sleep.ms", "1").trim(), 1);
+    }
+
+    public static void main(String[] args) throws Exception {
+        if (args.length == 0) {
+            System.out.println("请指定配置文件");
+            System.exit(-1);
+        }
+        String propertiesName = args[0];
+        long size = getSize(propertiesName);
+        String topic = getTopic(propertiesName);
+        String bootstrapServers = getBroker(propertiesName);
+        int sleepMs = getSleepMs(propertiesName);
 
         KafkaProducer<String, String> producer = KafkaTools.buildProducer(bootstrapServers, StringSerializer.class.getName());
-        for (long index = 0; index < records; index++) {
-            System.out.println(mockJsonLogData());
-            KafkaTools.send(producer, topic, mockJsonLogData());
-//            Thread.sleep(100);
+        for (int index = 0; index < size; index++) {
+//            System.out.println(mockJsonLogData(index));
+            if (index % 1000 == 0) {
+                System.out.println(index);
+            }
+            KafkaTools.send(producer, topic, mockJsonLogData(index));
+            if (sleepMs > 0) {
+                Thread.sleep(sleepMs);
+            }
         }
 
         Thread.sleep(2000);

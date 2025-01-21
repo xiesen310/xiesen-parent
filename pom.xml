@@ -22,7 +22,7 @@
 <!--        <module>xiesen-algorithm</module>-->
 <!--        <module>xiesen-kudu</module>-->
 <!--        <module>xiesen-hbase</module>-->
-        <module>xiesen-redis</module>
+<!--        <module>xiesen-redis</module>-->
 <!--        <module>xiesen-sqlserver</module>-->
 <!--        <module>xiesen-pulsar</module>-->
 <!--        <module>xiesen-learnning</module>-->
@@ -35,7 +35,7 @@
 <!--        <module>xiesen-json</module>-->
 <!--        <module>xiesen-hive</module>-->
 <!--        <module>xiesen-siddhi</module>-->
-        <module>xiesen-influxdb</module>
+<!--        <module>xiesen-influxdb</module>-->
 <!--        <module>kafka-3.1.0</module>-->
 <!--        <module>protobuf-example</module>-->
 <!--        <module>xiesen-oracle</module>-->
