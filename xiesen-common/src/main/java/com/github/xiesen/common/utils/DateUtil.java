@@ -19,6 +19,7 @@ import java.util.Date;
  */
 public class DateUtil {
     private static DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+08:00");
+    private static DateFormat formatNoZone = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
     private static DateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     private static DateFormat format1 = new SimpleDateFormat("yyyyMMdd");
 
@@ -54,6 +55,10 @@ public class DateUtil {
      */
     public static String getUTCTimeStr() {
         return format.format(new Date()).toString();
+    }
+
+    public static String getUTCTimeStrWithNoZone() {
+        return formatNoZone.format(new Date()).toString();
     }
 
     public static String getUTCTime() {
