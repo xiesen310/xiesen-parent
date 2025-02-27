@@ -3,6 +3,8 @@ package com.github.xiesen.mock.data;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiesen.common.utils.DateUtil;
+import com.github.xiesen.mock.util.CustomerProducer;
+import com.github.xiesen.mock.util.ProducerPool;
 
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -97,12 +99,12 @@ public class MockGuoSenLogAvro {
 
 
     public static void main(String[] args) throws Exception {
-        long size = 3L * 1;
+        long size = 1000L;
 //        String topicName = "stream_guosen_log_data";
         String topicName = "xiesen";
         for (int i = 0; i < size; i++) {
             String logTypeName = "tomcat_access_filebeat";
-            String timestamp = DateUtil.getUTCTimeStr();
+            String timestamp = DateUtil.getUTCTime();
 //            String source = "/var/log/nginx/access.log";
 //            String source = "/var/log/tomcat/access1.log";
             String source = "/var/log/tomcat/access.log";
@@ -119,13 +121,13 @@ public class MockGuoSenLogAvro {
             map.put("dimensions", dimensions);
             map.put("measures", measures);
             map.put("normalFields", normalFields);
-            System.out.println("size: " + JSON.toJSONString(map).length());
+//            System.out.println("size: " + JSON.toJSONString(map).length());
             System.out.println(JSON.toJSONString(map));
 
-//            CustomerProducer producer = ProducerPool.getInstance("D:\\develop\\workspace\\xiesen-parent\\xiesen-mock-data\\src\\main\\resources\\config.properties").getProducer();
-//            producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
+            CustomerProducer producer = ProducerPool.getInstance("/Users/xiesen/workspaces/xiesen-parent/xiesen-mock-data/src/main/resources/config.properties").getProducer();
+            producer.sendLog(logTypeName, timestamp, source, offset, dimensions, measures, normalFields);
 
-//            Thread.sleep(1000);
+            Thread.sleep(2000);
 //            Thread.sleep(10);
         }
         Thread.sleep(1000);
