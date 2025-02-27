@@ -18,7 +18,7 @@ import java.util.Date;
  * @Date 2020/6/28 9:38
  */
 public class DateUtil {
-    private static DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+08:00");
+    private static DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     private static DateFormat formatNoZone = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
     private static DateFormat parseFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
     private static DateFormat format1 = new SimpleDateFormat("yyyyMMdd");
