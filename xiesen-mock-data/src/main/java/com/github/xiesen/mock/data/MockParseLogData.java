@@ -150,18 +150,18 @@ public class MockParseLogData {
 
 //        System.out.println(buildMsg());
         long start = System.currentTimeMillis();
-        KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
+//        KafkaProducer<String, String> producer = buildProducer(bootstrapServers, StringSerializer.class.getName());
 
         for (long index = 0; index < records; index++) {
             String message = buildMsg();
             System.out.println(message);
             System.out.println(message.getBytes("UTF-8").length);
-            send(producer, topic, message);
+//            send(producer, topic, message);
 //            TimeUnit.SECONDS.sleep(1);
         }
 
-        producer.flush();
-        producer.close();
+//        producer.flush();
+//        producer.close();
         System.out.println("生产 " + records + " 条数据,耗时: " + (System.currentTimeMillis() - start) + " ms");
         Thread.sleep(1000L);
 
