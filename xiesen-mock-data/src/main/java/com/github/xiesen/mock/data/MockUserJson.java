@@ -29,7 +29,7 @@ public class MockUserJson {
     public static void main(String[] args) throws Exception {
 
         String topic = "test";
-        String bootstrapServers = "192.168.70.6:29092,192.168.70.7:29092,192.168.70.8:29092";
+        String bootstrapServers = "192.168.70.6:9092,192.168.70.7:9092,192.168.70.8:9092";
         long records = 1000L;
 
         KafkaProducer<String, String> producer = KafkaTools.buildProducer(bootstrapServers, StringSerializer.class.getName());
